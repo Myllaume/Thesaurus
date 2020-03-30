@@ -4,12 +4,22 @@ error_reporting(E_ALL);
 
 /**
  * -------
- * Connexion à la base de données
+ * Requêtes à la base de données
  * -------
  */
 
 include './core/bdd.php';
 $bdd = connexionBdd();
+
+/**
+ * Function search_ascendant
+ * Rechercher les lignes liées à un concept
+ * en tant que concept générique
+ * ---
+ * @param object $bdd PDO
+ * @param int $id > 0
+ * @return array $concepts_list Lignes de la bdd
+ */
 
 function search_ascendant($bdd, $id) {
     $request = $bdd->prepare('SELECT * FROM Concepts WHERE id_ascendant =' . $id);
@@ -29,27 +39,19 @@ function search_ascendant($bdd, $id) {
     return $concepts_list;
 }
 
-function create_JSON_from_array($array, $path) {
-    $JSON_content = json_encode($array, JSON_UNESCAPED_UNICODE);
-    file_put_contents($path, $JSON_content);
-}
-
-function create_CSV_from_array($array, $path, $entete) {
-    $CSV_file = fopen($path, 'w');
-
-    fputcsv($CSV_file, $entete);
-
-    foreach ($array as $line) {
-        fputcsv($CSV_file, $line);
-    }
-
-    fclose($CSV_file);
-}
-
 /**
  * -------
- * Génration de l'arborescence
+ * GÉNÉRATIONS
  * -------
+ */
+
+/**
+ * Function gen_arborescence
+ * Foncton récursive de génération de listes HTML
+ * imbriquées correspondant à la hierarchie du thesaurus
+ * ---
+ * @param object $bdd PDO
+ * @param array $concepts_list Liste de lignes de la base de données
  */
 
 function gen_arborescence($bdd, $concepts_list) {
@@ -67,10 +69,18 @@ function gen_arborescence($bdd, $concepts_list) {
 
 gen_arborescence($bdd, search_ascendant($bdd, 0));
 
-gen_cache($bdd);
+/**
+ * Function gen_cache
+ * Génération dans un tableau d'une copie des
+ * données de la table Concepts
+ * ---
+ * @param object $bdd PDO
+ * @return array $ligne_list Tableau contenant un tableau
+ * pour chaque ligne de la base de données
+ */
 
 function gen_cache($bdd) {
-    $array = [];
+    $ligne_list = [];
 
     $request = $bdd->prepare('SELECT * FROM Concepts');
     $is_valid_request = $request->execute();
@@ -87,14 +97,12 @@ function gen_cache($bdd) {
     }
 
     foreach ($concepts_list as $nb => $value) {
-        array_push($array, [
+        array_push($ligne_list, [
             'id' => $value['id'],
             'nom' => $value['nom'],
             'id_ascendant' => $value['id_ascendant']
         ]);
     }
 
-    create_CSV_from_array($array, './cache.csv', ['id', 'nom', 'id_ascendant']);
-    // create_JSON_from_array($array, './cache.json');
+    return $ligne_list;
 }
-
