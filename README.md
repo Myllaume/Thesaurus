@@ -38,3 +38,4 @@ Une interface d'administration permet à une personne d'ajouter, supprimer et mo
 Cet outil est inspiré des modèles suivants : 
 - [PACTOLS](https://pactols.frantiq.fr/opentheso/index.xhtml)
 - [Interface de consultation en ligne de MOTBIS](http://www.cndp.fr/thesaurus-motbis/site/)
+- [UK Archival Thesaurus](https://ukat.aim25.com/thesaurus/)
