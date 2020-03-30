@@ -1,15 +1,10 @@
 <?php
-ini_set('display_errors','on');
-error_reporting(E_ALL);
 
 /**
  * -------
  * Requêtes à la base de données
  * -------
  */
-
-include './core/bdd.php';
-$bdd = connexionBdd();
 
 /**
  * Function search_ascendant
@@ -56,18 +51,16 @@ function search_ascendant($bdd, $id) {
 
 function gen_arborescence($bdd, $concepts_list) {
     if (!$concepts_list) { return; }
-    echo '<ul>';
+    echo '<ul class="arborescence__section">';
 
     foreach ($concepts_list as $nb => $value) {
-        echo '<li>' . $value['nom'] . '</li>';
+        echo '<li class="arborescence__elt">' . $value['nom'] . '</li>';
 
         gen_arborescence($bdd, search_ascendant($bdd, $value['id']));
     }
 
     echo '</ul>';
 }
-
-gen_arborescence($bdd, search_ascendant($bdd, 0));
 
 /**
  * Function gen_cache

@@ -1,0 +1,51 @@
+.arborescence {
+    padding: 1rem;
+
+    ul {
+        list-style: none;
+
+        &:not(:first-child) {
+            transform: scaleY(0);
+            transform-origin: 50% 0;
+            height: 0px;
+            overflow: hidden;
+            transition: transform .2s,
+                height .2s;
+        }
+
+        &.--active {
+            transform: scaleY(1);
+            height: 100%;
+        }
+
+    }
+
+    li {
+        position: relative;
+        cursor: pointer;
+        margin: 1rem 0;
+    }
+
+    &__arrow {
+        @extend %font-code;
+        cursor: pointer;
+        background-color: transparent;
+        border: unset;
+        position: absolute;
+        left: -25px;
+        padding: .2rem;
+        width: 20px;
+        height: 20px;
+        border-radius: 2px;
+        transition: background-color .1s,
+            transform .1s;
+
+        &--active {
+            transform: rotate(90deg);
+        }
+
+        &:hover {
+            background-color: $color-orange;
+        }
+    }
+}

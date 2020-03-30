@@ -1,0 +1,10 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    /* tous les textes auront une
+     hauteur de base de 14px */
+    @extend %font-body-light;
+    font-size: 1.6rem;
+}

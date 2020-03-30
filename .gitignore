@@ -1,2 +1,6 @@
-
 core/bdd.php
+/assets
+
+/node_modules
+package-lock.json
+.DS_Store
