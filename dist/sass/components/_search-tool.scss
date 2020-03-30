@@ -1,0 +1,42 @@
+.search-tool {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    margin: 0 1rem;
+    width: 100%;
+
+    input {
+        border: 2px solid $color-gris;
+        width: 100%;
+        border-radius: 2px 0 0 2px;
+    }
+
+    button {
+        border: unset;
+        border-radius: 0 2px 2px 0;
+        background-color: $color-gris;
+    }
+
+    &__result-list {
+        color: $color-blanc;
+        position: absolute;
+        z-index: 1;
+        top: 110%;
+        background-color: $color-gris;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        border-radius: 3px;
+
+        li {
+            cursor: pointer;
+            padding: .8rem;
+
+            &:hover {
+                background-color: $color-rose;
+            }
+        }
+    }
+}

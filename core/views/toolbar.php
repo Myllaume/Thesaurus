@@ -1,3 +1,3 @@
 <header>
-    <h1 class="titre-site">Thesarus</h1>
+    <h1 class="titre-site">Thesaurus</h1>
 </header>
