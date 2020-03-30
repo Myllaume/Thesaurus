@@ -8,3 +8,9 @@ body {
     @extend %font-body-light;
     font-size: 1.6rem;
 }
+
+.titre-site {
+    @extend %font-code;
+    font-size: 3rem;
+    margin: unset;
+}

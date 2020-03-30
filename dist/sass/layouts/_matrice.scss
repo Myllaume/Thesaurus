@@ -1,0 +1,56 @@
+.matrice {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    &__cadre {
+        width: 200px;
+        min-height: 200px;
+        border: 2px solid $color-rouge;
+        border-radius: 3px;
+
+        ul {
+            display: block;
+            overflow-y: auto;
+            overflow-x: hidden;
+            list-style: none;
+            padding: 0;
+            margin: 0 1rem;
+        }
+
+        li {
+            margin: 1rem 0;
+        }
+
+        &--left, &--right {
+            position: absolute;
+        }
+
+        &--top, &--bottom {
+            text-align: center;
+        }
+
+        &--center {
+            margin: 5rem 0;
+            text-align: center;
+        }
+
+        &--left {
+            left: 0px;
+        }
+
+        &--right {
+            right: 0px;
+        }
+    }
+
+    &__entete {
+        background-color: $color-rouge;
+        text-align: center;
+        color: $color-blanc;
+        padding: .2rem;
+        margin-bottom: 2rem;
+    }
+}

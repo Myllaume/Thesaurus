@@ -3,6 +3,7 @@
 
     ul {
         list-style: none;
+        margin: 0;
 
         &:not(:first-child) {
             transform: scaleY(0);
