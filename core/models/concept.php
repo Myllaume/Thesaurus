@@ -63,10 +63,28 @@ class Concept {
      * =====================
      */
 
+    public function select_bdd($bdd) {
+        $request = $bdd->prepare('SELECT * FROM Concepts WHERE id=:id');
+        $is_valid_request = $request->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $is_valid_request &= $request->execute();
+
+        if (!$is_valid_request) {
+            throw new Exception('Erreur bdd : SELECT Concepts');
+        }
+
+        $concept = $request->fetch(PDO::FETCH_ASSOC);
+        if (empty($concept)) {
+            throw new Exception('Aucun concept trouvé dans la base de données');
+        }
+
+        $this->nom = $concept['nom'];
+        $this->id_ascendant = $concept['id_ascendant'];
+    }
+
     public function insert_bdd($bdd) {
         $request = $bdd->prepare('INSERT INTO Concepts SET nom=:nom, id_ascendant=:id_ascendant');
         $is_valid_request = $request->bindValue(':nom', $this->nom, PDO::PARAM_STR);
-        $is_valid_request = $request->bindValue(':id_ascendant', $this->id_ascendant, PDO::PARAM_INT);
+        $is_valid_request &= $request->bindValue(':id_ascendant', $this->id_ascendant, PDO::PARAM_INT);
         $is_valid_request &= $request->execute();
 
         if (!$is_valid_request) {

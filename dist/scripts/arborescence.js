@@ -93,7 +93,6 @@ var arborescence = {
         concept.classList.add('arborescence__elt');
         concept.dataset.id = id;
         concept.textContent = name;
-        // this.elts.push(concept);
 
         return concept;
     },
@@ -105,6 +104,20 @@ var arborescence = {
         this.articuler(node, elt)
 
         return node;
+    },
+
+    query: function(elt) {
+        elt.addEventListener('click', () => {
+            $.get( '/Thesaurus/core/controllers/query.php' , { id: elt.dataset.id },
+            function( json ) {
+                    
+                matrice.traitement(json.data);
+                
+            }, 'json' )
+            .fail(function (data) {
+                console.error(data);
+            })
+        });
     }
 }
 
@@ -116,5 +129,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
     arborescence.elts.forEach(elt => {
         arborescence.rendreEditable(elt);
+        arborescence.query(elt);
     });
 });

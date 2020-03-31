@@ -1,6 +1,9 @@
 <?php
 ini_set('display_errors','on');
 error_reporting(E_ALL);
+
+require './core/bdd.php';
+$bdd = connexionBdd();
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +37,7 @@ error_reporting(E_ALL);
                 </div>
 
                 <div id="onglet2" class="onglet">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus fuga tempore, facere laudantium deleniti esse, atque quas molestiae ut delectus iste, sequi labore velit. Illo incidunt praesentium perspiciatis animi sint?
+                    <?php include './core/views/index.php'; ?>
                 </div>
 
                 <div id="onglet3" class="onglet">

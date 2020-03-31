@@ -7,7 +7,7 @@
  */
 
 /**
- * Function search_ascendant
+ * Function search_descendant
  * Rechercher les lignes liées à un concept
  * en tant que concept générique
  * ---
@@ -16,8 +16,26 @@
  * @return array $concepts_list Lignes de la bdd
  */
 
-function search_ascendant($bdd, $id) {
+function search_descendant($bdd, $id) {
     $request = $bdd->prepare('SELECT * FROM Concepts WHERE id_ascendant =' . $id);
+    $is_valid_request = $request->execute();
+
+    if (!$is_valid_request) {
+        // Erreur bdd : SELECT Concepts
+        return false;
+    }
+
+    $concepts_list = $request->fetchAll(PDO::FETCH_ASSOC);
+    if (empty($concepts_list)) {
+        // Aucun concept trouvé dans la base de données
+        return false;
+    }
+
+    return $concepts_list;
+}
+
+function search_ascendant($bdd, $id_ascendant) {
+    $request = $bdd->prepare('SELECT * FROM Concepts WHERE id =' . $id_ascendant);
     $is_valid_request = $request->execute();
 
     if (!$is_valid_request) {
@@ -56,7 +74,7 @@ function gen_arborescence($bdd, $concepts_list) {
     foreach ($concepts_list as $nb => $value) {
         echo '<li class="arborescence__elt" data-id="' . $value['id'] . '">' . $value['nom'] . '</li>';
 
-        gen_arborescence($bdd, search_ascendant($bdd, $value['id']));
+        gen_arborescence($bdd, search_descendant($bdd, $value['id']));
     }
 
     echo '</ul>';

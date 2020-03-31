@@ -1,9 +1,6 @@
 <?php
 
-include './core/bdd.php';
-$bdd = connexionBdd();
-
-include './functions/navigation.php';
+require './functions/navigation.php';
 ?>
 
 <div class="search-tool">
@@ -20,6 +17,6 @@ include './functions/navigation.php';
 <?php
 
 echo '<div class="arborescence">';
-gen_arborescence($bdd, search_ascendant($bdd, 0));
+gen_arborescence($bdd, search_descendant($bdd, 0));
 echo '</div>';
 ?>
