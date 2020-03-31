@@ -22,12 +22,44 @@ error_reporting(E_ALL);
 
         <div class="wrapper">
 
-            <aside class="lateral">
-                <?php include './core/views/arborescence.php'; ?>
+            <aside>
+                <div class="onglet__entete">
+                    <div class="onglet__epingle onglet__epingle--active" data-onglet-aside="1">Arborescence</div>
+                    <div class="onglet__epingle" data-onglet-aside="2">Index</div>
+                    <div class="onglet__epingle" data-onglet-aside="3">Historique</div>
+                </div>
+
+                <div id="onglet1" class="onglet onglet--active">
+                    <?php include './core/views/arborescence.php'; ?>
+                </div>
+
+                <div id="onglet2" class="onglet">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus fuga tempore, facere laudantium deleniti esse, atque quas molestiae ut delectus iste, sequi labore velit. Illo incidunt praesentium perspiciatis animi sint?
+                </div>
+
+                <div id="onglet3" class="onglet">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, sit!
+                </div>
             </aside>
             
             <main>
-                <?php include './core/views/matrice.php'; ?>
+                <div class="onglet__entete">
+                    <div class="onglet__epingle onglet__epingle--active" data-onglet-main="4">Matrice</div>
+                    <div class="onglet__epingle" data-onglet-main="5">Notice</div>
+                    <div class="onglet__epingle" data-onglet-main="6">Page 3</div>
+                </div>
+
+                <div id="onglet4" class="onglet onglet--active">
+                    <?php include './core/views/matrice.php'; ?>
+                </div>
+
+                <div id="onglet5" class="onglet">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus fuga tempore, facere laudantium deleniti esse, atque quas molestiae ut delectus iste, sequi labore velit. Illo incidunt praesentium perspiciatis animi sint?
+                </div>
+
+                <div id="onglet6" class="onglet">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, sit!
+                </div>
             </main>
 
         </div>

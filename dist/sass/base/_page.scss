@@ -16,12 +16,10 @@ body {
 }
 
 aside, main {
-    box-sizing: border-box;
-    background-color: $color-blanc;
-    border: 2px solid $color-rouge;
+    position: relative;
     margin: 0 1rem;
     border-radius: 3px;
-    padding: 1rem;
+    height: calc(100vh - 90px);
 }
 
 aside {
@@ -30,4 +28,39 @@ aside {
 
 main {
     flex: 2;
+}
+
+.onglet {
+    overflow: auto;
+    padding: 1rem;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin-top: 3rem;
+    width: 100%;
+    height: calc(100% - 3rem);
+    background-color: $color-blanc;
+    border: 2px solid $color-rouge;
+
+    &__entete {
+        display: flex;
+        color: $color-blanc;
+    }
+
+    &__epingle {
+        cursor: pointer;
+        background-color: $color-rouge;
+        margin: 0 1rem;
+        padding: .5rem;
+        box-sizing: border-box;
+
+        &--active {
+            background-color: $color-rose;
+        }
+    }
+
+    &--active {
+        z-index: 2;
+    }
 }
