@@ -8,7 +8,6 @@ include './functions/navigation.php';
 
 <div class="search-tool">
     <input role="search" type="text" class="text" placeholder="Rechercher">
-    <button>search</button>
 
     <!-- <ul class="search-tool__result-list">
         <li>Lorem, ipsum.</li>

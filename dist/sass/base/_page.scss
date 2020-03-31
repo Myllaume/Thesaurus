@@ -2,17 +2,26 @@ body {
     cursor: default;
     padding: 0;
     margin: 0;
-    background-color: $color-blanc;
+    background-color: whitesmoke;
 }
 
 .wrapper-page {
     width: 100%;
     margin: 0 auto;
-    max-width: 1000px;
+    max-width: 1200px;
 }
 
 .wrapper {
     display: flex;
+}
+
+aside, main {
+    box-sizing: border-box;
+    background-color: $color-blanc;
+    border: 2px solid $color-rouge;
+    margin: 0 1rem;
+    border-radius: 3px;
+    padding: 1rem;
 }
 
 aside {
@@ -20,5 +29,5 @@ aside {
 }
 
 main {
-    flex: 3;
+    flex: 2;
 }

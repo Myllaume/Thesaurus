@@ -1,21 +1,10 @@
 .search-tool {
     position: relative;
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    margin: 0 1rem;
-    width: 100%;
 
     input {
         border: 2px solid $color-gris;
-        width: 100%;
+        width: calc(100% - 2rem);
         border-radius: 2px 0 0 2px;
-    }
-
-    button {
-        border: unset;
-        border-radius: 0 2px 2px 0;
-        background-color: $color-gris;
     }
 
     &__result-list {

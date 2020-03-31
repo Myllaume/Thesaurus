@@ -34,7 +34,8 @@ error_reporting(E_ALL);
 
     </div>
 
-    <script src="./assets/main.js"></script>
+    <script src="/Thesaurus/libs/jquery.js"></script>
+    <script src="/Thesaurus/assets/main.js"></script>
 </body>
 
 </html>

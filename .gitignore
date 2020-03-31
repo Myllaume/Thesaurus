@@ -2,5 +2,6 @@ core/bdd.php
 /assets
 
 /node_modules
+/libs
 package-lock.json
 .DS_Store

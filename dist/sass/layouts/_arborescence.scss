@@ -27,13 +27,11 @@
         margin: 1rem 0;
     }
 
-    &__arrow {
+    &__arrow, &__add {
         @extend %font-code;
         cursor: pointer;
         background-color: transparent;
         border: unset;
-        position: absolute;
-        left: -25px;
         padding: .2rem;
         width: 20px;
         height: 20px;
@@ -41,12 +39,18 @@
         transition: background-color .1s,
             transform .1s;
 
-        &--active {
-            transform: rotate(90deg);
-        }
-
         &:hover {
             background-color: $color-orange;
         }
+    }
+
+    &__arrow {
+        position: absolute;
+        left: -25px;
+    }
+
+    &__add {
+        position: relative;
+        right: -5px;
     }
 }

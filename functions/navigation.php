@@ -54,7 +54,7 @@ function gen_arborescence($bdd, $concepts_list) {
     echo '<ul class="arborescence__section">';
 
     foreach ($concepts_list as $nb => $value) {
-        echo '<li class="arborescence__elt">' . $value['nom'] . '</li>';
+        echo '<li class="arborescence__elt" data-id="' . $value['id'] . '">' . $value['nom'] . '</li>';
 
         gen_arborescence($bdd, search_ascendant($bdd, $value['id']));
     }
