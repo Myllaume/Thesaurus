@@ -6,7 +6,7 @@ if (!isset($_GET) || empty($_GET['action'])) {
     exit;
 }
 
-include '../bdd.php';
+require '../bdd.php';
 $bdd = connexionBdd();
 require '../models/concept.php';
 $class_concept = new Concept;
