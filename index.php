@@ -25,7 +25,7 @@ $bdd = connexionBdd();
 
         <div class="wrapper">
 
-            <aside>
+            <aside class="aside">
                 <div class="onglet__entete">
                     <div class="onglet__epingle onglet__epingle--active" data-onglet-aside="1">Arborescence</div>
                     <div class="onglet__epingle" data-onglet-aside="2">Index</div>
@@ -45,7 +45,7 @@ $bdd = connexionBdd();
                 </div>
             </aside>
             
-            <main>
+            <main class="main">
                 <div class="onglet__entete">
                     <div class="onglet__epingle onglet__epingle--active" data-onglet-main="4">Matrice</div>
                     <div class="onglet__epingle" data-onglet-main="5">Notice</div>
@@ -57,7 +57,7 @@ $bdd = connexionBdd();
                 </div>
 
                 <div id="onglet5" class="onglet">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus fuga tempore, facere laudantium deleniti esse, atque quas molestiae ut delectus iste, sequi labore velit. Illo incidunt praesentium perspiciatis animi sint?
+                    <?php include './core/views/notice.php'; ?>
                 </div>
 
                 <div id="onglet6" class="onglet">

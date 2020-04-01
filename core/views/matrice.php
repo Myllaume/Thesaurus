@@ -1,38 +1,53 @@
-<div class="matrice">
+<article class="matrice">
 
-    <div class="matrice__cadre matrice__cadre--top">
-        <div class="matrice__entete">Concept générique</div>
-        <ul>
-            <li id="concept-generique">AUCUN</li>
-        </ul>
-    </div>
+    <section class="cadre matrice--top">
+        <header class="cadre__entete">Concept générique</header>
 
-    <div class="matrice__cadre matrice__cadre--center">
-        <div class="matrice__entete">Concept</div>
-        <ul>
-            <li id="concept">AUCUN</li>
-        </ul>
-    </div>
+        <main class="cadre__content">
+            <ul>
+                <li id="concept-generique">AUCUN</li>
+            </ul>
+        </main>
+    </section>
 
-    <div class="matrice__cadre matrice__cadre--bottom">
-        <div class="matrice__entete">Concept(s) spécifique</div>
-        <ul id="concept-specifique">
-            <li>AUCUN</li>
-        </ul>
-    </div>
+    <section class="cadre matrice--center">
+        <header class="cadre__entete">Concept</header>
 
-    <div class="matrice__cadre matrice__cadre--left">
-        <div class="matrice__entete">Terme(s) usé(s)</div>
-        <ul>
-            <li>AUCUN</li>
-        </ul>
-    </div>
+        <main class="cadre__content">
+            <ul>
+                <li id="concept">AUCUN</li>
+            </ul>
+        </main>
+    </section>
 
-    <div class="matrice__cadre matrice__cadre--right">
-        <div class="matrice__entete">Concept(s) associé</div>
-        <ul>
-            <li>AUCUN</li>
-        </ul>
-    </div>
+    <section class="cadre matrice--bottom">
+        <header class="cadre__entete">Concept(s) spécifique</header>
+
+        <main class="cadre__content">
+            <ul id="concept-specifique">
+                <li>AUCUN</li>
+            </ul>
+        </main>
+    </section>
+
+    <section class="cadre matrice--left">
+        <header class="cadre__entete">Terme(s) usé(s)</header>
+
+        <main class="cadre__content">
+            <ul>
+                <li>AUCUN</li>
+            </ul>
+        </main>
+    </section>
+
+    <section class="cadre matrice--right">
+        <header class="cadre__entete">Concept(s) associé</header>
+
+        <main class="cadre__content">
+            <ul>
+                <li>AUCUN</li>
+            </ul>
+        </main>
+    </section>
     
-</div>
+</article>

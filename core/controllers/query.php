@@ -23,13 +23,13 @@ $concept_id = $class_concept->get_id();
 $concept_id_ascendant = $class_concept->get_id_ascendant();
 $concept_nom = $class_concept->get_nom();
 
-$data = ['concept' => [
-        'nom' => $concept_nom,
-        'id' => $concept_id,
+$data = [
+    'notice' => [
         'type' => 'Personne',
-        'notes' => 'lorem ipsum dolor est'
+        'description' => 'lorem ipsum dolor est'
     ],
-        'matrice' => [
+    'matrice' => [
+        'nom' => $concept_nom,
         'concept_specifique' => search_descendant($bdd, $_GET['id']),
         'concept_generique' => search_ascendant($bdd, $concept_id_ascendant)
     ]

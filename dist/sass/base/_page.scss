@@ -15,18 +15,18 @@ body {
     display: flex;
 }
 
-aside, main {
+.aside, .main {
     position: relative;
     margin: 0 1rem;
     border-radius: 3px;
     height: calc(100vh - 90px);
 }
 
-aside {
+.aside {
     flex: 1;
 }
 
-main {
+.main {
     flex: 2;
 }
 

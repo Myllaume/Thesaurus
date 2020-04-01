@@ -22,18 +22,18 @@ var matrice = {
         .innerHTML = html;
     },
     traitement: function (obj) {
-        this.setConcept(obj.concept.nom);
+        this.setConcept(obj.nom);
 
-        if (!obj.matrice.concept_generique) {
+        if (!obj.concept_generique) {
             this.setConceptGenerique('AUCUN');
         } else {
-            this.setConceptGenerique(obj.matrice.concept_generique[0].nom);
+            this.setConceptGenerique(obj.concept_generique[0].nom);
         }
 
-        if (!obj.matrice.concept_specifique) {
+        if (!obj.concept_specifique) {
             this.setConceptSpecifique(false);
         } else {
-            this.setConceptSpecifique(obj.matrice.concept_specifique);
+            this.setConceptSpecifique(obj.concept_specifique);
         }
         
     }
