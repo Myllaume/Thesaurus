@@ -11,12 +11,12 @@
     </section>
     
     <section class="cadre">
-        <header class="cadre__entete">Références</header>
-        <main class="cadre__content" id="concept-reference">
+        <header class="cadre__entete">Documents</header>
+        <main class="cadre__content" id="concept-document">
 
             <form id="form-upload" action="/Thesaurus/" method="post" enctype="multipart/form-data">
-                <input type="file" name="fichier">
-                <button type="submit">Enregistrer</button>
+                <label class="btn" for="input-upload">Téléverser un fichier</label>
+                <input type="file" name="fichier" id="input-upload">
             </form>
 
         </main>

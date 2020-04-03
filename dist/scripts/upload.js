@@ -1,6 +1,7 @@
 const formUpload = document.querySelector('#form-upload');
+const inputUpload = document.querySelector('#input-upload');
 
-formUpload.addEventListener('submit', (e) => {
+inputUpload.addEventListener('input', (e) => {
     e.preventDefault();
     var formData = new FormData(formUpload);
 
@@ -9,10 +10,12 @@ formUpload.addEventListener('submit', (e) => {
         type: 'POST',
         data: formData,
         dataType: 'json',
-        processData: false, // tell jQuery not to process the data
-        contentType: false, // tell jQuery not to set contentType
-        success: function (data) {
-            console.log(data);
+        processData: false,
+        contentType: false,
+        success: function (json) {
+            if (json.isOk) {
+                notice.setDocument(json.data);
+            }
         }
     });
 });

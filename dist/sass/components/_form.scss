@@ -1,6 +1,15 @@
-input {
-    @extend %font-body-light;
-    border: unset;
-    padding: .5rem;
-    font-size: 1.4rem;
+form {
+    margin: 2rem 0;
+
+    input {
+        @extend %font-body-light;
+        border: unset;
+        padding: .5rem;
+        font-size: 1.4rem;
+    
+        &[type="file"] {
+            display: none;
+        }
+    }
+
 }

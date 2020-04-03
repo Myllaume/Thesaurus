@@ -1,0 +1,12 @@
+.btn {
+    @extend %font-body-light;
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    margin: .5rem;
+    background-color: $color-rose;
+    color: $color-blanc;
+    border: unset;
+    border-radius: 3px;
+    font-size: inherit;
+    text-decoration: unset;
+}
