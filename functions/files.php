@@ -16,3 +16,26 @@ function create_CSV_from_array($array, $path, $entete) {
 
     fclose($CSV_file);
 }
+
+/**
+ * Function gen_arborescence
+ * Obtenir un tableau à partir d'un fichier CSV
+ * ---
+ * @param string $path Chemin vers le fichier CSV à transformer
+ * @return array Tableau contenant pour chaque ligne du fichier CSV un tableau
+ */
+
+function CSV_file_to_array($path) {
+    $return_tab = [];
+
+    $csv_file = file_get_contents($path);
+    $CSV_rows = str_getcsv($csv_file, "\n");
+
+    foreach($CSV_rows as &$row) {
+        // le séparateur défini ci-dessous comme virgule
+        $row = str_getcsv($row, ",");
+        array_push($return_tab, $row);
+    }
+    
+    return $return_tab;
+}

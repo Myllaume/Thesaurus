@@ -81,6 +81,35 @@ class Concept {
         $this->id_ascendant = $concept['id_ascendant'];
     }
 
+    public static function import_bdd($bdd) {
+        $request = $bdd->prepare('SELECT * FROM Concepts');
+        $is_valid_request = $request->execute();
+
+        if (!$is_valid_request) {
+            throw new Exception('Erreur bdd : SELECT Concepts');
+        }
+
+        $concept_list = $request->fetchAll(PDO::FETCH_ASSOC);
+        if (empty($concept_list)) {
+            throw new Exception('Aucun concept trouvé dans la base de données');
+        }
+        
+        return $concept_list;
+    }
+
+    public static function get_structure_bdd($bdd) {
+        $request = $bdd->prepare('DESCRIBE Concepts');
+        $is_valid_request = $request->execute();
+
+        if (!$is_valid_request) {
+            throw new Exception('Erreur bdd : DESCRIBE Concepts');
+        }
+
+        $table_structure = $request->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $table_structure;
+    }
+
     public function insert_bdd($bdd) {
         $request = $bdd->prepare('INSERT INTO Concepts SET nom=:nom, id_ascendant=:id_ascendant');
         $is_valid_request = $request->bindValue(':nom', $this->nom, PDO::PARAM_STR);
