@@ -12,7 +12,16 @@
     
     <section class="cadre">
         <header class="cadre__entete">Références</header>
-        <main class="cadre__content" id="concept-reference"></main>
+        <main class="cadre__content" id="concept-reference">
+
+            <form id="form-upload" action="/Thesaurus/" method="post" enctype="multipart/form-data">
+                <input type="file" name="fichier">
+                <button type="submit">Enregistrer</button>
+            </form>
+
+        </main>
     </section>
 
 </article>
+
+<?php include './core/controllers/upload.php'; ?>

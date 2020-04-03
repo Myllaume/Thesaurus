@@ -1,6 +1,7 @@
 core/bdd.php
 /assets
 /cache
+/upload
 
 /node_modules
 /libs
