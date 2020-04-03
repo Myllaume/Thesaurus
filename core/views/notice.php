@@ -23,5 +23,3 @@
     </section>
 
 </article>
-
-<?php include './core/controllers/upload.php'; ?>
