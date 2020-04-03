@@ -20,94 +20,94 @@ var arborescence = {
         });
     },
 
-    rendreEditable: function(elt) {
-        let brotherNodeIsList = true;
+    // rendreEditable: function(elt) {
+    //     let brotherNodeIsList = true;
 
-        var btnAdd = document.createElement('button');
-        btnAdd.classList.add('arborescence__add');
-        btnAdd.textContent = '+';
-        elt.appendChild(btnAdd);
+    //     var btnAdd = document.createElement('button');
+    //     btnAdd.classList.add('arborescence__add');
+    //     btnAdd.textContent = '+';
+    //     elt.appendChild(btnAdd);
 
-        btnAdd.addEventListener('click', () => {
-            var brotherNode = elt.nextSibling;
+    //     btnAdd.addEventListener('click', () => {
+    //         var brotherNode = elt.nextSibling;
 
-            if (brotherNode === null || brotherNode.classList == 'arborescence__elt') {
-                brotherNodeIsList = false;
-            }
+    //         if (brotherNode === null || brotherNode.classList == 'arborescence__elt') {
+    //             brotherNodeIsList = false;
+    //         }
 
-            var fieldContent = document.createElement('div');
-            fieldContent.classList.add('arborescence__insert-box');
-            elt.after(fieldContent);
+    //         var fieldContent = document.createElement('div');
+    //         fieldContent.classList.add('arborescence__insert-box');
+    //         elt.after(fieldContent);
 
-            var input = document.createElement('input');
-            input.setAttribute('placeholder', 'Nom...');
-            fieldContent.appendChild(input);
+    //         var input = document.createElement('input');
+    //         input.setAttribute('placeholder', 'Nom...');
+    //         fieldContent.appendChild(input);
     
-            var btn = document.createElement('button');
-            btn.setAttribute('type', 'submit');
-            btn.textContent = '+';
-            fieldContent.appendChild(btn);
+    //         var btn = document.createElement('button');
+    //         btn.setAttribute('type', 'submit');
+    //         btn.textContent = '+';
+    //         fieldContent.appendChild(btn);
 
-            input.focus();
+    //         input.focus();
 
-            console.log(brotherNode);
+    //         console.log(brotherNode);
             
     
-            btn.addEventListener('click', () => {
-                $.get( '/Thesaurus/core/controllers/operations.php' , {
-                    action: "add_concept",
-                    data: {
-                        nom: input.value,
-                        id_ascendant: elt.dataset.id
-                    }
-                },
-                function( json ) {
+    //         btn.addEventListener('click', () => {
+    //             $.get( '/Thesaurus/core/controllers/operations.php' , {
+    //                 action: "add_concept",
+    //                 data: {
+    //                     nom: input.value,
+    //                     id_ascendant: elt.dataset.id
+    //                 }
+    //             },
+    //             function( json ) {
                     
-                    if (json.isOk) {
-                        var newElt = arborescence.addConcept(json.isOk.id, input.value);
+    //                 if (json.isOk) {
+    //                     var newElt = arborescence.addConcept(json.isOk.id, input.value);
 
-                        if (brotherNodeIsList) {
-                            brotherNode.appendChild(newElt);
-                        } else {
-                            var newNode = arborescence.addNode(elt);
-                            elt.after(newNode);
-                            newNode.appendChild(newElt);
-                        }
+    //                     if (brotherNodeIsList) {
+    //                         brotherNode.appendChild(newElt);
+    //                     } else {
+    //                         var newNode = arborescence.addNode(elt);
+    //                         elt.after(newNode);
+    //                         newNode.appendChild(newElt);
+    //                     }
                         
-                        arborescence.rendreEditable(newElt);
+    //                     arborescence.rendreEditable(newElt);
 
-                        fieldContent.remove();
-                    }
+    //                     fieldContent.remove();
+    //                 }
                     
-                }, 'json' )
-                .fail(function (data) {
-                    console.error(data);
-                })
-            });
+    //             }, 'json' )
+    //             .fail(function (data) {
+    //                 console.error(data);
+    //             })
+    //         });
             
-        });
-    },
+    //     });
+    // },
 
-    addConcept: function(id, name) {
-        var concept = document.createElement('li');
-        concept.classList.add('arborescence__elt');
-        concept.dataset.id = id;
-        concept.textContent = name;
+    // addConcept: function(id, name) {
+    //     var concept = document.createElement('li');
+    //     concept.classList.add('arborescence__elt');
+    //     concept.dataset.id = id;
+    //     concept.textContent = name;
 
-        return concept;
-    },
+    //     return concept;
+    // },
 
-    addNode: function(elt) {
+    // addNode: function(elt) {
         
-        var node = document.createElement('ul');
-        node.classList.add('arborescence__section', '--active');
-        this.articuler(node, elt)
+    //     var node = document.createElement('ul');
+    //     node.classList.add('arborescence__section', '--active');
+    //     this.articuler(node, elt)
 
-        return node;
-    },
+    //     return node;
+    // },
 
     query: function(elt) {
-        elt.addEventListener('click', () => {
+        elt.querySelector('span').addEventListener('click', () => {
             $.get( '/Thesaurus/core/controllers/query.php' , { id: elt.dataset.id },
             function( json ) {
                     
@@ -129,7 +129,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     arborescence.elts.forEach(elt => {
-        arborescence.rendreEditable(elt);
+        // arborescence.rendreEditable(elt);
         arborescence.query(elt);
     });
 });
