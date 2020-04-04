@@ -10,7 +10,7 @@ document.querySelector('#input-upload').addEventListener('input', (e) => {
         processData: false,
         contentType: false,
         success: function (json) {
-            terminal.open(json.consolMsg)
+            terminal.open(json.consolMsg);
             if (json.isOk) {
                 notice.setDocument(json.data);
             }
