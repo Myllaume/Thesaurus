@@ -111,8 +111,10 @@ var arborescence = {
             $.get( '/Thesaurus/core/controllers/query.php' , { id: elt.dataset.id },
             function( json ) {
                     
-                matrice.traitement(json.data.matrice);
-                notice.traitement(json.data.notice);
+                if (json.isOk) {
+                    matrice.traitement(json.data.matrice);
+                    notice.traitement(json.data.notice);
+                }
                 
             }, 'json' )
             .fail(function (data) {

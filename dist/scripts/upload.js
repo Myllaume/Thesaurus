@@ -1,9 +1,6 @@
-const formUpload = document.querySelector('#form-upload');
-const inputUpload = document.querySelector('#input-upload');
-
-inputUpload.addEventListener('input', (e) => {
+document.querySelector('#input-upload').addEventListener('input', (e) => {
     e.preventDefault();
-    var formData = new FormData(formUpload);
+    var formData = new FormData(document.querySelector('#form-upload'));
 
     $.ajax({
         url: '/Thesaurus/core/controllers/upload.php',
@@ -13,6 +10,7 @@ inputUpload.addEventListener('input', (e) => {
         processData: false,
         contentType: false,
         success: function (json) {
+            terminal.open(json.consolMsg)
             if (json.isOk) {
                 notice.setDocument(json.data);
             }

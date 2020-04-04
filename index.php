@@ -65,6 +65,8 @@ $bdd = connexionBdd();
                 </div>
             </main>
 
+            <aside id="terminal" class="terminal"></aside>
+
         </div>
 
     </div>
