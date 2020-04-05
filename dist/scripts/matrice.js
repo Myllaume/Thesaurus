@@ -31,6 +31,18 @@ var matrice = {
         document.querySelector('#concept-associe')
         .innerHTML = html;
     },
+    setTermeEmploye: function (array) {
+        var html = '';
+
+        if (array) {
+            array.forEach(line => {
+                html += '<li>' + line.nom + '</li>';
+            });
+        }
+
+        document.querySelector('#terme-employe')
+        .innerHTML = html;
+    },
     traitement: function (obj) {
         this.setConcept(obj.nom);
 
@@ -50,6 +62,12 @@ var matrice = {
             this.setConceptAssocie(false);
         } else {
             this.setConceptAssocie(obj.concept_associe);
+        }
+
+        if (!obj.concept_employe) {
+            this.setTermeEmploye(false);
+        } else {
+            this.setTermeEmploye(obj.concept_employe);
         }
         
     }

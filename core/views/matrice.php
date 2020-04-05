@@ -31,10 +31,10 @@
     </section>
 
     <section class="cadre matrice--left">
-        <header class="cadre__entete">Terme(s) usé(s)</header>
+        <header class="cadre__entete">Terme(s) employé(s)</header>
 
         <main class="cadre__content">
-            <ul>
+            <ul id="terme-employe">
                 <li>AUCUN</li>
             </ul>
         </main>

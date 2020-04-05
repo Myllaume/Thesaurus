@@ -35,7 +35,8 @@ try {
             'nom' => $concept_nom,
             'concept_specifique' => search_descendant($bdd, $_GET['id']),
             'concept_generique' => search_ascendant($bdd, $concept_id_ascendant),
-            'concept_associe' => $class_concept->select_associe_bdd($bdd)
+            'concept_associe' => $class_concept->select_associe_bdd($bdd),
+            'concept_employe' => $class_concept->select_employe_bdd($bdd)
         ]
     ];
 } catch (Exception $error) {
