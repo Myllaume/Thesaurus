@@ -106,21 +106,33 @@ var arborescence = {
     //     return node;
     // },
 
-    query: function(elt) {
-        elt.querySelector('span').addEventListener('click', () => {
-            $.get( '/Thesaurus/core/controllers/query.php' , { id: elt.dataset.id },
-            function( json ) {
-                    
-                if (json.isOk) {
-                    matrice.traitement(json.data.matrice);
-                    notice.traitement(json.data.notice);
-                }
-                
-            }, 'json' )
-            .fail(function (data) {
-                console.error(data);
-            })
+    queryCache: function(id) {
+        $.getJSON( '/Thesaurus/cache/concept_' + id + '.json',
+        function(json) {
+            console.log('by cache');
+            arborescence.assignData(json);
+        })
+        .fail(function () {
+            arborescence.queryServeur(id);
         });
+    },
+
+    queryServeur: function(id) {
+        $.get( '/Thesaurus/core/controllers/query.php' , { id: id },
+        function( json ) {
+            console.log('by serveur');
+            arborescence.assignData(json);
+        }, 'json' )
+        .fail(function (data) {
+            console.error(data);
+        });
+    },
+
+    assignData: function(json) {
+        if (json.isOk) {
+            matrice.traitement(json.data.matrice);
+            notice.traitement(json.data.notice);
+        }
     }
 }
 
@@ -131,7 +143,8 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     arborescence.elts.forEach(elt => {
-        // arborescence.rendreEditable(elt);
-        arborescence.query(elt);
+        elt.querySelector('span').addEventListener('click', () => {
+            arborescence.queryCache(elt.dataset.id);
+        });
     });
 });

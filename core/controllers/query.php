@@ -41,4 +41,7 @@ try {
     $consol_msg = 'Erreur de génération : ' . $error;
 }
 
-echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
+$json = json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
+
+file_put_contents('../../cache/concept_' . $concept_id . '.json', $json);
+echo $json;

@@ -17,7 +17,6 @@ var notice = {
         document.querySelector('#concept-document').appendChild(icon_content);
     },
     traitement: function (obj) {
-        console.log(obj);
         this.setType(obj.type);
         this.setDescription(obj.description);
     }
