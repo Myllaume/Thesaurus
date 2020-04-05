@@ -10,11 +10,7 @@ var matrice = {
     setConceptSpecifique: function (array) {
         var html = '';
 
-        if (array) {
-            array.forEach(line => {
-                html += '<li>' + line.nom + '</li>';
-            });
-        }
+        if (array) { html = this.list(array); }
 
         document.querySelector('#concept-specifique')
         .innerHTML = html;
@@ -22,11 +18,7 @@ var matrice = {
     setConceptAssocie: function (array) {
         var html = '';
 
-        if (array) {
-            array.forEach(line => {
-                html += '<li>' + line.nom + '</li>';
-            });
-        }
+        if (array) { html = this.list(array); }
 
         document.querySelector('#concept-associe')
         .innerHTML = html;
@@ -34,41 +26,25 @@ var matrice = {
     setTermeEmploye: function (array) {
         var html = '';
 
+        if (array) { html = this.list(array); }
+
+        document.querySelector('#terme-employe')
+        .innerHTML = html;
+    },
+    list: function (array) {
+        var html = '';
         if (array) {
             array.forEach(line => {
                 html += '<li>' + line.nom + '</li>';
             });
         }
-
-        document.querySelector('#terme-employe')
-        .innerHTML = html;
+        return html;
     },
     traitement: function (obj) {
         this.setConcept(obj.nom);
-
-        if (!obj.concept_generique) {
-            this.setConceptGenerique('');
-        } else {
-            this.setConceptGenerique(obj.concept_generique[0].nom);
-        }
-
-        if (!obj.concept_specifique) {
-            this.setConceptSpecifique(false);
-        } else {
-            this.setConceptSpecifique(obj.concept_specifique);
-        }
-
-        if (!obj.concept_associe) {
-            this.setConceptAssocie(false);
-        } else {
-            this.setConceptAssocie(obj.concept_associe);
-        }
-
-        if (!obj.concept_employe) {
-            this.setTermeEmploye(false);
-        } else {
-            this.setTermeEmploye(obj.concept_employe);
-        }
-        
+        this.setConceptGenerique(obj.concept_generique.nom);
+        this.setConceptSpecifique(obj.concept_specifique);
+        this.setConceptAssocie(obj.concept_associe);
+        this.setTermeEmploye(obj.concept_employe);
     }
 }

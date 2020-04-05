@@ -53,11 +53,5 @@ function search_ascendant($bdd, $id_ascendant) {
         return false;
     }
 
-    $concepts_list = $request->fetchAll(PDO::FETCH_ASSOC);
-    if (empty($concepts_list)) {
-        // Aucun concept trouvé dans la base de données
-        return false;
-    }
-
-    return $concepts_list;
+    return $request->fetch(PDO::FETCH_ASSOC);
 }
