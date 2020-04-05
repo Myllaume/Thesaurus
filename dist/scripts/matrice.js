@@ -14,18 +14,28 @@ var matrice = {
             array.forEach(line => {
                 html += '<li>' + line.nom + '</li>';
             });
-        } else {
-            html = 'AUCUN';
         }
 
         document.querySelector('#concept-specifique')
+        .innerHTML = html;
+    },
+    setConceptAssocie: function (array) {
+        var html = '';
+
+        if (array) {
+            array.forEach(line => {
+                html += '<li>' + line.nom + '</li>';
+            });
+        }
+
+        document.querySelector('#concept-associe')
         .innerHTML = html;
     },
     traitement: function (obj) {
         this.setConcept(obj.nom);
 
         if (!obj.concept_generique) {
-            this.setConceptGenerique('AUCUN');
+            this.setConceptGenerique('');
         } else {
             this.setConceptGenerique(obj.concept_generique[0].nom);
         }
@@ -34,6 +44,12 @@ var matrice = {
             this.setConceptSpecifique(false);
         } else {
             this.setConceptSpecifique(obj.concept_specifique);
+        }
+
+        if (!obj.concept_associe) {
+            this.setConceptAssocie(false);
+        } else {
+            this.setConceptAssocie(obj.concept_associe);
         }
         
     }

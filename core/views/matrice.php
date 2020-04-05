@@ -44,7 +44,7 @@
         <header class="cadre__entete">Concept(s) associé</header>
 
         <main class="cadre__content">
-            <ul>
+            <ul id="concept-associe">
                 <li>AUCUN</li>
             </ul>
         </main>

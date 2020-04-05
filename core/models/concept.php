@@ -81,6 +81,18 @@ class Concept {
         $this->id_ascendant = $concept['id_ascendant'];
     }
 
+    public function select_associe_bdd($bdd) {
+        $request = $bdd->prepare('SELECT id, nom FROM Concepts INNER JOIN Associations ON Concepts.id = Associations.id_associe WHERE id_concept = :id');
+        $is_valid_request = $request->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $is_valid_request &= $request->execute();
+
+        if (!$is_valid_request) {
+            throw new Exception('Erreur bdd : SELECT Associations');
+        }
+
+        return $request->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public static function import_bdd($bdd) {
         $request = $bdd->prepare('SELECT * FROM Concepts');
         $is_valid_request = $request->execute();

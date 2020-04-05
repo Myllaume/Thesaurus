@@ -34,14 +34,15 @@ try {
         'matrice' => [
             'nom' => $concept_nom,
             'concept_specifique' => search_descendant($bdd, $_GET['id']),
-            'concept_generique' => search_ascendant($bdd, $concept_id_ascendant)
+            'concept_generique' => search_ascendant($bdd, $concept_id_ascendant),
+            'concept_associe' => $class_concept->select_associe_bdd($bdd)
         ]
     ];
 } catch (Exception $error) {
     $consol_msg = 'Erreur de génération : ' . $error;
 }
 
-$json = json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
+$json = json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data), JSON_UNESCAPED_UNICODE);
 
-file_put_contents('../../cache/concept_' . $concept_id . '.json', $json);
+// file_put_contents('../../cache/concept_' . $concept_id . '.json', $json);
 echo $json;
