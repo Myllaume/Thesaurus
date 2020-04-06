@@ -133,6 +133,7 @@ var arborescence = {
         if (json.isOk) {
             matrice.traitement(json.data.matrice);
             notice.traitement(json.data.notice);
+            fiche.set(json.data.fiche);
         }
     }
 }

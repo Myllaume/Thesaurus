@@ -105,6 +105,19 @@ class Concept {
         return $request->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function select_fiche_bdd($bdd) {
+        $request = $bdd->prepare('SELECT id, nom_enregistrement, nom_sortie, extension
+            FROM Files WHERE id_concept = :id');
+        $is_valid_request = $request->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $is_valid_request &= $request->execute();
+
+        if (!$is_valid_request) {
+            throw new Exception('Erreur bdd : SELECT Files');
+        }
+
+        return $request->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public static function import_bdd($bdd) {
         $request = $bdd->prepare('SELECT * FROM Concepts');
         $is_valid_request = $request->execute();

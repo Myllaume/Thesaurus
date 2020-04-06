@@ -65,6 +65,8 @@ try {
     $is_valid_request &= $request->bindValue(':extension', $extension_fichier, PDO::PARAM_STR);
     $is_valid_request &= $request->bindValue(':id_concept', $_GET['id'], PDO::PARAM_INT);
     $is_valid_request &= $request->execute();
+
+    $id = $bdd->lastInsertId();
 } catch (Exception $error) {
     unlink($chemin_fichier);
 
@@ -76,8 +78,10 @@ try {
 $is_ok = true;
 $consol_msg = 'Fichier enregistré.';
 $data = [
-    'chemin' => '/upload/' . $nom_enregistrement . '.' .$extension_fichier,
-    'type' => $extension_fichier
+    'id' => $id,
+    'nom_enregistrement' => $nom_enregistrement,
+    'nom_sortie' => $nom_sortie,
+    'extension' => $extension_fichier
 ];
 
 echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));

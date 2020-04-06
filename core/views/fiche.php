@@ -5,4 +5,6 @@
         <input type="file" name="fichier" id="input-upload">
     </form>
 
+    <section id="fiche"></section>
+
 </article>

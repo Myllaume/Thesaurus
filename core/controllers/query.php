@@ -37,7 +37,8 @@ try {
             'concept_generique' => search_ascendant($bdd, $concept_id_ascendant),
             'concept_associe' => $class_concept->select_associe_bdd($bdd),
             'concept_employe' => $class_concept->select_employe_bdd($bdd)
-        ]
+        ],
+        'fiche' => $class_concept->select_fiche_bdd($bdd)
     ];
 } catch (Exception $error) {
     $consol_msg = 'Erreur de génération : ' . $error;
