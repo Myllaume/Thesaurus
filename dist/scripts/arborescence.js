@@ -143,15 +143,20 @@ window.addEventListener("DOMContentLoaded", () => {
         arborescence.articuler(list);
     });
 
-    arborescence.queryCache(sessionStorage.getItem('concept'));
-
     arborescence.elts.forEach(elt => {
         elt.querySelector('span').addEventListener('click', () => {
-            history.pushState({
-                lastConceptId : sessionStorage.getItem('concept')
-            }, 'concept ' + elt.dataset.id, elt.dataset.id);
+            
+            history.pushState({}, 'concept ' + elt.dataset.id, elt.dataset.id);
+
+            sessionStorage.setItem('lastConcept', sessionStorage.getItem('concept'));
             sessionStorage.setItem('concept', elt.dataset.id);
+
             arborescence.queryCache();
         });
     });
 });
+
+window.onpopstate = function() {
+    sessionStorage.setItem('concept', sessionStorage.getItem('lastConcept'));
+    arborescence.queryCache();
+};
