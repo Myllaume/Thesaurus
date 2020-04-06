@@ -20,19 +20,17 @@ try {
     $class_concept = new Concept;
     $class_concept->set_id($_GET['id']);
     $class_concept->select_bdd($bdd);
-    $concept_id = $class_concept->get_id();
     $concept_id_ascendant = $class_concept->get_id_ascendant();
-    $concept_nom = $class_concept->get_nom();
     
     $is_ok = true;
     $consol_msg = 'Données acquises.';
     $data = [
         'notice' => [
-            'type' => 'Personne',
-            'description' => 'lorem ipsum dolor est'
+            'type_id' => $class_concept->get_id_type(),
+            'description' => $class_concept->get_description()
         ],
         'matrice' => [
-            'nom' => $concept_nom,
+            'nom' => $class_concept->get_nom(),
             'concept_specifique' => search_descendant($bdd, $_GET['id']),
             'concept_generique' => search_ascendant($bdd, $concept_id_ascendant),
             'concept_associe' => $class_concept->select_associe_bdd($bdd),

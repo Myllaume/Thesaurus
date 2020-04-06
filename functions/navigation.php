@@ -55,3 +55,29 @@ function search_ascendant($bdd, $id_ascendant) {
 
     return $request->fetch(PDO::FETCH_ASSOC);
 }
+
+/**
+ * Function gen_arborescence
+ * Foncton récursive de génération de listes HTML
+ * imbriquées correspondant à la hierarchie du thesaurus
+ * le tout stocké dans un fichier /cache/arboresence.html
+ * ---
+ * @param object $bdd PDO
+ * @param array $concepts_list Liste de lignes de la base de données
+ */
+
+function gen_arborescence($bdd, $concepts_list) {
+    if (!$concepts_list) { return; }
+    $open_list = '<ul class="arborescence__section">';
+    file_put_contents('../../cache/arboresence.html', $open_list, FILE_APPEND);
+
+    foreach ($concepts_list as $nb => $value) {
+        $elt = '<li class="arborescence__elt" data-id="' . $value['id'] . '"><span>' . $value['nom'] . '<span></li>';
+        file_put_contents('../../cache/arboresence.html', $elt, FILE_APPEND);
+
+        gen_arborescence($bdd, search_descendant($bdd, $value['id']));
+    }
+
+    $close_list = '</ul>';
+    file_put_contents('../../cache/arboresence.html', $close_list, FILE_APPEND);
+}

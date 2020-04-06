@@ -3,12 +3,16 @@
 class Concept {
     private $id;
     private $nom;
+    private $description;
     private $id_ascendant;
+    private $id_type;
 
     function __construct() {
         $this->id = intval($this->id);
         $this->nom = strval($this->nom);
+        $this->description = strval($this->description);
         $this->id_ascendant = intval($this->id_ascendant);
+        $this->id_type = intval($this->id_type);
     }
 
     /**
@@ -45,6 +49,22 @@ class Concept {
         return $this->nom;
     }
 
+    public function set_description($var) {
+        if (!is_string($var)) {
+            throw new Exception("La description d'un concept doit être une chaine de caractère");
+        }
+
+        if (strlen($var) <= 0) {
+            throw new Exception("La description d'un concept ne peut être nulle");
+        }
+        
+        $this->description = $var;
+    }
+
+    public function get_description() {
+        return $this->description;
+    }
+
     public function set_id_ascendant($var) {
         if (!is_numeric($var)) {
             throw new Exception("L'id d'un concept doit être un nombre entier");
@@ -55,6 +75,18 @@ class Concept {
 
     public function get_id_ascendant() {
         return $this->id_ascendant;
+    }
+
+    public function set_id_type($var) {
+        if (!is_numeric($var)) {
+            throw new Exception("L'id d'un type doit être un nombre entier");
+        }
+        
+        $this->id_type = $var;
+    }
+
+    public function get_id_type() {
+        return $this->id_type;
     }
 
     /**
@@ -78,7 +110,9 @@ class Concept {
         }
 
         $this->nom = $concept['nom'];
+        $this->description = $concept['description'];
         $this->id_ascendant = $concept['id_ascendant'];
+        $this->id_type = $concept['id_type'];
     }
 
     public function select_associe_bdd($bdd) {

@@ -1,14 +1,15 @@
 var notice = {
     inputType: document.querySelector('#concept-type'),
     inputDescription: document.querySelector('#concept-description'),
-    // setType: function (text) {
-        
-    // },
+
+    setType: function (id) {
+        this.inputType.querySelector('[value="' + id + '"]').setAttribute('selected', '')
+    },
     setDescription: function (text) {
         this.inputDescription.textContent = text;
     },
     traitement: function (obj) {
-        // this.setType(obj.type);
+        this.setType(obj.type_id);
         this.setDescription(obj.description);
     },
     canEdit: function(bool) {
