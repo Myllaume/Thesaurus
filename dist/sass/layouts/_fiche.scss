@@ -1,0 +1,7 @@
+.form-upload {
+    display: none;
+
+    &--active {
+        display: block;
+    }
+}

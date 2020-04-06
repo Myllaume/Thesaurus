@@ -1,46 +1,61 @@
-var formConnexion = document.querySelector('#form-connexion');
-if (formConnexion) { connexion(); }
+var authSwitch = {
+    btnDeconnexion: document.querySelector('#btn-deconnexion'),
+    formConnexion: document.querySelector('#form-connexion'),
 
-var btnDeconnexion = document.querySelector('#btn-deconnexion');
-if (btnDeconnexion) { deconnexion(); }
+    isConnected: function() {
+        notice.canEdit(true);
+        fiche.canEdit(true);
 
-function connexion() {
-    formConnexion.addEventListener('submit', (e) => {
-        var cleEntree = document.querySelector('#input-connexion').value;
-        e.preventDefault();
-    
-        if (cleEntree !== '') {
-            $.post( '/Thesaurus/core/controllers/authentification.php?action=connexion',
-            { cle : cleEntree },
+        this.btnDeconnexion.classList.add('btn-deconnexion--active');
+        this.formConnexion.classList.remove('form-connexion--active');
+
+        this.btnDeconnexion.addEventListener('click', () => {
+            $.get( '/Thesaurus/core/controllers/authentification.php' , { action: 'deconnexion' },
             function( json ) {
-                    
                 terminal.open(json.consolMsg);
+    
                 if (json.isOk) {
-                    document.location.reload(true);
+                    sessionStorage.setItem('isOp', false);
+                    authSwitch.isDisconnected();
                 }
                 
             }, 'json' )
             .fail(function (data) {
                 console.error(data);
-            });
-        }
-    
-    });
-}
+            })
+        });
+    },
+    isDisconnected: function() {
+        notice.canEdit(false);
+        fiche.canEdit(false);
 
-function deconnexion() {
-    btnDeconnexion.addEventListener('click', (e) => {
-        $.get( '/Thesaurus/core/controllers/authentification.php' , { action: 'deconnexion' },
-        function( json ) {
-            terminal.open(json.consolMsg);
+        this.btnDeconnexion.classList.remove('btn-deconnexion--active');
+        this.formConnexion.classList.add('form-connexion--active');
 
-            if (json.isOk) {
-                document.location.reload(true);
+        this.formConnexion.addEventListener('submit', (e) => {
+            var cleEntree = document.querySelector('#input-connexion').value;
+            e.preventDefault();
+        
+            if (cleEntree !== '') {
+                $.post( '/Thesaurus/core/controllers/authentification.php?action=connexion',
+                { cle : cleEntree },
+                function( json ) {
+                        
+                    terminal.open(json.consolMsg);
+                    if (json.isOk) {
+                        authSwitch.formConnexion.reset();
+
+                        sessionStorage.setItem('isOp', true);
+                        fiche.canEdit(false);
+                        authSwitch.isConnected();
+                    }
+                    
+                }, 'json' )
+                .fail(function (data) {
+                    console.error(data);
+                });
             }
-            
-        }, 'json' )
-        .fail(function (data) {
-            console.error(data);
-        })
-    });
-}
+        
+        });
+    }
+};

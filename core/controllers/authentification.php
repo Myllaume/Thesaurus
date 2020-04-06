@@ -18,7 +18,7 @@ switch ($_GET['action']) {
             $list_cle = explode(PHP_EOL, $list_cle);
 
             if (in_array($_POST['cle'], $list_cle)) {
-                $_SESSION['is_admin'] = true;
+                $_SESSION['is_operateur'] = true;
                 
                 $is_ok = true;
                 $consol_msg = 'Connexion réussie.';

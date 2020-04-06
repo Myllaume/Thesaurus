@@ -1,12 +1,8 @@
-document.querySelector('#input-upload').addEventListener('input', (e) => {
-    e.preventDefault();
-    var formData = new FormData(document.querySelector('#form-upload'));
-
-    fiche.send(formData);
-});
-
 var fiche = {
     content: document.querySelector('#fiche'),
+    input: document.querySelector('#input-upload'),
+    form: document.querySelector('#form-upload'),
+
     set: function(array) {
         array.forEach(line => {
             this.add(line);
@@ -37,5 +33,19 @@ var fiche = {
                 }
             }
         });
+    },
+    canEdit: function(bool) {
+        if (bool === true) {
+            this.form.classList.add('form-upload--active');
+
+            fiche.form.addEventListener('input', (e) => {
+                e.preventDefault();
+                var formData = new FormData(fiche.input);
+            
+                fiche.send(formData);
+            });
+        } else {
+            this.form.classList.remove('form-upload--active');
+        }
     }
 };

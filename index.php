@@ -8,7 +8,11 @@ require './core/bdd.php';
 $bdd = connexionBdd();
 
 if (isset($_GET) && !empty($_GET['id'])) { $id_concept = $_GET['id']; }
-else {$id_concept = 1;}
+else { $id_concept = 1; }
+
+if (isset($_SESSION['is_operateur']) && $_SESSION['is_operateur'] === true )
+{ $is_op = 'true'; }
+else { $is_op = 'false'; }
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +26,7 @@ else {$id_concept = 1;}
     <link rel="stylesheet" href="/Thesaurus/assets/main.css">
 </head>
 
-<body data-concept="<?= $id_concept ?>">
+<body data-concept="<?= $id_concept ?>" data-op="<?= $is_op ?>">
 
     <div class="wrapper-page">
 

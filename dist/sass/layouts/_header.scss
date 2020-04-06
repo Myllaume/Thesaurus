@@ -37,3 +37,19 @@
         transform: translate(50%, 0%);
     }
 }
+
+.btn-deconnexion {
+    display: none;
+
+    &--active {
+        display: block;
+    }
+}
+
+.form-connexion {
+    display: none;
+
+    &--active {
+        display: block;
+    }
+}

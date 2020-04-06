@@ -45,6 +45,16 @@ switch ($_GET['element']) {
 
         break;
 
+    case 'generer_list_type':
+        $request = $bdd->prepare('SELECT * FROM Types');
+        $is_valid_request = $request->bindValue(':nom_enregistrement', $nom_enregistrement, PDO::PARAM_STR);
+        $is_valid_request &= $request->bindValue(':nom_sortie', $nom_sortie, PDO::PARAM_STR);
+        $is_valid_request &= $request->bindValue(':extension', $extension_fichier, PDO::PARAM_STR);
+        $is_valid_request &= $request->bindValue(':id_concept', $_GET['id'], PDO::PARAM_INT);
+        $is_valid_request &= $request->execute();
+
+        break;
+
     case 'telecharger_csv':
         $bdd_entete = Concept::get_structure_bdd($bdd);
         $entete = [];
