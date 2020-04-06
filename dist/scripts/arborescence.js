@@ -106,19 +106,20 @@ var arborescence = {
     //     return node;
     // },
 
-    queryCache: function(id) {
-        $.getJSON( '/Thesaurus/cache/concept_' + id + '.json',
+    queryCache: function() {
+        $.getJSON( '/Thesaurus/cache/concept_' + sessionStorage.getItem('concept') + '.json',
         function(json) {
             console.log('by cache');
+            
             arborescence.assignData(json);
         })
         .fail(function () {
-            arborescence.queryServeur(id);
+            arborescence.queryServeur();
         });
     },
 
-    queryServeur: function(id) {
-        $.get( '/Thesaurus/core/controllers/query.php' , { id: id },
+    queryServeur: function() {
+        $.get( '/Thesaurus/core/controllers/query.php' , { id: sessionStorage.getItem('concept') },
         function( json ) {
             console.log('by serveur');
             arborescence.assignData(json);
@@ -142,9 +143,15 @@ window.addEventListener("DOMContentLoaded", () => {
         arborescence.articuler(list);
     });
 
+    arborescence.queryCache(sessionStorage.getItem('concept'));
+
     arborescence.elts.forEach(elt => {
         elt.querySelector('span').addEventListener('click', () => {
-            arborescence.queryCache(elt.dataset.id);
+            history.pushState({
+                lastConceptId : sessionStorage.getItem('concept')
+            }, 'concept ' + elt.dataset.id, elt.dataset.id);
+            sessionStorage.setItem('concept', elt.dataset.id);
+            arborescence.queryCache();
         });
     });
 });

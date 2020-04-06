@@ -3,7 +3,7 @@ document.querySelector('#input-upload').addEventListener('input', (e) => {
     var formData = new FormData(document.querySelector('#form-upload'));
 
     $.ajax({
-        url: '/Thesaurus/core/controllers/upload.php',
+        url: '/Thesaurus/core/controllers/upload.php?id=' + sessionStorage.getItem('concept'),
         type: 'POST',
         data: formData,
         dataType: 'json',

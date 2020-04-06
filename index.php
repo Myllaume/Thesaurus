@@ -6,6 +6,9 @@ session_start();
 
 require './core/bdd.php';
 $bdd = connexionBdd();
+
+if (isset($_GET) && !empty($_GET['id'])) { $id_concept = $_GET['id']; }
+else {$id_concept = 1;}
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +22,7 @@ $bdd = connexionBdd();
     <link rel="stylesheet" href="/Thesaurus/assets/main.css">
 </head>
 
-<body>
+<body data-concept="<?= $id_concept ?>">
 
     <div class="wrapper-page">
 
@@ -51,7 +54,7 @@ $bdd = connexionBdd();
                 <div class="onglet__entete">
                     <div class="onglet__epingle onglet__epingle--active" data-onglet-main="4">Matrice</div>
                     <div class="onglet__epingle" data-onglet-main="5">Notice</div>
-                    <div class="onglet__epingle" data-onglet-main="6">Page 3</div>
+                    <div class="onglet__epingle" data-onglet-main="6">Fiches</div>
                 </div>
 
                 <div id="onglet4" class="onglet onglet--active">
@@ -63,7 +66,7 @@ $bdd = connexionBdd();
                 </div>
 
                 <div id="onglet6" class="onglet">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, sit!
+                    <?php include './core/views/fiche.php'; ?>
                 </div>
             </main>
 

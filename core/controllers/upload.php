@@ -1,7 +1,8 @@
 <?php
 
 if (!isset($_POST) || empty($_FILES['fichier'])
-    || !is_uploaded_file($_FILES['fichier']['tmp_name'])) {
+    || !is_uploaded_file($_FILES['fichier']['tmp_name'])
+    || !isset($_GET) || empty($_GET['id'])) {
     exit;
 }
 
@@ -58,10 +59,11 @@ try {
 
 try {
     $request = $bdd->prepare('INSERT INTO Files SET nom_enregistrement=:nom_enregistrement,
-        nom_sortie=:nom_sortie, extension=:extension');
+        nom_sortie=:nom_sortie, extension=:extension, id_concept=:id_concept');
     $is_valid_request = $request->bindValue(':nom_enregistrement', $nom_enregistrement, PDO::PARAM_STR);
     $is_valid_request &= $request->bindValue(':nom_sortie', $nom_sortie, PDO::PARAM_STR);
     $is_valid_request &= $request->bindValue(':extension', $extension_fichier, PDO::PARAM_STR);
+    $is_valid_request &= $request->bindValue(':id_concept', $_GET['id'], PDO::PARAM_INT);
     $is_valid_request &= $request->execute();
 } catch (Exception $error) {
     unlink($chemin_fichier);

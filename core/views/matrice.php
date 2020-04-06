@@ -5,7 +5,7 @@
 
         <main class="cadre__content">
             <ul>
-                <li id="concept-generique">AUCUN</li>
+                <li id="concept-generique"></li>
             </ul>
         </main>
     </section>
@@ -15,7 +15,7 @@
 
         <main class="cadre__content">
             <ul>
-                <li id="concept">AUCUN</li>
+                <li id="concept"></li>
             </ul>
         </main>
     </section>
@@ -25,7 +25,7 @@
 
         <main class="cadre__content">
             <ul id="concept-specifique">
-                <li>AUCUN</li>
+                <li></li>
             </ul>
         </main>
     </section>
@@ -35,7 +35,7 @@
 
         <main class="cadre__content">
             <ul id="terme-employe">
-                <li>AUCUN</li>
+                <li></li>
             </ul>
         </main>
     </section>
@@ -45,7 +45,7 @@
 
         <main class="cadre__content">
             <ul id="concept-associe">
-                <li>AUCUN</li>
+                <li></li>
             </ul>
         </main>
     </section>
