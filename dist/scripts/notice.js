@@ -2,8 +2,16 @@ var notice = {
     inputType: document.querySelector('#concept-type'),
     inputDescription: document.querySelector('#concept-description'),
 
+    lastTypeElt: undefined,
+
     setType: function (id) {
-        this.inputType.querySelector('[value="' + id + '"]').setAttribute('selected', '')
+        if (this.lastTypeElt !== undefined)
+        { this.lastTypeElt.removeAttribute('selected'); }
+
+        var selectedElt = this.inputType.querySelector('[value="' + id + '"]')
+        selectedElt.setAttribute('selected', '');
+
+        this.lastTypeElt = selectedElt;
     },
     setDescription: function (text) {
         this.inputDescription.textContent = text;

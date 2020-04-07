@@ -3,21 +3,15 @@
     <section class="cadre matrice--top">
         <header class="cadre__entete">Concept générique</header>
 
-        <main class="cadre__content">
-            <ul>
-                <li id="concept-generique"></li>
-            </ul>
-        </main>
+        <select id="concept-generique" disabled>
+            <?php include './cache/select_concept.html'; ?>
+        </select>
     </section>
 
     <section class="cadre matrice--center">
         <header class="cadre__entete">Concept</header>
 
-        <main class="cadre__content">
-            <ul>
-                <li id="concept"></li>
-            </ul>
-        </main>
+        <textarea id="concept" class="cadre__content" readonly></textarea>
     </section>
 
     <section class="cadre matrice--bottom">

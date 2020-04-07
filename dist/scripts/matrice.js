@@ -1,35 +1,47 @@
 var matrice = {
+    inputConcept: document.querySelector('#concept'),
+    inputConceptGenerique: document.querySelector('#concept-generique'),
+    inputConceptSpecifique: document.querySelector('#concept-specifique'),
+    inputConceptAssocie: document.querySelector('#concept-associe'),
+    inputTermeEmploye: document.querySelector('#terme-employe'),
+
+    lastConceptGeneriqueElt: undefined,
+
     setConcept: function (text) {
-        document.querySelector('#concept')
-        .textContent = text;
+        this.inputConcept.textContent = text;
     },
-    setConceptGenerique: function (text) {
-        document.querySelector('#concept-generique')
-        .textContent = text;
+    setConceptGenerique: function (obj) {
+        if (obj == false) { var id = 0; } else { var id = obj.id; }
+
+        if (this.lastConceptGeneriqueElt !== undefined)
+        { this.lastConceptGeneriqueElt.removeAttribute('selected'); }
+
+        var selectedElt = this.inputConceptGenerique.querySelector('[value="' + id + '"]');
+        selectedElt.setAttribute('selected', '');
+
+        this.lastConceptGeneriqueElt = selectedElt;
+        
     },
     setConceptSpecifique: function (array) {
         var html = '';
 
         if (array) { html = this.list(array); }
 
-        document.querySelector('#concept-specifique')
-        .innerHTML = html;
+        this.inputConceptSpecifiqueinnerHTML = html;
     },
     setConceptAssocie: function (array) {
         var html = '';
 
         if (array) { html = this.list(array); }
 
-        document.querySelector('#concept-associe')
-        .innerHTML = html;
+        this.inputConceptAssocie.innerHTML = html;
     },
     setTermeEmploye: function (array) {
         var html = '';
 
         if (array) { html = this.list(array); }
 
-        document.querySelector('#terme-employe')
-        .innerHTML = html;
+        this.inputTermeEmploye.innerHTML = html;
     },
     list: function (array) {
         var html = '';
@@ -42,9 +54,14 @@ var matrice = {
     },
     traitement: function (obj) {
         this.setConcept(obj.nom);
-        this.setConceptGenerique(obj.concept_generique.nom);
+        this.setConceptGenerique(obj.concept_generique);
         this.setConceptSpecifique(obj.concept_specifique);
         this.setConceptAssocie(obj.concept_associe);
         this.setTermeEmploye(obj.concept_employe);
+    },
+    canEdit: function(bool) {
+        bool = !bool; // inversion
+        this.inputConcept.readOnly = bool;
+        this.inputConceptGenerique.disabled = bool;
     }
 }

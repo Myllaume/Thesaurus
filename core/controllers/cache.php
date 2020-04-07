@@ -61,12 +61,34 @@ switch ($_GET['element']) {
     case 'arborescence':
         require '../../functions/navigation.php';
 
-
         try {
             file_put_contents('../../cache/arboresence.html', ''); // vider /cache/arboresence.html
             gen_arborescence($bdd, search_descendant($bdd, 0));
+
+            $is_ok = true;
+            $consol_msg = 'Arborescence générée.';
         } catch (Exception $error) {
-            // message d'erreur à $error
+            $consol_msg = 'Erreur de génération arborescence : ' . $error;
+        }
+
+        break;
+    
+    case 'select_concept':
+        require '../../functions/navigation.php';
+
+        try {
+            include '../models/concept.php';
+            
+            $html = '<option value="0"></option>';
+            foreach (Concept::import_bdd($bdd) as $ligne_nb => $ligne) {
+                $html .= '<option value="' . $ligne['id'] . '" >' . $ligne['nom'] . '</option>';
+            }
+            file_put_contents('../../cache/select_concept.html', $html);
+
+            $is_ok = true;
+            $consol_msg = 'Select des concepts généré.';
+        } catch (Exception $error) {
+            $consol_msg = 'Erreur de select de concepts : ' . $error;
         }
 
         break;

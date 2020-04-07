@@ -81,3 +81,19 @@ function gen_arborescence($bdd, $concepts_list) {
     $close_list = '</ul>';
     file_put_contents('../../cache/arboresence.html', $close_list, FILE_APPEND);
 }
+
+function gen_select($bdd, $concepts_list) {
+    if (!$concepts_list) { return; }
+    $open_list = '<optgroup>';
+    file_put_contents('../../cache/select-concepts.html', $open_list, FILE_APPEND);
+
+    foreach ($concepts_list as $nb => $value) {
+        $elt = '<option value="' . $value['id'] . '">' . $value['nom'] . '</option>';
+        file_put_contents('../../cache/select-concepts.html', $elt, FILE_APPEND);
+
+        gen_select($bdd, search_descendant($bdd, $value['id']));
+    }
+
+    $close_list = '</optgroup>';
+    file_put_contents('../../cache/select-concepts.html', $close_list, FILE_APPEND);
+}

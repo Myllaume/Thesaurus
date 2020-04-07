@@ -153,7 +153,7 @@ class Concept {
     }
 
     public static function import_bdd($bdd) {
-        $request = $bdd->prepare('SELECT * FROM Concepts');
+        $request = $bdd->prepare('SELECT * FROM Concepts ORDER BY nom');
         $is_valid_request = $request->execute();
 
         if (!$is_valid_request) {
