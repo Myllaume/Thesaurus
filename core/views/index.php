@@ -26,24 +26,26 @@ function gen_index($bdd) {
 // echo '</pre>';
 
 echo '
-<table>
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Type</th>
-        <tr>
-    <thead>
-    <tbody>';
+<article>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Type</th>
+            <tr>
+        <thead>
+        <tbody>';
 foreach (gen_index($bdd) as $nb => $line) {
 echo '
-        <tr>
-            <td>' . $line['nom'] . '</td>
-            <td>' . $line['type'] . '</td>
-        </tr>';
+            <tr>
+                <td>' . $line['nom'] . '</td>
+                <td>' . $line['type'] . '</td>
+            </tr>';
 }
 echo '
-    </tbody>
-</table>';
+        </tbody>
+    </table>
+</article>';
 
 // foreach (gen_index($bdd) as $key => $value) {
 //     echo $key;

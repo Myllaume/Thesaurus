@@ -5,7 +5,6 @@ var fiche = {
 
     set: function(array) {
         this.content.innerHTML = '';
-        console.log(this.content);
         
         array.forEach(line => {
             this.add(line);
@@ -44,7 +43,6 @@ var fiche = {
 
             this.form.addEventListener('input', (e) => {
                 e.preventDefault();
-                console.log(this.input);
                 
                 var formData = new FormData(this.form);
             

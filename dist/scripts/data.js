@@ -2,7 +2,6 @@ var cache = {
     query: function() {
         $.getJSON( '/Thesaurus/cache/concept_' + sessionStorage.getItem('concept') + '.json',
         function(json) {
-            console.log('by cache');
             assignData(json, true);
         })
         .fail(function () {
@@ -15,7 +14,6 @@ var cache = {
             id: sessionStorage.getItem('concept')
         },
         function( json ) {
-            console.log('by serveur');
             if (mustReloadContent) {
                 assignData(json.data, json.isOk); }
         }, 'json' )

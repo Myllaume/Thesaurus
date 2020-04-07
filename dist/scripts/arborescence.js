@@ -108,7 +108,7 @@ var arborescence = {
 }
 
 window.onpopstate = function() {
-    sessionStorage.setItem('concept', sessionStorage.getItem('lastConcept'));
+    sessionStorage.setItem('concept', historique.getLastConceptId());
     cache.query();
 };
 
@@ -129,7 +129,7 @@ function changeConcept(idConcept) {
 
     history.pushState({}, 'concept ' + idConcept, idConcept);
 
-    sessionStorage.setItem('lastConcept', sessionStorage.getItem('concept'));
+    historique.actualiser();
     sessionStorage.setItem('concept', idConcept);
 
     cache.query();

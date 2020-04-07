@@ -50,7 +50,7 @@ else { $is_op = 'false'; }
                 </div>
 
                 <div id="onglet3" class="onglet">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, sit!
+                    <article id="historique" class="historique"></article>
                 </div>
             </aside>
             
