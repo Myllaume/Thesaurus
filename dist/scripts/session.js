@@ -10,7 +10,7 @@ console.log(sessionStorage);
 
 
 window.addEventListener("DOMContentLoaded", () => {
-    arborescence.queryCache(sessionStorage.getItem('concept'));
+    cache.query(sessionStorage.getItem('concept'));
 
     if (sessionStorage.getItem('isOp') == 'true') {
         authSwitch.isConnected();

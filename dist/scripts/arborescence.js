@@ -105,38 +105,12 @@ var arborescence = {
 
     //     return node;
     // },
-
-    queryCache: function() {
-        $.getJSON( '/Thesaurus/cache/concept_' + sessionStorage.getItem('concept') + '.json',
-        function(json) {
-            console.log('by cache');
-            
-            arborescence.assignData(json);
-        })
-        .fail(function () {
-            arborescence.queryServeur();
-        });
-    },
-
-    queryServeur: function() {
-        $.get( '/Thesaurus/core/controllers/query.php' , { id: sessionStorage.getItem('concept') },
-        function( json ) {
-            console.log('by serveur');
-            arborescence.assignData(json);
-        }, 'json' )
-        .fail(function (data) {
-            console.error(data);
-        });
-    },
-
-    assignData: function(json) {
-        if (json.isOk) {
-            matrice.traitement(json.data.matrice);
-            notice.traitement(json.data.notice);
-            fiche.set(json.data.fiche);
-        }
-    }
 }
+
+window.onpopstate = function() {
+    sessionStorage.setItem('concept', sessionStorage.getItem('lastConcept'));
+    cache.query();
+};
 
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -146,18 +120,17 @@ window.addEventListener("DOMContentLoaded", () => {
 
     arborescence.elts.forEach(elt => {
         elt.querySelector('span').addEventListener('click', () => {
-            
-            history.pushState({}, 'concept ' + elt.dataset.id, elt.dataset.id);
-
-            sessionStorage.setItem('lastConcept', sessionStorage.getItem('concept'));
-            sessionStorage.setItem('concept', elt.dataset.id);
-
-            arborescence.queryCache();
-        });
+            changeConcept(elt.dataset.id); });
     });
 });
 
-window.onpopstate = function() {
-    sessionStorage.setItem('concept', sessionStorage.getItem('lastConcept'));
-    arborescence.queryCache();
-};
+function changeConcept(idConcept) {
+    if (idConcept == sessionStorage.getItem('concept')) { return; }
+
+    history.pushState({}, 'concept ' + idConcept, idConcept);
+
+    sessionStorage.setItem('lastConcept', sessionStorage.getItem('concept'));
+    sessionStorage.setItem('concept', idConcept);
+
+    cache.query();
+}

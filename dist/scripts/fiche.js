@@ -4,6 +4,9 @@ var fiche = {
     form: document.querySelector('#form-upload'),
 
     set: function(array) {
+        this.content.innerHTML = '';
+        console.log(this.content);
+        
         array.forEach(line => {
             this.add(line);
         });
@@ -30,6 +33,7 @@ var fiche = {
                 terminal.open(json.consolMsg);
                 if (json.isOk) {
                     fiche.add(json.data);
+                    cache.get(false);
                 }
             }
         });
@@ -38,11 +42,13 @@ var fiche = {
         if (bool === true) {
             this.form.classList.add('form-upload--active');
 
-            fiche.form.addEventListener('input', (e) => {
+            this.form.addEventListener('input', (e) => {
                 e.preventDefault();
-                var formData = new FormData(fiche.input);
+                console.log(this.input);
+                
+                var formData = new FormData(this.form);
             
-                fiche.send(formData);
+                this.send(formData);
             });
         } else {
             this.form.classList.remove('form-upload--active');
