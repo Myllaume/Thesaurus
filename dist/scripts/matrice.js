@@ -10,17 +10,8 @@ var matrice = {
     setConcept: function (text) {
         this.inputConcept.textContent = text;
     },
-    setConceptGenerique: function (obj) {
-        if (obj == false) { var id = 0; } else { var id = obj.id; }
-
-        if (this.lastConceptGeneriqueElt !== undefined)
-        { this.lastConceptGeneriqueElt.removeAttribute('selected'); }
-
-        var selectedElt = this.inputConceptGenerique.querySelector('[value="' + id + '"]');
-        selectedElt.setAttribute('selected', '');
-
-        this.lastConceptGeneriqueElt = selectedElt;
-        
+    setConceptGenerique: function (text) {
+        this.inputConceptGenerique.textContent = text;
     },
     setConceptSpecifique: function (array) {
         var html = '';
@@ -54,7 +45,7 @@ var matrice = {
     },
     traitement: function (obj) {
         this.setConcept(obj.nom);
-        this.setConceptGenerique(obj.concept_generique);
+        this.setConceptGenerique(obj.concept_generique.nom);
         this.setConceptSpecifique(obj.concept_specifique);
         this.setConceptAssocie(obj.concept_associe);
         this.setTermeEmploye(obj.concept_employe);

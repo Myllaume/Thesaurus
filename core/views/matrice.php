@@ -3,9 +3,9 @@
     <section class="cadre matrice--top">
         <header class="cadre__entete">Concept générique</header>
 
-        <select id="concept-generique" disabled>
-            <?php include './cache/select_concept.html'; ?>
-        </select>
+        <ul>
+            <li id="concept-generique"></li>
+        </ul>
     </section>
 
     <section class="cadre matrice--center">
