@@ -48,11 +48,15 @@ else { $is_op = 'false'; }
 
                 <main class="section__main">
                     <section id="onglet1" class="onglet onglet--active">
-                        <?php include './core/views/arborescence.php'; ?>
+                        <div class="arborescence">
+                            <?php require './cache/arboresence.html'; ?>
+                        </div>
                     </section>
 
                     <section id="onglet2" class="onglet">
-                        <?php include './core/views/index.php'; ?>
+                        <div class="index">
+                            <?php include './cache/index.html'; ?>
+                        </div>
                     </section>
 
                     <section id="onglet3" class="onglet">

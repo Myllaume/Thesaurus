@@ -72,7 +72,7 @@ function gen_arborescence($bdd, $concepts_list) {
     file_put_contents('../../cache/arboresence.html', $open_list, FILE_APPEND);
 
     foreach ($concepts_list as $nb => $value) {
-        $elt = '<li class="arborescence__elt" data-id="' . $value['id'] . '"><span>' . $value['nom'] . '<span></li>';
+        $elt = '<li class="arborescence__elt" data-id="' . $value['id'] . '"><span>' . $value['nom'] . '</span></li>';
         file_put_contents('../../cache/arboresence.html', $elt, FILE_APPEND);
 
         gen_arborescence($bdd, search_descendant($bdd, $value['id']));

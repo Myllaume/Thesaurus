@@ -73,6 +73,34 @@ switch ($_GET['element']) {
 
         break;
     
+    case 'index':
+        try {
+            $request = $bdd->prepare('SELECT Concepts.id AS id, Concepts.nom AS nom, Types.nom AS type 
+                FROM Concepts INNER JOIN Types ON Concepts.id_type = Types.id');
+            $is_valid_request = $request->execute();
+            
+            if (!$is_valid_request) { throw new Exception("Erreur bdd : SELECT Concepts"); }
+            $concepts_list = $request->fetchAll(PDO::FETCH_ASSOC);
+            
+            $html = '<table><thead>';
+            $html .= '<tr><th>Nom</th><th>Type</th><tr>';
+            $html .= '</thead><tbody>';
+
+            foreach ($concepts_list as $nb => $line) {
+            $html .= '<tr><td>' . $line['nom'] . '</td><td>' . $line['type'] . '</td></tr>'; }
+
+            $html .= '</tbody></table>';
+
+            file_put_contents('../../cache/index.html', $html);
+
+            $is_ok = true;
+            $consol_msg = 'Index généré.';
+        } catch (Exception $error) {
+            $consol_msg = 'Erreur de génération index : ' . $error;
+        }
+
+        break;
+    
     case 'select_concept':
         require '../../functions/navigation.php';
 
