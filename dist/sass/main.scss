@@ -9,14 +9,17 @@
 
 // COMPONENTS
 @import './components/form';
-@import './components/table';
+@import './components/wind-text';
 @import './components/btn';
-@import './components/search-tool';
-@import './components/cadre';
-@import './components/file';
+@import './components/table';
 
 // LAYOUTS
-@import './layouts/header';
+@import './layouts/navigation';
+@import './layouts/visualisation';
 @import './layouts/arborescence';
+@import './layouts/toolbar';
+@import './layouts/footer';
 @import './layouts/matrice';
+@import './layouts/notice';
 @import './layouts/fiche';
+@import './layouts/terminal';

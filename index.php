@@ -34,49 +34,66 @@ else { $is_op = 'false'; }
 
         <div class="wrapper">
 
-            <aside class="aside">
-                <div class="onglet__entete">
-                    <div class="onglet__epingle onglet__epingle--active" data-onglet-aside="1">Arborescence</div>
-                    <div class="onglet__epingle" data-onglet-aside="2">Index</div>
-                    <div class="onglet__epingle" data-onglet-aside="3">Historique</div>
-                </div>
+            <section class="section navigation">
+                <header class="section__entete">
+                    <div id="navigation-btn" class="onglet-titre navigation-btn">
+                        Navigation
+                    </div>
+                </header>
+                <ul id="navigation-list" class="navigation-list">
+                    <li class="onglet-titre" data-onglet-aside="1">Arborescence</li>
+                    <li class="onglet-titre" data-onglet-aside="2">Index</li>
+                    <li class="onglet-titre" data-onglet-aside="3">Historique</li>
+                </ul>
 
-                <div id="onglet1" class="onglet onglet--active">
-                    <?php include './core/views/arborescence.php'; ?>
-                </div>
+                <main class="section__main">
+                    <section id="onglet1" class="onglet onglet--active">
+                        <?php include './core/views/arborescence.php'; ?>
+                    </section>
 
-                <div id="onglet2" class="onglet">
-                    <?php include './core/views/index.php'; ?>
-                </div>
+                    <section id="onglet2" class="onglet">
+                        <?php include './core/views/index.php'; ?>
+                    </section>
 
-                <div id="onglet3" class="onglet">
-                    <article id="historique" class="historique"></article>
-                </div>
-            </aside>
-            
-            <main class="main">
-                <div class="onglet__entete">
-                    <div class="onglet__epingle onglet__epingle--active" data-onglet-main="4">Matrice</div>
-                    <div class="onglet__epingle" data-onglet-main="5">Notice</div>
-                    <div class="onglet__epingle" data-onglet-main="6">Fiches</div>
-                </div>
+                    <section id="onglet3" class="onglet">
+                        <div id="historique" class="historique"></div>
+                    </section>
+                </main>
+            </section>
 
-                <div id="onglet4" class="onglet onglet--active">
-                    <?php include './core/views/matrice.php'; ?>
-                </div>
+            <section class="section visualisation">
+                <header class="section__entete">
+                    <div class="onglet-titre" data-onglet-main="4">
+                        Matrice
+                    </div>
+                    <div class="onglet-titre" data-onglet-main="5">
+                        Notice
+                    </div>
+                    <div class="onglet-titre" data-onglet-main="6">
+                        Fiches
+                    </div>
+                </header>
 
-                <div id="onglet5" class="onglet">
-                    <?php include './core/views/notice.php'; ?>
-                </div>
+                <main class="section__main">
+                    <section id="onglet4" class="onglet onglet--active">
+                        <?php include './core/views/matrice.php'; ?>
+                    </section>
 
-                <div id="onglet6" class="onglet">
-                    <?php include './core/views/fiche.php'; ?>
-                </div>
-            </main>
+                    <section id="onglet5" class="onglet">
+                        <?php include './core/views/notice.php'; ?>
+                    </section>
+
+                    <section id="onglet6" class="onglet">
+                        <?php include './core/views/fiche.php'; ?>
+                    </section>
+                </main>
+            </section>
 
             <aside id="terminal" class="terminal"></aside>
 
         </div>
+        
+        <?php include './core/views/footer.php'; ?>
 
     </div>
 

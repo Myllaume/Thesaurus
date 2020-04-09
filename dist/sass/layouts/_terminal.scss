@@ -1,0 +1,24 @@
+.terminal {
+    @extend %font-code;
+    position: absolute;
+    z-index: 100;
+    background-color: $color-blanc;
+    box-sizing: border-box;
+    bottom: 20px;
+    right: 50%;
+    transform: translate(50%, 100%);
+    width: 500px;
+    height: 0px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px $color-noir;
+    transition: transform .4s, height .1s;
+    
+    &--visible {
+        height: 70px;
+        padding: 1rem;
+        border-top: 2px solid $color-rouge;
+        border-right: 2px solid $color-rouge;
+        border-left: 2px solid $color-rouge;
+        transform: translate(50%, 0%);
+    }
+}

@@ -1,48 +1,36 @@
+%font-body-bold {
+    font-family: 'EB Garamond', serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+%font-body-bold-italic {
+    font-family: 'EB Garamond', serif;
+    font-weight: 600;
+    font-style: italic;
+}
+
 %font-body-medium {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'EB Garamond', serif;
     font-weight: 500;
     font-style: normal;
 }
 
 %font-body-medium-italic {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'EB Garamond', serif;
     font-weight: 500;
     font-style: italic;
 }
 
 %font-body-regular {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'EB Garamond', serif;
     font-weight: normal;
     font-style: normal;
 }
 
 %font-body-italic {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'EB Garamond', serif;
     font-weight: normal;
-    font-style: italic;
-}
-
-%font-body-light {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-style: normal;
-}
-
-%font-body-light-italic {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-style: italic;
-}
-
-%font-body-thin {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 100;
-    font-style: italic;
-}
-
-%font-body-thin-italic {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 100;
     font-style: italic;
 }
 

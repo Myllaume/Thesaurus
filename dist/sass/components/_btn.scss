@@ -1,12 +1,11 @@
 .btn {
-    @extend %font-body-light;
+    @extend %font-body-medium;
     cursor: pointer;
-    padding: 1rem 1.5rem;
+    padding: .5rem .8rem;
     margin: .5rem;
     background-color: $color-rouge;
     color: $color-blanc;
     border: unset;
-    border-radius: 3px;
-    font-size: inherit;
+    font-size: 1.4rem;
     text-decoration: unset;
 }

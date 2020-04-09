@@ -1,5 +1,4 @@
 .arborescence {
-    padding: 1rem;
 
     ul {
         list-style: none;
@@ -24,10 +23,15 @@
     li {
         position: relative;
         cursor: pointer;
-        margin: 1rem 0;
+        margin: .5rem 0;
+        padding: .5rem;
+
+        &:hover {
+            background-color: $color-rose;
+        }
     }
 
-    &__arrow, &__add {
+    &__arrow {
         @extend %font-code;
         cursor: pointer;
         background-color: transparent;
@@ -40,17 +44,12 @@
             transform .1s;
 
         &:hover {
-            background-color: $color-orange;
+            background-color: $color-rose;
         }
     }
 
     &__arrow {
         position: absolute;
         left: -25px;
-    }
-
-    &__add {
-        position: relative;
-        right: -5px;
     }
 }

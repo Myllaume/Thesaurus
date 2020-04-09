@@ -2,44 +2,72 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    height: 100%;
+    max-height: 700px;
+    box-sizing: border-box;
 
-    .cadre {
-        width: 200px;
+    &__bloc {
+        width: 30%;
+        margin: 0 2rem 2rem 2rem;
+        &--haut {
+            .matrice__cadre {
+                border-bottom: 1px solid $color-rouge;
+                border-left: 1px solid $color-rouge;
+                border-right: 1px solid $color-rouge;
+                padding: 2rem;
+            }
+        }
+        &--centre {
+            .matrice__cadre {
+                border: unset;
+                height: 10px;
+            }
+        }
+        &--bas {
+            margin: 2rem 2rem 0rem 2rem;
+            .matrice__cadre {
+                border-top: 1px solid $color-rouge;
+                border-left: 1px solid $color-rouge;
+                border-right: 1px solid $color-rouge;
+                padding: 2rem;
+            }
+        }
+        &--gauche {
+            position: absolute;
+            top: 30%;
+            left: 0px;
+            margin: 2rem 2rem 2rem 0;
+            .matrice__cadre {
+                border-top: 1px solid $color-rouge;
+                border-bottom: 1px solid $color-rouge;
+                border-right: 1px solid $color-rouge;
+                padding: 2rem 2rem 2rem 0;
+            }
+        }
+        &--droite {
+            position: absolute;
+            top: 30%;
+            right: 0px;
+            margin: 2rem 0 2rem 2rem;
+            .matrice__cadre {
+                border-top: 1px solid $color-rouge;
+                border-bottom: 1px solid $color-rouge;
+                border-left: 1px solid $color-rouge;
+                padding: 2rem 0 2rem 2rem;
+            }
+        }
+    }
+
+    &__cadre {
+        min-height: 120px;
+        background-color: transparent;
+        box-sizing: border-box;
     }
 
     ul {
-        display: block;
-        overflow-y: auto;
-        overflow-x: hidden;
         list-style: none;
-        padding: 0;
-        margin: 0 1rem;
-    }
-
-    li {
-        margin: 1rem 0;
-    }
-
-    &--left, &--right {
-        position: absolute;
-    }
-
-    &--top, &--bottom {
-        text-align: center;
-    }
-
-    &--center {
-        margin: 3rem 0;
-        text-align: center;
-    }
-
-    &--left {
-        left: 0px;
-    }
-
-    &--right {
-        right: 0px;
+        padding: unset;
     }
 }

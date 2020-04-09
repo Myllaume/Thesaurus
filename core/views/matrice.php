@@ -1,46 +1,35 @@
 <article class="matrice">
 
-    <section class="cadre matrice--top">
-        <header class="cadre__entete">Concept générique</header>
-
-        <ul>
-            <li id="concept-generique"></li>
-        </ul>
+    <section class="matrice__bloc matrice__bloc--haut">
+        <div id="concept-generique" class="matrice__cadre"></div>
+        <header class="libelle">Concept générique</header>
     </section>
 
-    <section class="cadre matrice--center">
-        <header class="cadre__entete">Concept</header>
-
-        <textarea id="concept" class="cadre__content" readonly></textarea>
+    <section class="matrice__bloc matrice__bloc--centre">
+        <textarea id="concept" class="matrice__cadre text-center" readonly></textarea>
     </section>
 
-    <section class="cadre matrice--bottom">
-        <header class="cadre__entete">Concept(s) spécifique</header>
+    <section class="matrice__bloc matrice__bloc--bas">
+        <header class="libelle">Concept(s) spécifique</header>
 
-        <main class="cadre__content">
-            <ul id="concept-specifique">
-                <li></li>
-            </ul>
+        <main class="">
+            <ul id="concept-specifique" class="matrice__cadre"></ul>
         </main>
     </section>
 
-    <section class="cadre matrice--left">
-        <header class="cadre__entete">Terme(s) employé(s)</header>
+    <section class="matrice__bloc matrice__bloc--gauche">
+        <header class="libelle">Terme(s) employé(s)</header>
 
-        <main class="cadre__content">
-            <ul id="terme-employe">
-                <li></li>
-            </ul>
+        <main class="">
+            <ul id="terme-employe" class="matrice__cadre"></ul>
         </main>
     </section>
 
-    <section class="cadre matrice--right">
-        <header class="cadre__entete">Concept(s) associé</header>
+    <section class="matrice__bloc matrice__bloc--droite">
+        <header class="libelle">Concept(s) associé</header>
 
-        <main class="cadre__content">
-            <ul id="concept-associe">
-                <li></li>
-            </ul>
+        <main class="">
+            <ul id="concept-associe" class="matrice__cadre"></ul>
         </main>
     </section>
     

@@ -5,12 +5,47 @@ html {
 body {
     /* tous les textes auront une
      hauteur de base de 14px */
-    @extend %font-body-light;
-    font-size: 1.6rem;
+    @extend %font-body-regular;
+    font-size: 2.2rem;
+}
+
+h2 {
+    @extend %font-body-regular;
+    margin: .2rem 0;
+}
+
+a {
+    color: inherit;
 }
 
 .titre-site {
-    @extend %font-code;
-    font-size: 3rem;
-    margin: unset;
+    @extend %font-body-regular;
+    cursor: pointer;
+    display: inline;
+    font-size: 10rem;
+    margin: 2rem;
+    color: $color-rouge;
+}
+
+.onglet-titre {
+    @extend %font-body-medium;
+    cursor: pointer;
+    text-align: center;
+    color: $color-rouge;
+    padding: .8rem 0;
+
+    &:hover {
+        background-color: $color-rose;
+    }
+}
+
+.libelle {
+    @extend %font-body-italic;
+    color: $color-rouge;
+    line-height: 0px;
+    margin: 1.2rem 0 0 0;
+}
+
+.text-center {
+    text-align: center;
 }

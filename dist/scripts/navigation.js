@@ -1,3 +1,36 @@
+var navDeroulante = {
+    list: document.querySelector('#navigation-list'),
+    btn: document.querySelector('#navigation-btn'),
+    elts: document.querySelectorAll('#navigation-list li'),
+    isOpen: false,
+
+    open: function() { this.list.classList.add('navigation-list--active'); },
+    close: function() { this.list.classList.remove('navigation-list--active'); }
+};
+
+navDeroulante.btn.addEventListener('click', () => {
+    if (!navDeroulante.isOpen) {
+        navDeroulante.open();
+        navDeroulante.isOpen = true;
+    } else {
+        navDeroulante.close();
+        navDeroulante.isOpen = false;
+    }
+});
+
+var toolbar = {
+    menu: document.querySelector('#tool-menu'),
+    btn: document.querySelector('#tool-btn')
+};
+
+toolbar.btn.addEventListener('click', () => {
+    toolbar.menu.classList.toggle('toolbar__window--visible')
+});
+
+navDeroulante.elts.forEach(elt => {
+    elt.addEventListener('click', () => { navDeroulante.close(); });
+});
+
 var voletAside = {
     epingles: document.querySelectorAll('[data-onglet-aside]'),
     epingleActive: document.querySelectorAll('[data-onglet-aside]')[0],

@@ -120,7 +120,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
     arborescence.elts.forEach(elt => {
         elt.querySelector('span').addEventListener('click', () => {
-            changeConcept(elt.dataset.id); });
+            changeConcept(elt.dataset.id); 
+        
+            console.log(elt);
+        });
+            
     });
 });
 

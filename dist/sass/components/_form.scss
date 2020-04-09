@@ -1,15 +1,26 @@
-form {
-    margin: 2rem 0;
+input, textarea {
+    font-family: inherit;
+    border: unset;
+    background-color: transparent;
+    font-size: inherit;
+    color: inherit;
+    resize: vertical;
+    width: 100%;
 
-    input {
-        @extend %font-body-light;
-        border: unset;
-        padding: .5rem;
-        font-size: 1.4rem;
-    
-        &[type="file"] {
-            display: none;
-        }
+    &[type="file"] {
+        display: none;
     }
+}
 
+select {
+    font-family: inherit;
+    border: unset;
+    background-color: transparent;
+    font-size: inherit;
+    color: inherit;
+    margin: 1rem 0;
+
+    option {
+        background-color: $color-rose;
+    }
 }

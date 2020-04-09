@@ -2,63 +2,54 @@ body {
     cursor: default;
     padding: 0;
     margin: 0;
-    background-color: whitesmoke;
 }
 
 .wrapper-page {
+    position: relative;
     width: 100%;
     margin: 0 auto;
-    max-width: 1200px;
+    min-width: 1200px;
+    max-width: 1300px;
+    width: 100vw;
+    background-color: $color-fond;
+    border-left: 1px solid $color-rouge;
+    border-right: 1px solid $color-rouge;
+    box-sizing: border-box;
 }
 
 .wrapper {
     display: flex;
+    justify-content: space-around;
 }
 
-.aside, .main {
+.section {
     position: relative;
-    margin: 0 1rem;
-    border-radius: 3px;
-    height: calc(100vh - 90px);
-}
-
-.aside {
-    flex: 1;
-}
-
-.main {
-    flex: 2;
-}
-
-.onglet {
-    overflow: auto;
-    padding: 1rem;
+    height: 100vh;
     box-sizing: border-box;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    margin-top: 3rem;
-    width: 100%;
-    height: calc(100% - 3rem);
-    background-color: $color-blanc;
-    border: 2px solid $color-rouge;
 
     &__entete {
         display: flex;
-        color: $color-blanc;
+        justify-content: space-around;
+        border-bottom: 2px solid $color-rouge;
+        margin: 6rem 0 0 0;
     }
 
-    &__epingle {
-        cursor: pointer;
-        background-color: $color-rouge;
-        margin: 0 1rem;
-        padding: .5rem;
-        box-sizing: border-box;
-
-        &--active {
-            background-color: $color-rose;
-        }
+    &__main {
+        position: relative;
+        height: calc(100vh - 110px);
     }
+}
+
+.onglet {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: auto;
+    background-color: $color-fond;
+    width: 100%;
+    height: 100%;
+    padding-top: 3rem;
+    box-sizing: border-box;
 
     &--active {
         z-index: 2;

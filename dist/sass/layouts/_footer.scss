@@ -1,0 +1,15 @@
+footer {
+    @extend %font-body-bold;
+    position: absolute;
+    width: calc(100% - 4px);
+    bottom: 0px;
+    color: $color-blanc;
+    font-size: 1.4rem;
+    background-color: $color-rouge;
+    padding: .2rem;
+    z-index: 100;
+
+    a {
+        text-decoration: none;
+    }
+}

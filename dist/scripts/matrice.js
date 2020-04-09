@@ -18,7 +18,7 @@ var matrice = {
 
         if (array) { html = this.list(array); }
 
-        this.inputConceptSpecifiqueinnerHTML = html;
+        this.inputConceptSpecifique.innerHTML = html;
     },
     setConceptAssocie: function (array) {
         var html = '';
@@ -52,7 +52,7 @@ var matrice = {
     },
     canEdit: function(bool) {
         bool = !bool; // inversion
-        this.inputConcept.readOnly = bool;
+        this.inputConcept.disabled = bool;
         this.inputConceptGenerique.disabled = bool;
     }
 }

@@ -1,0 +1,63 @@
+.toolbar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: inline-block;
+    z-index: 100;
+
+    a {
+        text-decoration: none;
+    }
+
+    &__window {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 20px;
+        width: 200px;
+        background-color: $color-rose;
+        border: 1px solid $color-rouge;
+        color: $color-rouge;
+        padding-left: .8rem;
+
+        &--visible {
+            display: block;
+        }
+    }
+
+    &__line {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 1rem 0;
+    }
+
+    &__prefix {
+        display: inline-block;
+        width: 40px;
+        
+    }
+    img {
+        margin-right: 10px;
+        height: 40px;
+    }
+}
+
+.btn-deconnexion {
+    display: none;
+    margin-left: 40px;
+
+    &--active {
+        display: block;
+    }
+}
+
+.form-connexion {
+    display: none;
+    margin-left: 50px;
+    width: 70%;
+
+    &--active {
+        display: block;
+    }
+}

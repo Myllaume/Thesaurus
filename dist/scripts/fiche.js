@@ -12,12 +12,17 @@ var fiche = {
     },
     add: function(obj) {
         var icon_content = document.createElement('div');
-        icon_content.classList.add('file-icon');
+        icon_content.classList.add('file');
         icon_content.innerHTML = `
-        <a href="/Thesaurus/upload/` + obj.nom_enregistrement + `.` + obj.extension + `" target="_blank">
-            <img src="/Thesaurus/assets/images/icon-` + obj.extension + `.svg"
-                title="` + obj.nom_sortie + `" alt="Fichier ` + obj.extension + `" />
-        </a>`;
+        <img class="file__icon" src="/Thesaurus/assets/images/icon-` + obj.extension + `.svg"
+            title="` + obj.nom_sortie + `" alt="Fichier ` + obj.extension + `" />
+        <div class="file__bandeau">
+            <h2 class="file__titre">` + obj.nom_sortie + `</h2>
+            <div class="file__btns">
+                <button class="btn">Lire</button>
+                <button class="btn">Télécharger</button>
+            </div>
+        </div>`;
         this.content.appendChild(icon_content);
     },
     send: function(data) {
