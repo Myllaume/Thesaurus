@@ -26,14 +26,14 @@ function gen_index($bdd) {
 // echo '</pre>';
 
 echo '
-<article>
+<div class="index">
     <table>
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Type</th>
             <tr>
-        <thead>
+        </thead>
         <tbody>';
 foreach (gen_index($bdd) as $nb => $line) {
 echo '

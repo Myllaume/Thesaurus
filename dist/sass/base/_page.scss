@@ -28,6 +28,7 @@ body {
     box-sizing: border-box;
 
     &__entete {
+        position: relative;
         display: flex;
         justify-content: space-around;
         border-bottom: 2px solid $color-rouge;
@@ -36,7 +37,7 @@ body {
 
     &__main {
         position: relative;
-        height: calc(100vh - 110px);
+        height: calc(100vh - 130px);
     }
 }
 
@@ -48,7 +49,6 @@ body {
     background-color: $color-fond;
     width: 100%;
     height: 100%;
-    padding-top: 3rem;
     box-sizing: border-box;
 
     &--active {

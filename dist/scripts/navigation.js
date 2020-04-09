@@ -18,6 +18,13 @@ navDeroulante.btn.addEventListener('click', () => {
     }
 });
 
+navDeroulante.elts.forEach(elt => {
+    elt.addEventListener('click', () => {
+        navDeroulante.close();
+        navDeroulante.isOpen = false;
+    });
+});
+
 var toolbar = {
     menu: document.querySelector('#tool-menu'),
     btn: document.querySelector('#tool-btn')
@@ -25,10 +32,6 @@ var toolbar = {
 
 toolbar.btn.addEventListener('click', () => {
     toolbar.menu.classList.toggle('toolbar__window--visible')
-});
-
-navDeroulante.elts.forEach(elt => {
-    elt.addEventListener('click', () => { navDeroulante.close(); });
 });
 
 var voletAside = {

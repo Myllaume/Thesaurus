@@ -39,12 +39,12 @@ else { $is_op = 'false'; }
                     <div id="navigation-btn" class="onglet-titre navigation-btn">
                         Navigation
                     </div>
+                    <ul id="navigation-list" class="navigation-list">
+                        <li class="onglet-titre" data-onglet-aside="1">Arborescence</li>
+                        <li class="onglet-titre" data-onglet-aside="2">Index</li>
+                        <li class="onglet-titre" data-onglet-aside="3">Historique</li>
+                    </ul>
                 </header>
-                <ul id="navigation-list" class="navigation-list">
-                    <li class="onglet-titre" data-onglet-aside="1">Arborescence</li>
-                    <li class="onglet-titre" data-onglet-aside="2">Index</li>
-                    <li class="onglet-titre" data-onglet-aside="3">Historique</li>
-                </ul>
 
                 <main class="section__main">
                     <section id="onglet1" class="onglet onglet--active">

@@ -8,6 +8,11 @@
 }
 
 .navigation-list {
+    position: absolute;
+    z-index: 200;
+    background-color: $color-fond;
+    border: 1px solid $color-rouge;
+    top: 100%;
     margin: unset;
     padding: unset;
     list-style: none;
@@ -21,6 +26,6 @@
 
     &--active {
         transform: scaleY(1);
-        height: 130px;
+        height: auto;
     }
 }
