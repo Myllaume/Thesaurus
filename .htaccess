@@ -8,4 +8,4 @@ RewriteEngine on
 # Règles de réécriture d'URL :
 #--------------------------------------------------
 
-RewriteRule ^([1-9]+)$ ./index.php?id=$1 [L]
+RewriteRule ^([0-9]+)$ ./index.php?id=$1 [L]

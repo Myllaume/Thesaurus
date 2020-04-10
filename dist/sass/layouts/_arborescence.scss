@@ -30,6 +30,10 @@
         &:hover {
             background-color: $color-rose;
         }
+
+        &.--active {
+            background-color: $color-rose;
+        }
     }
 
     &__arrow {

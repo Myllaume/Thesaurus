@@ -1,7 +1,12 @@
 var arborescence = {
     content: document.querySelector('.arborescence'),
+    racine: document.querySelector('.arborescence__section'),
     lists: document.querySelectorAll('.arborescence__section:not(:first-child)'),
     elts: document.querySelectorAll('.arborescence li'),
+
+    findNode: function(idConcept) {
+        return document.querySelector('[data-id="' + idConcept + '"]');
+    },
 
     articuler: function(listNode, articulation = false) {
         var btnArrow = document.createElement('button');
@@ -19,6 +24,17 @@ var arborescence = {
             btnArrow.classList.toggle('arborescence__arrow--active');
         });
     },
+
+    showNode: function(idConcept = sessionStorage.getItem('concept')) {
+        var nodeTab = [this.findNode(idConcept)];
+        nodeTab[nodeTab.length-1].classList.add('--active');
+
+        while (nodeTab[nodeTab.length-1] !== this.racine) {
+            nodeTab.push(nodeTab[nodeTab.length-1].parentNode);
+        }
+
+        nodeTab.forEach(elt => { elt.classList.add('--active'); });
+    }
 
     // rendreEditable: function(elt) {
     //     let brotherNodeIsList = true;
@@ -107,6 +123,10 @@ var arborescence = {
     // },
 }
 
+console.log(sessionStorage.getItem('concept'));
+
+arborescence.showNode();
+
 window.onpopstate = function() {
     sessionStorage.setItem('concept', historique.getLastConceptId());
     cache.query();
@@ -120,9 +140,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
     arborescence.elts.forEach(elt => {
         elt.querySelector('span').addEventListener('click', () => {
-            changeConcept(elt.dataset.id); 
-        
-            console.log(elt);
+            elt.classList.add('--active');
+            
+            // .classList.remove('--active');
+            changeConcept(elt.dataset.id);
         });
             
     });
@@ -131,10 +152,22 @@ window.addEventListener("DOMContentLoaded", () => {
 function changeConcept(idConcept) {
     if (idConcept == sessionStorage.getItem('concept')) { return; }
 
-    history.pushState({}, 'concept ' + idConcept, idConcept);
+    arborescence.findNode(sessionStorage.getItem('concept'))
+        .classList.remove('--active');
 
+    history.pushState({}, 'concept ' + idConcept, idConcept);
     historique.actualiser();
     sessionStorage.setItem('concept', idConcept);
 
+    arborescence.findNode(idConcept)
+        .classList.add('--active');
+
     cache.query();
 }
+
+// console.log();
+
+// console.log(toto);
+// console.log(toto.parentNode);
+// console.log(toto.parentNode.parentNode);
+
