@@ -26,3 +26,6 @@ var notice = {
         this.inputDescription.readOnly = bool;
     }
 }
+
+notice.inputType.addEventListener('focus', () => { sauvegardeAuto(notice.inputType, 'type', true) });
+notice.inputDescription.addEventListener('focus', () => { sauvegardeAuto(notice.inputDescription, 'description') });
