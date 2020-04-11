@@ -1,28 +1,16 @@
 var navDeroulante = {
     list: document.querySelector('#navigation-list'),
     btn: document.querySelector('#navigation-btn'),
-    elts: document.querySelectorAll('#navigation-list li'),
-    isOpen: false,
-
-    open: function() { this.list.classList.add('navigation-list--active'); },
-    close: function() { this.list.classList.remove('navigation-list--active'); }
+    elts: document.querySelectorAll('#navigation-list li')
 };
 
 navDeroulante.btn.addEventListener('click', () => {
-    if (!navDeroulante.isOpen) {
-        navDeroulante.open();
-        navDeroulante.isOpen = true;
-    } else {
-        navDeroulante.close();
-        navDeroulante.isOpen = false;
-    }
+    navDeroulante.list.classList.toggle('list__content--active');
 });
 
 navDeroulante.elts.forEach(elt => {
     elt.addEventListener('click', () => {
-        navDeroulante.close();
-        navDeroulante.isOpen = false;
-    });
+        navDeroulante.list.classList.remove('list__content--active'); });
 });
 
 var toolbar = {

@@ -58,22 +58,22 @@ switch ($_GET['action']) {
         }
         break;
 
-    case 'change_type':
+    case 'change_nom':
 
         if (!isset($_POST['data']) || empty($_POST['data'])
             || empty($_POST['id'])) { break; }
 
         try {
-            $request = $bdd->prepare('UPDATE Concepts SET id_type = :id_type
+            $request = $bdd->prepare('UPDATE Concepts SET nom = :nom
             WHERE id = :id');
-            $is_valid_request = $request->bindValue(':id_type', $_POST['data'], PDO::PARAM_INT);
+            $is_valid_request = $request->bindValue(':nom', $_POST['data'], PDO::PARAM_STR);
             $is_valid_request &= $request->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
             $is_valid_request &= $request->execute();
 
-            if (!$is_valid_request) { throw new Exception("UPDATE Concepts id_type échoué"); }
+            if (!$is_valid_request) { throw new Exception("UPDATE Concepts nom échoué"); }
 
             $is_ok = true;
-            $consol_msg = 'Type actualisé';
+            $consol_msg = 'Nom actualisé';
         } catch (Exception $error) {
             $consol_msg = $error;
         }

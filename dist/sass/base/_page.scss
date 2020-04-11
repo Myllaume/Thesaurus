@@ -28,7 +28,6 @@ body {
     box-sizing: border-box;
 
     &__entete {
-        position: relative;
         display: flex;
         justify-content: space-around;
         border-bottom: 2px solid $color-rouge;

@@ -1,0 +1,26 @@
+.list {
+    position: relative;
+    
+    &__content {
+        position: absolute;
+        z-index: 200;
+        background-color: $color-fond;
+        border: 1px solid $color-rouge;
+        top: 100%;
+        margin: unset;
+        padding: unset;
+        list-style: none;
+        width: 100%;
+        height: 0px;
+        overflow: hidden;
+        transform: scaleY(0);
+        transform-origin: 50% 0;
+        transition: transform .2s,
+            height .2s;
+
+        &--active {
+            transform: scaleY(1);
+            height: auto;
+        }
+    }
+}

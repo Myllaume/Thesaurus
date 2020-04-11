@@ -8,7 +8,7 @@ var matrice = {
     lastConceptGeneriqueElt: undefined,
 
     setConcept: function (text) {
-        this.inputConcept.textContent = text;
+        this.inputConcept.value = text;
     },
     setConceptGenerique: function (text) {
         this.inputConceptGenerique.textContent = text;
@@ -52,7 +52,16 @@ var matrice = {
     },
     canEdit: function(bool) {
         bool = !bool; // inversion
-        this.inputConcept.disabled = bool;
+        this.inputConcept.readOnly = bool;
         this.inputConceptGenerique.disabled = bool;
     }
 }
+
+matrice.inputConcept.addEventListener('focus', () => {
+    sauvegardeAuto(matrice.inputConcept, 'nom')
+    .then(function(result) {
+        arborescence.findNode(result.id).textContent = result.content;
+        cache.getArborescence();
+    })
+    .catch(function(error) { console.error(error); });
+});

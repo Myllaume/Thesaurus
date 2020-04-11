@@ -123,16 +123,13 @@ var arborescence = {
     // },
 }
 
-console.log(sessionStorage.getItem('concept'));
-
-arborescence.showNode();
-
 window.onpopstate = function() {
     sessionStorage.setItem('concept', historique.getLastConceptId());
-    cache.query();
+    cache.queryConcept();
 };
 
 window.addEventListener("DOMContentLoaded", () => {
+    arborescence.showNode();
 
     arborescence.lists.forEach(list => {
         arborescence.articuler(list);
@@ -142,7 +139,6 @@ window.addEventListener("DOMContentLoaded", () => {
         elt.querySelector('span').addEventListener('click', () => {
             elt.classList.add('--active');
             
-            // .classList.remove('--active');
             changeConcept(elt.dataset.id);
         });
             
@@ -162,12 +158,5 @@ function changeConcept(idConcept) {
     arborescence.findNode(idConcept)
         .classList.add('--active');
 
-    cache.query();
+    cache.queryConcept();
 }
-
-// console.log();
-
-// console.log(toto);
-// console.log(toto.parentNode);
-// console.log(toto.parentNode.parentNode);
-

@@ -9,7 +9,7 @@ if (sessionStorage.length === 0) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    cache.query(sessionStorage.getItem('concept'));
+    cache.queryConcept(sessionStorage.getItem('concept'));
 
     if (sessionStorage.getItem('isOp') == 'true') {
         authSwitch.isConnected();

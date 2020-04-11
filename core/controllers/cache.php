@@ -107,10 +107,11 @@ switch ($_GET['element']) {
         try {
             include '../models/concept.php';
             
-            $html = '<option value="0"></option>';
+            $html = '<ul class="select list__content">';
             foreach (Concept::import_bdd($bdd) as $ligne_nb => $ligne) {
-                $html .= '<option value="' . $ligne['id'] . '" >' . $ligne['nom'] . '</option>';
+                $html .= '<li data-concept-id="' . $ligne['id'] . '" class="onglet-titre" >' . $ligne['nom'] . '</li>';
             }
+            $html .= '<ul>';
             file_put_contents('../../cache/select_concept.html', $html);
 
             $is_ok = true;
@@ -122,32 +123,27 @@ switch ($_GET['element']) {
         break;
 
     case 'select_type':
-        $request = $bdd->prepare('SELECT * FROM Types');
-        $is_valid_request = $request->execute();
 
-        if (!$is_valid_request) {
-            $consol_msg = 'Erreur bdd : SELECT Types';
-            json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
-            exit;
+        try {
+            $request = $bdd->prepare('SELECT * FROM Types');
+            $is_valid_request = $request->execute();
+
+            if (!$is_valid_request) { throw new Exception("Erreur bdd : SELECT Types"); }
+            $type_list = $request->fetchAll(PDO::FETCH_ASSOC);
+            if (empty($type_list)) { throw new Exception("Aucun type trouvé dans la base de données"); }
+            
+            $html = '<ul class="select list__content">';
+            foreach ($type_list as $ligne_nb => $ligne) {
+                $html .= '<li data-type-id="' . $ligne['id'] . '" class="onglet-titre" >' . $ligne['nom'] . '</li>';
+            }
+            $html .= '</ul>';
+
+            file_put_contents('../../cache/select_type.html', $html);
+            $is_ok = true;
+            $consol_msg = 'Select des types généré.';
+        } catch (Exception $error) {
+            $consol_msg = 'Erreur de select des types : ' . $error;
         }
-
-        $type_list = $request->fetchAll(PDO::FETCH_ASSOC);
-        if (empty($type_list)) {
-            $consol_msg = 'Aucun type trouvé dans la base de données';
-            json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
-            exit;
-        }
-
-        $html = '';
-        foreach ($type_list as $ligne_nb => $ligne) {
-            $html .= '<option value="' . $ligne['id'] . '">' . $ligne['nom'] . '</option>';
-        }
-
-        file_put_contents('../../cache/select_type.html', $html);
-
-        $is_ok = true;
-        $consol_msg = 'Génération réussie.';
-
         break;
 }
 

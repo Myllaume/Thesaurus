@@ -1,14 +1,14 @@
 var cache = {
-    query: function() {
+    queryConcept: function() {
         $.getJSON( '/Thesaurus/cache/concept_' + sessionStorage.getItem('concept') + '.json',
         function(json) {
             assignData(json, true);
         })
         .fail(function () {
-            cache.get();
+            cache.getConcept();
         });
     },
-    get: function(mustReloadContent = true, id = sessionStorage.getItem('concept')) {
+    getConcept: function(mustReloadContent = true, id = sessionStorage.getItem('concept')) {
         $.get( '/Thesaurus/core/controllers/cache.php' , {
             element: 'concept',
             id: id
@@ -20,7 +20,18 @@ var cache = {
         .fail(function (data) {
             console.error(data);
         });
-    }
+    },
+    getArborescence: function() {
+        $.get( '/Thesaurus/core/controllers/cache.php' , {
+            element: 'arborescence'
+        },
+        function( json ) {
+            terminal.open(json.consolMsg);
+        }, 'json' )
+        .fail(function (data) {
+            console.error(data);
+        });
+    },
 }
 
 function assignData(obj, isOk) {
@@ -34,29 +45,43 @@ function assignData(obj, isOk) {
 }
 
 function sauvegardeAuto(input, metaOnChange, immediat = false) {
-    if (immediat) { var delais = 0; }
-    else { var delais = 10000; }
-    var lastContent = notice.inputDescription.value;
-    var newContent = notice.inputDescription.value;
-    var id = sessionStorage.getItem('concept');
+    return new Promise((resolve, reject) => {
 
-    input.addEventListener('input', () => { newContent = input.value; });
-    
-    var toto = setInterval(() => {
-        if (lastContent !== newContent) {
-            $.post( '/Thesaurus/core/controllers/modification.php?action=change_' + metaOnChange,
-            { id : sessionStorage.getItem('concept'), data : input.value},
-            function( json ) {
-                terminal.open(json.consolMsg);
-                if (json.isOk) { cache.get(false, id); }
-            }, 'json' )
-            .fail(function (data) {
-                console.error(data);
-            });
+        if (immediat) { var delais = 0; }
+        else { var delais = 10000; }
+        var lastContent = input.value;
+        var newContent = input.value;
+        var id = sessionStorage.getItem('concept');
 
-            lastContent = newContent;
-        }
+        input.addEventListener('input', () => { newContent = input.value; });
+        
+        var retardateur = setInterval(() => {
+            if (lastContent !== newContent) {
+                
+                $.post( '/Thesaurus/core/controllers/concept.php?action=change_' + metaOnChange,
+                { id : id, data : input.value},
+                function( json ) {
+                    terminal.open(json.consolMsg);
 
-        if (document.activeElement !== input) { clearInterval(toto); }
-    }, delais);
+                    if (json.isOk) {
+                        cache.getConcept(false, id);
+                        resolve({
+                            content: input.value,
+                            id: id
+                        });
+                    } else {
+                        reject(json.consolMsg);
+                    }
+                }, 'json' )
+                .fail(function (data) {
+                    reject("Échec :" + data);
+                });
+
+                lastContent = newContent;
+            }
+
+            if (document.activeElement !== input) { clearInterval(retardateur); }
+        }, delais);
+
+    });
 }
