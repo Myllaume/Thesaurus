@@ -78,6 +78,30 @@ switch ($_GET['action']) {
             $consol_msg = $error;
         }
         break;
+
+    case 'change_ascendant':
+
+        if (!isset($_GET['id']) || empty($_GET['id'])
+            || !isset($_GET['id_ascendant']) || empty($_GET['id_ascendant']))
+        { break; }
+
+        if ($_GET['id'] === $_GET['id_ascendant']) { break; }
+
+        try {
+            $request = $bdd->prepare('UPDATE Concepts SET id_ascendant = :id_ascendant
+            WHERE id = :id');
+            $is_valid_request = $request->bindValue(':id_ascendant', $_GET['id_ascendant'], PDO::PARAM_INT);
+            $is_valid_request &= $request->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
+            $is_valid_request &= $request->execute();
+
+            if (!$is_valid_request) { throw new Exception("UPDATE Concepts id_ascendant échoué"); }
+
+            $is_ok = true;
+            $consol_msg = 'Concept générique modifié';
+        } catch (Exception $error) {
+            $consol_msg = $error;
+        }
+        break;
 }
 
 echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));

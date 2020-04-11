@@ -65,3 +65,13 @@ matrice.inputConcept.addEventListener('focus', () => {
     })
     .catch(function(error) { console.error(error); });
 });
+
+matrice.inputConceptGenerique.addEventListener('click', () => {
+    matrice.inputConceptGenerique.classList.add('clignotant--active');
+    arborescence.elts.forEach(elt => {
+        elt.removeEventListener('click', changeConcept);
+
+        elt.addEventListener('click', modifAscendant);
+    });
+    
+});

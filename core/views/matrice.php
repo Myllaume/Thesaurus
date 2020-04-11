@@ -1,7 +1,7 @@
 <article class="matrice">
 
     <section class="matrice__bloc matrice__bloc--haut">
-        <div id="concept-generique" class="matrice__cadre"></div>
+        <div id="concept-generique" class="matrice__cadre clignotant"></div>
         <header class="libelle">Concept générique</header>
     </section>
 

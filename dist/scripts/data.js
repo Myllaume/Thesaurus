@@ -26,7 +26,7 @@ var cache = {
             element: 'arborescence'
         },
         function( json ) {
-            terminal.open(json.consolMsg);
+            document.location.reload();
         }, 'json' )
         .fail(function (data) {
             console.error(data);

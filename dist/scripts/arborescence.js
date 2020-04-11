@@ -2,7 +2,7 @@ var arborescence = {
     content: document.querySelector('.arborescence'),
     racine: document.querySelector('.arborescence__section'),
     lists: document.querySelectorAll('.arborescence__section:not(:first-child)'),
-    elts: document.querySelectorAll('.arborescence li'),
+    elts: document.querySelectorAll('.arborescence li span'),
 
     findNode: function(idConcept) {
         return document.querySelector('[data-id="' + idConcept + '"]');
@@ -136,27 +136,42 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     arborescence.elts.forEach(elt => {
-        elt.querySelector('span').addEventListener('click', () => {
-            elt.classList.add('--active');
-            
-            changeConcept(elt.dataset.id);
-        });
-            
+        elt.addEventListener('click', changeConcept);
     });
 });
 
-function changeConcept(idConcept) {
+function changeConcept(e) {
+    idConcept = e.target.dataset.id;
     if (idConcept == sessionStorage.getItem('concept')) { return; }
+    if (sessionStorage.getItem('inEdition') == 'true') { return; }
 
-    arborescence.findNode(sessionStorage.getItem('concept'))
+    arborescence.findNode(sessionStorage.getItem('concept')).parentNode
         .classList.remove('--active');
 
     history.pushState({}, 'concept ' + idConcept, idConcept);
     historique.actualiser();
     sessionStorage.setItem('concept', idConcept);
 
-    arborescence.findNode(idConcept)
+    arborescence.findNode(idConcept).parentNode
         .classList.add('--active');
 
     cache.queryConcept();
+}
+
+function modifAscendant(e) {
+    $.get( '/Thesaurus/core/controllers/concept.php' , {
+        action: 'change_ascendant',
+        id: sessionStorage.getItem('concept'),
+        id_ascendant: e.target.dataset.id
+    },
+    function( json ) {
+        terminal.open(json.consolMsg);
+        if (json.isOk) {
+            cache.getConcept();
+            cache.getArborescence();
+        }
+    }, 'json' )
+    .fail(function (data) {
+        console.error(data);
+    });
 }

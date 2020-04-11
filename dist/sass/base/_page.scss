@@ -50,6 +50,10 @@ body {
     height: 100%;
     box-sizing: border-box;
 
+    &__epingle--active {
+        background-color: $color-rose;
+    }
+
     &--active {
         z-index: 2;
     }

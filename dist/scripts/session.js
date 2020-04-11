@@ -1,8 +1,9 @@
-// sessionStorage.clear();
+sessionStorage.clear();
 if (sessionStorage.length === 0) {
     sessionStorage.setItem('concept', document.body.dataset.concept)
     sessionStorage.setItem('isOp', document.body.dataset.op);
     sessionStorage.setItem('historique', [document.body.dataset.concept]);
+    sessionStorage.setItem('inEdition', 'false');
     
 } else if (sessionStorage.getItem('concept') != document.body.dataset.concept) {
     sessionStorage.setItem('concept', document.body.dataset.concept);

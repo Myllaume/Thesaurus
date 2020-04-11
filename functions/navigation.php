@@ -72,7 +72,7 @@ function gen_arborescence($bdd, $concepts_list) {
     file_put_contents('../../cache/arboresence.html', $open_list, FILE_APPEND);
 
     foreach ($concepts_list as $nb => $value) {
-        $elt = '<li class="arborescence__elt" data-id="' . $value['id'] . '"><span>' . $value['nom'] . '</span></li>';
+        $elt = '<li class="arborescence__elt"><span data-id="' . $value['id'] . '">' . $value['nom'] . '</span></li>';
         file_put_contents('../../cache/arboresence.html', $elt, FILE_APPEND);
 
         gen_arborescence($bdd, search_descendant($bdd, $value['id']));
@@ -80,20 +80,4 @@ function gen_arborescence($bdd, $concepts_list) {
 
     $close_list = '</ul>';
     file_put_contents('../../cache/arboresence.html', $close_list, FILE_APPEND);
-}
-
-function gen_select($bdd, $concepts_list) {
-    if (!$concepts_list) { return; }
-    $open_list = '<optgroup>';
-    file_put_contents('../../cache/select-concepts.html', $open_list, FILE_APPEND);
-
-    foreach ($concepts_list as $nb => $value) {
-        $elt = '<option value="' . $value['id'] . '">' . $value['nom'] . '</option>';
-        file_put_contents('../../cache/select-concepts.html', $elt, FILE_APPEND);
-
-        gen_select($bdd, search_descendant($bdd, $value['id']));
-    }
-
-    $close_list = '</optgroup>';
-    file_put_contents('../../cache/select-concepts.html', $close_list, FILE_APPEND);
 }
