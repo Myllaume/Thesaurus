@@ -19,14 +19,16 @@ $data = [];
 switch ($_GET['action']) {
     case 'add_concept':
 
-        if (!isset($_GET['data']) || empty($_GET['data'])) { break; }
+        if (!isset($_GET['nom']) || empty($_GET['nom'])
+            || !isset($_GET['id_ascendant']))
+        { break; }
 
         require '../models/concept.php';
         $class_concept = new Concept;
 
         try {
-            $class_concept->set_nom($_GET['data']['nom']);
-            $class_concept->set_id_ascendant($_GET['data']['id_ascendant']);
+            $class_concept->set_nom($_GET['nom']);
+            $class_concept->set_id_ascendant($_GET['id_ascendant']);
             $class_concept->insert_bdd($bdd);
 
             $is_ok = true;

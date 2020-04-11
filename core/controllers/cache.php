@@ -65,8 +65,15 @@ switch ($_GET['element']) {
             file_put_contents('../../cache/arboresence.html', ''); // vider /cache/arboresence.html
             gen_arborescence($bdd, search_descendant($bdd, 0));
 
-            $is_ok = true;
-            $consol_msg = 'Arborescence générée.';
+            clearstatcache();
+            if(filesize('../../cache/arboresence.html')) {
+                $is_ok = true;
+                $consol_msg = 'Arborescence générée.';
+            } else {
+                $is_ok = false;
+                $consol_msg = 'arborescence vide';
+            }
+
         } catch (Exception $error) {
             $consol_msg = 'Erreur de génération arborescence : ' . $error;
         }

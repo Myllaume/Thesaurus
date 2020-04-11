@@ -61,7 +61,7 @@ matrice.inputConcept.addEventListener('focus', () => {
     sauvegardeAuto(matrice.inputConcept, 'nom')
     .then(function(result) {
         arborescence.findNode(result.id).textContent = result.content;
-        cache.getArborescence();
+        cache.getArborescence(true);
     })
     .catch(function(error) { console.error(error); });
 });

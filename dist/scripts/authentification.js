@@ -6,6 +6,7 @@ var authSwitch = {
         notice.canEdit(true);
         fiche.canEdit(true);
         matrice.canEdit(true);
+        arborescence.canEdit(true);
 
         this.btnDeconnexion.classList.add('btn-deconnexion--active');
         this.formConnexion.classList.remove('form-connexion--active');
@@ -30,6 +31,7 @@ var authSwitch = {
         notice.canEdit(false);
         fiche.canEdit(false);
         matrice.canEdit(false);
+        arborescence.canEdit(false);
 
         this.btnDeconnexion.classList.remove('btn-deconnexion--active');
         this.formConnexion.classList.add('form-connexion--active');

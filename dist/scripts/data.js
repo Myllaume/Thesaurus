@@ -21,12 +21,16 @@ var cache = {
             console.error(data);
         });
     },
-    getArborescence: function() {
+    getArborescence: function(mustReload = false) {
         $.get( '/Thesaurus/core/controllers/cache.php' , {
             element: 'arborescence'
         },
         function( json ) {
-            document.location.reload();
+            if (json.isOk && mustReload) { document.location.reload(); }
+            else if (!json.isOk && json.consolMsg == 'arborescence vide') {
+                console.log("C'est vide, il faut créer");
+                sessionStorage.setItem('concept', 0);
+            }
         }, 'json' )
         .fail(function (data) {
             console.error(data);

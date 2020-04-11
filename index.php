@@ -50,6 +50,7 @@ else { $is_op = 'false'; }
                     <section id="onglet1" class="onglet onglet--active">
                         <div class="arborescence">
                             <?php require './cache/arboresence.html'; ?>
+                            <button id="concept-racine" class="btn btn--hidden">Nouveau concept</button>
                         </div>
                     </section>
 

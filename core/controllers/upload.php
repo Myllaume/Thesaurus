@@ -1,5 +1,11 @@
 <?php
 
+session_start();
+
+if (!isset($_SESSION['is_operateur']) || $_SESSION['is_operateur'] !== true) {
+    exit;
+}
+
 if (!isset($_POST) || empty($_FILES['fichier'])
     || !is_uploaded_file($_FILES['fichier']['tmp_name'])
     || !isset($_GET) || empty($_GET['id'])) {

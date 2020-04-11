@@ -1,4 +1,4 @@
-sessionStorage.clear();
+// sessionStorage.clear();
 if (sessionStorage.length === 0) {
     sessionStorage.setItem('concept', document.body.dataset.concept)
     sessionStorage.setItem('isOp', document.body.dataset.op);
@@ -10,8 +10,6 @@ if (sessionStorage.length === 0) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    cache.queryConcept(sessionStorage.getItem('concept'));
-
     if (sessionStorage.getItem('isOp') == 'true') {
         authSwitch.isConnected();
     } else {
