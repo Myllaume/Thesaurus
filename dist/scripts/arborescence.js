@@ -52,8 +52,8 @@ var arborescence = {
 window.onpopstate = function() {
     // si l'utilisateur recule d'une page
     var lastIdConcept = sessionStorage.getItem('idConcept');
-    var newIdConcept = historique.getLastConceptId();
-
+    var newIdConcept = historique.backConcept();
+    
     arborescence.findNode(lastIdConcept).parentNode
         .classList.remove('--active');
 
@@ -68,6 +68,8 @@ window.onpopstate = function() {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
+    console.log('to');
+    
     if (arborescence.isNotEmpty()) {
         // afficher le concept demandé à l'ouverture via l'URL
         cache.queryConcept();
@@ -98,6 +100,8 @@ function changeConcept(e) {
     // le concept n'est pas déjà actif et aucune édition n'est en cours
     if (idConcept == sessionStorage.getItem('idConcept')) { return; }
     if (sessionStorage.getItem('inEdition') == 'true') { return; }
+
+    // window.location.assign('/Thesaurus/' + idConcept);
 
     arborescence.findNode(sessionStorage.getItem('idConcept')).parentNode
         .classList.remove('--active');

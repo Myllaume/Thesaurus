@@ -15,19 +15,28 @@ var historique = {
         var idConcept = sessionStorage.getItem('idConcept');
         var nomConcept = sessionStorage.getItem('nomConcept');
         oldHistory += ',{"nom" : "' + nomConcept + '", "id": ' + idConcept + '}]';
-        sessionStorage.setItem('historique', oldHistory);
-
-        console.log(historique.sessionHistoriqueToJSON());
+        sessionStorage.setItem('historique', oldHistory);;
 
         this.addLine(JSON.parse('{"nom" : "' + nomConcept + '", "id": ' + idConcept + '}'));
-        
     },
     /**
      * @return { Number } - Dernier id entré dans l'historique de session
+     * ---
+     * Trouver l'id de concept relatif à la position dans l'historique
      */
-    getLastConceptId: function() {
+    backConcept: function() {
         var oldHistory = this.sessionHistoriqueToJSON();
-        return oldHistory[oldHistory.length-1].id;
+        // extrème de l'historique
+        var minHistory = -Math.abs(oldHistory.length);
+        
+        if (sessionStorage.getItem('historiquePos') <= minHistory) {
+            return oldHistory[0].id; }
+
+        // descendre de 1 dans l'historique et stockage de la nouvelle position
+        var historyPos = Number(sessionStorage.getItem('historiquePos')) - 1;
+        sessionStorage.setItem('historiquePos', historyPos);
+    
+        return oldHistory[oldHistory.length - Math.abs(historyPos)].id;
     },
     set: function() {
         this.sessionHistoriqueToJSON()

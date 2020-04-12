@@ -74,6 +74,8 @@ var voletMain = {
                 document.querySelector('#onglet' + epingle.dataset.ongletMain)
                     .classList.add('onglet--active');
                 epingle.classList.add('onglet__epingle--active');
+
+                // history.pushState({}, 'concept ' + idConcept, idConcept);
             });
         });
     }
