@@ -5,8 +5,6 @@ var matrice = {
     inputConceptAssocie: document.querySelector('#concept-associe'),
     inputTermeEmploye: document.querySelector('#terme-employe'),
 
-    lastConceptGeneriqueElt: undefined,
-
     setConcept: function (text) {
         this.inputConcept.value = text;
     },
@@ -34,13 +32,17 @@ var matrice = {
 
         this.inputTermeEmploye.innerHTML = html;
     },
+    /**
+     * @param { Array } - Tableau de noms
+     * @return { String } - Code html
+     * ---
+     * Créer une liste à partir d'éléments en tableau
+     */
     list: function (array) {
         var html = '';
-        if (array) {
-            array.forEach(line => {
-                html += '<li>' + line.nom + '</li>';
-            });
-        }
+        array.forEach(line => {
+            html += '<li>' + line.nom + '</li>'; });
+
         return html;
     },
     traitement: function (obj) {
@@ -59,19 +61,16 @@ var matrice = {
 
 matrice.inputConcept.addEventListener('focus', () => {
     sauvegardeAuto(matrice.inputConcept, 'nom')
-    .then(function(result) {
-        arborescence.findNode(result.id).textContent = result.content;
-        cache.getArborescence(true);
-    })
+    .then(function(result) { cache.getArborescence(true); })
     .catch(function(error) { console.error(error); });
 });
 
 matrice.inputConceptGenerique.addEventListener('click', () => {
     matrice.inputConceptGenerique.classList.add('clignotant--active');
     arborescence.elts.forEach(elt => {
+        // désactiver le changement de visualation de concept
         elt.removeEventListener('click', changeConcept);
-
+        // activer la modificaton de parent de concept
         elt.addEventListener('click', modifAscendant);
     });
-    
 });

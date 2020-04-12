@@ -37,7 +37,7 @@ var fiche = {
                 terminal.open(json.consolMsg);
                 if (json.isOk) {
                     fiche.add(json.data);
-                    cache.get(false);
+                    cache.getConcept(false);
                 }
             }
         });

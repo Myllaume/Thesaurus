@@ -13,10 +13,4 @@ var notice = {
 }
 
 notice.inputDescription.addEventListener('focus', () => {
-    sauvegardeAuto(notice.inputDescription, 'description')
-    .then(function(result) {
-        console.log(result);
-        
-    })
-    .catch(function(error) { console.error(error); });
-});
+    sauvegardeAuto(notice.inputDescription, 'description'); });

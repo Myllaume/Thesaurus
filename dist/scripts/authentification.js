@@ -3,11 +3,13 @@ var authSwitch = {
     formConnexion: document.querySelector('#form-connexion'),
 
     isConnected: function() {
+        // activation de l'édition des différentes visualisations
         notice.canEdit(true);
         fiche.canEdit(true);
         matrice.canEdit(true);
         arborescence.canEdit(true);
 
+        // échange de l'affichage entre le bouton de déco. et le formulaire de co.
         this.btnDeconnexion.classList.add('btn-deconnexion--active');
         this.formConnexion.classList.remove('form-connexion--active');
 
@@ -17,7 +19,9 @@ var authSwitch = {
                 terminal.open(json.consolMsg);
     
                 if (json.isOk) {
+                    // l'utilisateur perd le statut d'opérateur
                     sessionStorage.setItem('isOp', false);
+                    // activation de la connexion
                     authSwitch.isDisconnected();
                 }
                 
@@ -28,11 +32,13 @@ var authSwitch = {
         });
     },
     isDisconnected: function() {
+        // désactivation de l'édition des différentes visualisations
         notice.canEdit(false);
         fiche.canEdit(false);
         matrice.canEdit(false);
         arborescence.canEdit(false);
 
+        // échange de l'affichage entre le bouton de déco. et le formulaire de co.
         this.btnDeconnexion.classList.remove('btn-deconnexion--active');
         this.formConnexion.classList.add('form-connexion--active');
 
@@ -47,10 +53,11 @@ var authSwitch = {
                         
                     terminal.open(json.consolMsg);
                     if (json.isOk) {
-                        authSwitch.formConnexion.reset();
+                        authSwitch.formConnexion.reset(); // form vidé
 
+                        // l'utilisateur obtient le statut d'opérateur
                         sessionStorage.setItem('isOp', true);
-                        fiche.canEdit(false);
+                        // activation de la déconnexion
                         authSwitch.isConnected();
                     }
                     
@@ -59,7 +66,6 @@ var authSwitch = {
                     console.error(data);
                 });
             }
-        
         });
     }
 };
