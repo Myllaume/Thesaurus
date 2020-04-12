@@ -27,7 +27,7 @@ var fiche = {
     },
     send: function(data) {
         $.ajax({
-            url: '/Thesaurus/core/controllers/upload.php?id=' + sessionStorage.getItem('concept'),
+            url: '/Thesaurus/core/controllers/upload.php?id=' + sessionStorage.getItem('idConcept'),
             type: 'POST',
             data: data,
             dataType: 'json',

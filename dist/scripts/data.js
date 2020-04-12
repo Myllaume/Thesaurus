@@ -1,21 +1,30 @@
 var cache = {
-    // recherche du fichier JSON cache d'un concept
+    /**
+     * @return { Promise }
+     * ---
+     * recherche du fichier JSON cache d'un concept
+    */
     queryConcept: function() {
-        $.getJSON( '/Thesaurus/cache/concept_' + sessionStorage.getItem('concept') + '.json',
-        function(json) {
-            assignData(json, true);
-        })
-        // si aucun n'est stocké, demande du cache
-        .fail(function(error) { cache.getConcept(); });
+        return new Promise((resolve, reject) => {
+
+            $.getJSON( '/Thesaurus/cache/concept_' + sessionStorage.getItem('idConcept') + '.json',
+            function(json) {
+                assignData(json, true);
+                resolve(true);
+            })
+            // si aucun n'est stocké, demande du cache
+            .fail(function(error) { cache.getConcept(); });
+        });
     },
     /**
-     * @param { Boolean } [mustReloadContent = true]
+     * @param { Boolean } [mustReloadContent = true] - Si la visualisation
+     * doit être rechargée avec le contenu téléchargé
      * @param { Integer } [id = sessionStorage id]
      * ---
      * query la génération du cache pour un concept et
      * recueil d'une copie des données
     */
-    getConcept: function(mustReloadContent = true, id = sessionStorage.getItem('concept')) {
+    getConcept: function(mustReloadContent = true, id = sessionStorage.getItem('idConcept')) {
         $.get( '/Thesaurus/core/controllers/cache.php' , {
             element: 'concept',
             id: id
@@ -38,7 +47,7 @@ var cache = {
         function( json ) {
             if (json.isOk && mustReload) { document.location.reload(); }
             else if (!json.isOk && json.consolMsg == 'arborescence vide') {
-                sessionStorage.setItem('concept', 0); }
+                sessionStorage.setItem('idConcept', 0); }
         }, 'json' )
         .fail(function(error) { console.error(error); });
     },
@@ -54,6 +63,9 @@ var cache = {
 
 function assignData(obj, isOk) {
     if (isOk) {
+        // enregistrement du nom du concept
+        sessionStorage.setItem('nomConcept', obj.matrice.nom);
+
         matrice.traitement(obj.matrice);
         notice.traitement(obj.notice);
         fiche.set(obj.fiche);
@@ -78,7 +90,7 @@ function sauvegardeAuto(input, metaOnChange, immediat = false) {
         var lastContent = input.value;
         var newContent = input.value;
         // id = id de concept enregistré dans la session
-        var id = sessionStorage.getItem('concept');
+        var id = sessionStorage.getItem('idConcept');
 
         input.addEventListener('input', () => {
             // contenu actualité en temps réel

@@ -4,40 +4,47 @@ var historique = {
     /**
      * @return { Array } - Historique de session découpé
      */
-    sessionHistoriqueToArray: function() {
-        return sessionStorage.getItem('historique').split(',');
+    sessionHistoriqueToJSON: function() {
+        return JSON.parse(sessionStorage.getItem('historique'));
     },
     actualiser: function() {
-        var oldHistory = this.sessionHistoriqueToArray();
+        var oldHistory = sessionStorage.getItem('historique');
+        var oldHistory = oldHistory.substr(0, oldHistory.length-1);
+        
         // l'id du concept en session est ajouté à l'historique...
-        var idConcept = sessionStorage.getItem('concept');
-        oldHistory.push(idConcept);
+        var idConcept = sessionStorage.getItem('idConcept');
+        var nomConcept = sessionStorage.getItem('nomConcept');
+        oldHistory += ',{"nom" : "' + nomConcept + '", "id": ' + idConcept + '}]';
         sessionStorage.setItem('historique', oldHistory);
 
-        this.addLine(idConcept); // et au panneau Historique
+        console.log(historique.sessionHistoriqueToJSON());
+
+        this.addLine(JSON.parse('{"nom" : "' + nomConcept + '", "id": ' + idConcept + '}'));
+        
     },
     /**
      * @return { Number } - Dernier id entré dans l'historique de session
      */
     getLastConceptId: function() {
-        var oldHistory = this.sessionHistoriqueToArray();
-        return oldHistory[oldHistory.length-1];
+        var oldHistory = this.sessionHistoriqueToJSON();
+        return oldHistory[oldHistory.length-1].id;
     },
     set: function() {
-        var oldHistory = this.sessionHistoriqueToArray();
-        oldHistory.forEach(idConcept => {
-            this.addLine(idConcept); });
+        this.sessionHistoriqueToJSON()
+            .forEach(this.addLine);
     },
     /**
-     * @param { Number } [idConcept=] Dernier id  enregistré en Historique de session
+     * @param { Object } obj Dernier objet enregistré en Historique de session
      */
-    addLine: function(idConcept = this.getLastConceptId()) {
-        var histLigne = document.createElement('div');
+    addLine: function(obj) {
+        var histLigne = document.createElement('a');
         histLigne.classList.add('historique__ligne');
-        histLigne.innerHTML = '<a href="/Thesaurus/' + idConcept + '">Concept ' + idConcept + '</a>';
-        this.content.appendChild(histLigne);
+        histLigne.setAttribute('href', '/Thesaurus/' + obj.id);
+        histLigne.textContent = obj.nom;
+        historique.content.prepend(histLigne);
+        
     }
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-    historique.set(); });
+    historique.set();});

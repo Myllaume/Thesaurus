@@ -31,7 +31,7 @@ var arborescence = {
     },
     // trouve le node correspondant à un concept et remonte ses parents
     // pour les déployer un à un et aisi le laisser apparaître
-    showNode: function(idConcept = sessionStorage.getItem('concept')) {
+    showNode: function(idConcept = sessionStorage.getItem('idConcept')) {
         var node = this.findNode(idConcept);
         if (node == null) { return false; }
         var nodeTab = [node];
@@ -51,14 +51,26 @@ var arborescence = {
 
 window.onpopstate = function() {
     // si l'utilisateur recule d'une page
-    sessionStorage.setItem('concept', historique.getLastConceptId());
-    cache.queryConcept();
+    var lastIdConcept = sessionStorage.getItem('idConcept');
+    var newIdConcept = historique.getLastConceptId();
+
+    arborescence.findNode(lastIdConcept).parentNode
+        .classList.remove('--active');
+
+    sessionStorage.setItem('idConcept', newIdConcept);
+    cache.queryConcept()
+    .then(function() {
+        document.title = sessionStorage.getItem('nomConcept');
+
+        arborescence.findNode(newIdConcept).parentNode
+            .classList.add('--active');
+    });
 };
 
 window.addEventListener("DOMContentLoaded", () => {
     if (arborescence.isNotEmpty()) {
         // afficher le concept demandé à l'ouverture via l'URL
-        cache.queryConcept(sessionStorage.getItem('concept'));
+        cache.queryConcept();
         arborescence.showNode();
     
         arborescence.lists.forEach(list => {
@@ -73,7 +85,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 arborescence.btnAddConcept.addEventListener('click', () => {
     // ajout d'un concept à la racine de l'arborescence
-    sessionStorage.setItem('concept', 0);
+    sessionStorage.setItem('idConcept', 0);
     createConcept();
 });
 
@@ -84,23 +96,27 @@ arborescence.btnAddConcept.addEventListener('click', () => {
 function changeConcept(e) {
     idConcept = e.target.dataset.id; // = id du nouveau concept
     // le concept n'est pas déjà actif et aucune édition n'est en cours
-    if (idConcept == sessionStorage.getItem('concept')) { return; }
+    if (idConcept == sessionStorage.getItem('idConcept')) { return; }
     if (sessionStorage.getItem('inEdition') == 'true') { return; }
 
-    arborescence.findNode(sessionStorage.getItem('concept')).parentNode
+    arborescence.findNode(sessionStorage.getItem('idConcept')).parentNode
         .classList.remove('--active');
 
     /** ajouter le nouveau concept à l'URL, à l'historique
     et l'enregistrer comme concept actif dans la session */
     history.pushState({}, 'concept ' + idConcept, idConcept);
     historique.actualiser();
-    sessionStorage.setItem('concept', idConcept);
+    sessionStorage.setItem('idConcept', idConcept);
 
-    arborescence.findNode(idConcept).parentNode
-        .classList.add('--active');
-
-    // afficher les informations du concept dans les panneaux de visualisation
-    cache.queryConcept();
+    /** afficher les informations du concept dans les panneaux de visualisation
+    et dans la session */
+    cache.queryConcept()
+    .then(function() {
+        document.title = sessionStorage.getItem('nomConcept');
+    
+        arborescence.findNode(idConcept).parentNode
+            .classList.add('--active');
+    });
 }
 
 /**
@@ -113,7 +129,7 @@ function changeConcept(e) {
 function modifAscendant(e) {
     $.get( '/Thesaurus/core/controllers/concept.php' , {
         action: 'change_ascendant',
-        id: sessionStorage.getItem('concept'),
+        id: sessionStorage.getItem('idConcept'),
         id_ascendant: e.target.dataset.id // = id du concept cible
     },
     function(json) {
@@ -130,7 +146,7 @@ function createConcept() {
     $.get( '/Thesaurus/core/controllers/concept.php' , {
         action: 'add_concept',
         nom: 'Nouveau concept',
-        id_ascendant: sessionStorage.getItem('concept')
+        id_ascendant: sessionStorage.getItem('idConcept')
     },
     function(json) {
         terminal.open(json.consolMsg);
