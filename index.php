@@ -68,27 +68,27 @@ else { $is_op = 'false'; }
 
             <section class="section visualisation">
                 <header class="section__entete">
-                    <div class="onglet-titre" data-onglet-main="4">
+                    <div class="onglet-titre" data-onglet-main="matrice">
                         Matrice
                     </div>
-                    <div class="onglet-titre" data-onglet-main="5">
+                    <div class="onglet-titre" data-onglet-main="notice">
                         Notice
                     </div>
-                    <div class="onglet-titre" data-onglet-main="6">
+                    <div class="onglet-titre" data-onglet-main="fiches">
                         Fiches
                     </div>
                 </header>
 
                 <main class="section__main">
-                    <section id="onglet4" class="onglet onglet--active">
+                    <section id="matrice" class="onglet onglet--active">
                         <?php include './core/views/matrice.php'; ?>
                     </section>
 
-                    <section id="onglet5" class="onglet">
+                    <section id="notice" class="onglet">
                         <?php include './core/views/notice.php'; ?>
                     </section>
 
-                    <section id="onglet6" class="onglet">
+                    <section id="fiches" class="onglet">
                         <?php include './core/views/fiche.php'; ?>
                     </section>
                 </main>

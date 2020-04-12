@@ -68,12 +68,12 @@ window.onpopstate = function() {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-    console.log('to');
-    
     if (arborescence.isNotEmpty()) {
         // afficher le concept demandé à l'ouverture via l'URL
         cache.queryConcept();
         arborescence.showNode();
+        history.pushState({}, 'concept ' + sessionStorage.getItem('idConcept'),
+            sessionStorage.getItem('idConcept'));
     
         arborescence.lists.forEach(list => {
             arborescence.articuler(list); });

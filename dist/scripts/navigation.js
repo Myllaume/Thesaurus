@@ -56,13 +56,18 @@ var voletAside = {
 var voletMain = {
     epingles: document.querySelectorAll('[data-onglet-main]'),
     epingleActive: undefined,
+    epingleByHash: document.querySelector('[data-onglet-main="'+ window.location.hash.substr(1) + '"]'),
 
     activ: function () {
         this.epingles.forEach(epingle => {
             epingle.addEventListener('click', (e) => {
 
                 if (this.epingleActive == undefined) {
-                    this.epingleActive = this.epingles.item(0); }
+                    if (epingleByHash) {
+                        this.epingleActive = this.epingleByHash; }
+                    else {
+                        this.epingleActive = this.epingles.item(0); }
+                }
         
                 if (this.epingleActive !== e.target) {
                     document.querySelector('#onglet' + this.epingleActive.dataset.ongletMain)
@@ -80,6 +85,22 @@ var voletMain = {
         });
     }
 }
+
+var ongletByHash = document.querySelector(identifiantOnglet);
+
+if (ongletByHash) {
+    document.querySelector('#' + ongletByHash.dataset.ongletMain)
+        .classList.add('onglet--active');
+    ongletByHash.classList.add('onglet__epingle--active');
+} else {
+    var firstOnglet = document.querySelector('[data-onglet-aside]');
+    document.querySelector('#' + firstOnglet.dataset.ongletMain)
+        .classList.add('onglet--active');
+    firstOnglet.classList.add('onglet__epingle--active');
+}
+
+
+console.log(window.location.hash);
 
 window.addEventListener("DOMContentLoaded", () => {
     voletAside.activ();
