@@ -20,20 +20,25 @@ var cache = {
      * @param { Boolean } [mustReloadContent = true] - Si la visualisation
      * doit être rechargée avec le contenu téléchargé
      * @param { Integer } [id = sessionStorage id]
+     * @return { Promise }
      * ---
      * query la génération du cache pour un concept et
      * recueil d'une copie des données
     */
     getConcept: function(mustReloadContent = true, id = sessionStorage.getItem('idConcept')) {
-        $.get( '/Thesaurus/core/controllers/cache.php' , {
-            element: 'concept',
-            id: id
-        },
-        function( json ) {
-            if (mustReloadContent) {
-                assignData(json.data, json.isOk); }
-        }, 'json' )
-        .fail(function (data) { console.error(data); });
+        return new Promise((resolve, reject) => {
+
+            $.get( '/Thesaurus/core/controllers/cache.php' , {
+                element: 'concept',
+                id: id
+            },
+            function( json ) {
+                if (mustReloadContent) {
+                    assignData(json.data, json.isOk); }
+                resolve(true);
+            }, 'json' )
+            .fail(function (error) { resolve(error); });
+        });
     },
     /**
      * @param { Boolean } [mustReload = false]

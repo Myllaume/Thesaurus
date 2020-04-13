@@ -104,6 +104,29 @@ switch ($_GET['action']) {
             $consol_msg = $error;
         }
         break;
+
+    case 'add_associe':
+
+        if (!isset($_GET['id']) || empty($_GET['id'])
+            || !isset($_GET['id_associe']) || empty($_GET['id_associe']))
+        { break; }
+
+        if ($_GET['id'] === $_GET['id_associe']) { break; }
+
+        try {
+            $request = $bdd->prepare('INSERT INTO Associations SET id_concept=:id_concept, id_associe=:id_associe');
+            $is_valid_request = $request->bindValue(':id_concept', $_GET['id'], PDO::PARAM_INT);
+            $is_valid_request &= $request->bindValue(':id_associe', $_GET['id_associe'], PDO::PARAM_INT);
+            $is_valid_request &= $request->execute();
+
+            if (!$is_valid_request) { throw new Exception("INSERT INTO Associations échoué"); }
+
+            $is_ok = true;
+            $consol_msg = 'Association créée';
+        } catch (Exception $error) {
+            $consol_msg = $error;
+        }
+        break;
 }
 
 echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));

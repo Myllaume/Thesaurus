@@ -72,3 +72,13 @@
         padding: unset;
     }
 }
+
+.clignotant {
+    cursor: pointer;
+
+    &--active {
+        animation-name: clignotement;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+    }
+}

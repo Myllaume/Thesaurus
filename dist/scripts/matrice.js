@@ -53,9 +53,16 @@ var matrice = {
         this.setTermeEmploye(obj.concept_employe);
     },
     canEdit: function(bool) {
+        if (bool) {
+            matrice.inputConceptGenerique.classList.add('clignotant');
+            matrice.inputConceptAssocie.classList.add('clignotant');
+        } else {
+            matrice.inputConceptGenerique.classList.remove('clignotant');
+            matrice.inputConceptAssocie.classList.remove('clignotant');
+        }
+
         bool = !bool; // inversion
         this.inputConcept.readOnly = bool;
-        this.inputConceptGenerique.disabled = bool;
     }
 }
 
@@ -66,11 +73,7 @@ matrice.inputConcept.addEventListener('focus', () => {
 });
 
 matrice.inputConceptGenerique.addEventListener('click', () => {
-    matrice.inputConceptGenerique.classList.add('clignotant--active');
-    arborescence.elts.forEach(elt => {
-        // désactiver le changement de visualation de concept
-        elt.removeEventListener('click', changeConcept);
-        // activer la modificaton de parent de concept
-        elt.addEventListener('click', modifAscendant);
-    });
-});
+    changeMode(matrice.inputConceptGenerique, modifGenerique); });
+
+matrice.inputConceptAssocie.addEventListener('click', () => {
+    changeMode(matrice.inputConceptAssocie, modifAssocie); });

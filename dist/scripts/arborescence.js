@@ -16,8 +16,17 @@ var arborescence = {
     // return le node d'un concept correspondant à l'identifiant en paramètre
     findNode: function(idConcept) {
         return document.querySelector('[data-id="' + idConcept + '"]'); },
+    getChildsId: function(target) {
+        if (target.tagName != 'UL') { return false; }
+        return target.querySelectorAll('[data-id]');
+    },
+    nodeToId: function(nodeList) {
+        var idList = [];
+        nodeList.forEach(node => { idList.push(node.dataset.id); });
+        return idList;
+    },
     // ajout des flèches et du mécanisme de volet des listes de concept
-    articuler: function(listNode, articulation = false) {
+    articuler: function(listNode) {
         var btnArrow = document.createElement('button');
         btnArrow.classList.add('arborescence__arrow');
         btnArrow.textContent = '▶';
@@ -68,8 +77,6 @@ window.onpopstate = function() {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-    console.log('to');
-    
     if (arborescence.isNotEmpty()) {
         // afficher le concept demandé à l'ouverture via l'URL
         cache.queryConcept();
@@ -101,8 +108,6 @@ function changeConcept(e) {
     if (idConcept == sessionStorage.getItem('idConcept')) { return; }
     if (sessionStorage.getItem('inEdition') == 'true') { return; }
 
-    // window.location.assign('/Thesaurus/' + idConcept);
-
     arborescence.findNode(sessionStorage.getItem('idConcept')).parentNode
         .classList.remove('--active');
 
@@ -124,20 +129,102 @@ function changeConcept(e) {
 }
 
 /**
+ * @param { HTMLElement } target
+ * @param { Function } fxModification
+ * ---
+ * Passage en mode modification de l'arborescence :
+ * cliquer sur ses éléments ne permet plus de naviguer mais
+ * de mettre à jour la matrice et donc la hirarchie
+ */
+
+function changeMode(target, fxModification) {
+    if (sessionStorage.getItem('isOp') != 'true') { return; }
+
+    target.classList.add('clignotant--active');
+    arborescence.elts.forEach(elt => {
+        // désactiver le changement de visualation de concept
+        elt.removeEventListener('click', changeConcept);
+        // activer la modificaton de parent de concept
+        elt.addEventListener('click', fxModification);
+    });
+}
+
+/**
+ * @param { Number } idConcept - Id d'un concept selectionné
+ * dans l'arborescence
+ * @return { Boolean } - 'true' en cas d'acte ignoble
+ * ---
+ * Éviter qu'un élément parent puisse devenir l'enfant ou l'associé
+ * d'un de ces enfants, ce qui casserait la structure
+ * L'inversre est toutefois autorisé...
+ */
+
+function isInceste(idConcept) {
+    // selectionner son élement frère = la liste de concept dont il est parent, générique
+    let isAListParent = arborescence.findNode(sessionStorage.getItem('idConcept'))
+    .parentNode.nextSibling;
+    // chercher ses concepts enfants, spécifiques
+    isAListParent = arborescence.getChildsId(isAListParent);
+    if (isAListParent) {
+    /** s'il s'agit bien d'un parent :
+     * lister les id de concepts dont il est parent
+     * vérifier que l'un d'eux n'est pas la cible (target)
+     */
+    var idList = arborescence.nodeToId(isAListParent);
+    var test = idList.indexOf(idConcept);
+
+        if (test !== -1) { return true; }
+        else { return false; }
+    }
+
+    return false;
+}
+
+/**
  * @param { Event } e
  * ---
  * envoie d'une requête AJAX pour modifier le
  * concept générique : id_ascendant
 */
 
-function modifAscendant(e) {
+function modifGenerique(e) {
+
+    if (isInceste(e.target.dataset.id)) { return; }
+    
     $.get( '/Thesaurus/core/controllers/concept.php' , {
         action: 'change_ascendant',
         id: sessionStorage.getItem('idConcept'),
         id_ascendant: e.target.dataset.id // = id du concept cible
     },
     function(json) {
-        if (json.isOk) { cache.getArborescence(true); }
+        if (json.isOk) {
+            cache.getConcept()
+            .then(function() { cache.getArborescence(true); })
+        }
+    }, 'json')
+    .fail(function(error) { console.error(error); });
+}
+
+/**
+ * @param { Event } e
+ * ---
+ * envoie d'une requête AJAX pour ajouter un
+ * concept associé
+*/
+
+function modifAssocie(e) {
+
+    if (isInceste(e.target.dataset.id)) { return; }
+
+    $.get( '/Thesaurus/core/controllers/concept.php' , {
+        action: 'add_associe',
+        id: sessionStorage.getItem('idConcept'),
+        id_associe: e.target.dataset.id // = id du concept cible
+    },
+    function(json) {
+        console.log(json);
+        
+        if (json.isOk) { cache.getConcept(true); }
     }, 'json')
     .fail(function(error) { console.error(error); });
 }
