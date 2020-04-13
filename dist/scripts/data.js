@@ -127,7 +127,7 @@ function sauvegardeAuto(input, metaOnChange, immediat = false) {
                     }
                 }, 'json' )
                 .fail(function(erreur) {
-                    reject("Échec :" + erreur); });
+                    reject(erreur); });
 
                 // le contenu enregistré devient contenu actuel à comparer
                 lastContent = newContent;

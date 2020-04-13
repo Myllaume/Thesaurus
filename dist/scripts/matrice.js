@@ -26,11 +26,11 @@ var matrice = {
         this.inputConceptAssocie.innerHTML = html;
     },
     setTermeEmploye: function (array) {
-        var html = '';
+        var text = '';
+        array.forEach(elt => {
+            text += elt.nom + '\r\n'; });
 
-        if (array) { html = this.list(array); }
-
-        this.inputTermeEmploye.innerHTML = html;
+        this.inputTermeEmploye.value = text;
     },
     /**
      * @param { Array } - Tableau de noms
@@ -63,12 +63,19 @@ var matrice = {
 
         bool = !bool; // inversion
         this.inputConcept.readOnly = bool;
+        this.inputTermeEmploye.readOnly = bool;
     }
 }
 
 matrice.inputConcept.addEventListener('focus', () => {
     sauvegardeAuto(matrice.inputConcept, 'nom')
     .then(function(result) { cache.getArborescence(true); })
+    .catch(function(error) { console.error(error); });
+});
+
+matrice.inputTermeEmploye.addEventListener('focus', () => {
+    sauvegardeAuto(matrice.inputTermeEmploye, 'employe')
+    .then(function(result) { cache.getConcept(true); })
     .catch(function(error) { console.error(error); });
 });
 

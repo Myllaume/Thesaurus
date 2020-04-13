@@ -81,6 +81,36 @@ switch ($_GET['action']) {
         }
         break;
 
+        case 'change_employe':
+
+            if (!isset($_POST['data']) || empty($_POST['data'])
+            || empty($_POST['id'])) { break; }
+    
+            $_POST['data'] = explode("\n", $_POST['data']);
+
+            try {
+                $request_del = $bdd->prepare('DELETE FROM Emplois WHERE id_concept=:id_concept');
+                $is_valid_request_del = $request_del->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
+                $is_valid_request_del &= $request_del->execute();
+
+                if (!$is_valid_request_del) { break; }
+
+                $request_add = $bdd->prepare('INSERT INTO Emplois SET id_concept=:id_concept, nom=:nom');
+                foreach ($_POST['data'] as $nb_valeur => $libelle) {
+                    $is_valid_request_add = $request_add->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
+                    $is_valid_request_add &= $request_add->bindValue(':nom', $libelle, PDO::PARAM_STR);
+                    $is_valid_request_add &= $request_add->execute();
+                    
+                    if (!$is_valid_request_add) {break 2;}
+                }
+    
+                $is_ok = true;
+                $consol_msg = 'Termes employés modifiés';
+            } catch (Exception $error) {
+                $consol_msg = $error;
+            }
+            break;
+
     case 'change_ascendant':
 
         if (!isset($_GET['id']) || empty($_GET['id'])

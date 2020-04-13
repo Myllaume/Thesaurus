@@ -20,9 +20,7 @@
     <section class="matrice__bloc matrice__bloc--gauche">
         <header class="libelle">Terme(s) employé(s)</header>
 
-        <main class="">
-            <ul id="terme-employe" class="matrice__cadre"></ul>
-        </main>
+        <textarea id="terme-employe" class="matrice__cadre" wrap="hard" readonly></textarea>
     </section>
 
     <section class="matrice__bloc matrice__bloc--droite">

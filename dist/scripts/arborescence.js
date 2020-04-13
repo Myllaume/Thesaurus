@@ -125,7 +125,7 @@ function changeConcept(e) {
     
         arborescence.findNode(idConcept).parentNode
             .classList.add('--active');
-    });
+    })
 }
 
 /**
@@ -161,10 +161,11 @@ function changeMode(target, fxModification) {
 
 function isInceste(idConcept) {
     // selectionner son élement frère = la liste de concept dont il est parent, générique
-    let isAListParent = arborescence.findNode(sessionStorage.getItem('idConcept'))
+    var brother = arborescence.findNode(sessionStorage.getItem('idConcept'))
     .parentNode.nextSibling;
     // chercher ses concepts enfants, spécifiques
-    isAListParent = arborescence.getChildsId(isAListParent);
+    if (brother === null) { return false; }
+    let isAListParent = arborescence.getChildsId(brother);
     if (isAListParent) {
     /** s'il s'agit bien d'un parent :
      * lister les id de concepts dont il est parent
@@ -199,7 +200,7 @@ function modifGenerique(e) {
     function(json) {
         if (json.isOk) {
             cache.getConcept()
-            .then(function() { cache.getArborescence(true); })
+            .then(function() { cache.getArborescence(true); });
         }
     }, 'json')
     .fail(function(error) { console.error(error); });
