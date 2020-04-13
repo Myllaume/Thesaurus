@@ -19,8 +19,13 @@ select {
     font-size: inherit;
     color: inherit;
     margin: 1rem 0;
+    width: 100%;
 
     option {
         background-color: $color-rose;
+    }
+
+    &.--hidden {
+        display: none;
     }
 }

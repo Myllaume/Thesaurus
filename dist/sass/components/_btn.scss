@@ -12,4 +12,9 @@
     &--hidden {
         display: none;
     }
+
+    &--active {
+        background-color: $color-rose;
+        color: black;
+    }
 }

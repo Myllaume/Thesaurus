@@ -56,7 +56,7 @@ else { $is_op = 'false'; }
 
                     <section id="onglet2" class="onglet">
                         <div class="index">
-                            <?php include './cache/index.html'; ?>
+                            <?php require './core/views/index.php'; ?>
                         </div>
                     </section>
 
