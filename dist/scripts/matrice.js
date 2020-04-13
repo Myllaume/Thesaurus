@@ -48,8 +48,6 @@ var matrice = {
         return html;
     },
     traitement: function (obj) {
-        console.log(obj);
-        
         this.setConcept(obj.nom);
         this.setConceptGenerique(obj.concept_generique);
         this.setConceptSpecifique(obj.concept_specifique);

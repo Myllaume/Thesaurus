@@ -140,7 +140,7 @@ class Concept {
     }
 
     public function select_fiche_bdd($bdd) {
-        $request = $bdd->prepare('SELECT id, nom_enregistrement, nom_sortie, extension
+        $request = $bdd->prepare('SELECT id, nom_enregistrement, nom_sortie, extension, date
             FROM Files WHERE id_concept = :id');
         $is_valid_request = $request->bindValue(':id', $this->id, PDO::PARAM_INT);
         $is_valid_request &= $request->execute();

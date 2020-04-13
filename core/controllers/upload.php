@@ -20,7 +20,7 @@ $consol_msg = 'Aucun traitement.';
 $data = [];
 
 $extension_fichier = pathinfo($_FILES['fichier']['name'], PATHINFO_EXTENSION);
-$extensions_valid = ['md', 'pdf', 'jpg', 'png', 'txt'];
+$extensions_valid = ['md', 'jpg'];
 
 if (!in_array($extension_fichier, $extensions_valid)) {
     $consol_msg = 'Cette extension de fichier n\'est pas admise.';
@@ -28,13 +28,7 @@ if (!in_array($extension_fichier, $extensions_valid)) {
     exit;
 }
 
-if ($_FILES['fichier']['size'] > 2000000) { // 2 mégaoctets
-    $consol_msg = 'Ce fichier est trop lourd : 2 mégaoctets maximum.';
-    echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
-    exit;
-}
-
-if ($_FILES['fichier']['size'] > 2000000) { // 2 mégaoctets
+if ($_FILES['fichier']['size'] > 1000000) { // 2 mégaoctets
     $consol_msg = 'Ce fichier est trop lourd : 2 mégaoctets maximum.';
     echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
     exit;
@@ -52,6 +46,7 @@ $path_destination = '../../upload/';
 
 $rand_string = str_shuffle('abcdefghijklmnopqrstuvwxyz');
 $nom_enregistrement = substr($rand_string, 4, -6);
+$date_enregistrement = date("Y-m-d");
 
 $chemin_fichier = $path_destination . $nom_enregistrement . '.' .$extension_fichier;
 
@@ -65,10 +60,11 @@ try {
 
 try {
     $request = $bdd->prepare('INSERT INTO Files SET nom_enregistrement=:nom_enregistrement,
-        nom_sortie=:nom_sortie, extension=:extension, id_concept=:id_concept');
+        nom_sortie=:nom_sortie, extension=:extension, date=:date, id_concept=:id_concept');
     $is_valid_request = $request->bindValue(':nom_enregistrement', $nom_enregistrement, PDO::PARAM_STR);
     $is_valid_request &= $request->bindValue(':nom_sortie', $nom_sortie, PDO::PARAM_STR);
     $is_valid_request &= $request->bindValue(':extension', $extension_fichier, PDO::PARAM_STR);
+    $is_valid_request &= $request->bindValue(':date', $date_enregistrement, PDO::PARAM_STR);
     $is_valid_request &= $request->bindValue(':id_concept', $_GET['id'], PDO::PARAM_INT);
     $is_valid_request &= $request->execute();
 

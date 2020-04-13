@@ -7,4 +7,6 @@
 
     <section id="fiche"></section>
 
+    <section id="reader"></section>
+
 </article>

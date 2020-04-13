@@ -39,3 +39,14 @@ function CSV_file_to_array($path) {
     
     return $return_tab;
 }
+
+function markdown_to_html($path) {
+    $markdown_content = file_get_contents($path);
+
+    try {
+        $parsedown = new Parsedown();
+        return $parsedown->text($markdown_content);
+    } catch (Exception $error) {
+        return false;
+    }
+}

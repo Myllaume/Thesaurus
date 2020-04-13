@@ -107,6 +107,36 @@ switch ($_GET['element']) {
         }
 
         break;
+
+    case 'fiche':
+        try {
+            if (!isset($_GET['id']) || empty($_GET['id'])) {
+                $consol_msg = 'Aucun identifiant de fiche renseigné';
+                json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
+                exit;
+            }
+
+            $request = $bdd->prepare('SELECT nom_enregistrement, extension FROM Files WHERE id=:id');
+            $is_valid_request = $request->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
+            $is_valid_request &= $request->execute();
+            
+            if (!$is_valid_request) { throw new Exception("Erreur bdd : SELECT Files"); }
+            $fiche_metas = $request->fetch(PDO::FETCH_ASSOC);
+
+            include_once '../../libs/Parsedown.php';
+            include_once '../../functions/files.php';
+
+            $data = markdown_to_html('../../upload/' . $fiche_metas['nom_enregistrement'] . '.' . $fiche_metas['extension']);
+
+            file_put_contents('../../cache/' . $fiche_metas['nom_enregistrement'] . '.html', $data);
+
+            $is_ok = true;
+            $consol_msg = 'Fiche générée.';
+        } catch (Exception $error) {
+            $consol_msg = 'Erreur de génération index : ' . $error;
+        }
+
+        break;
     
     case 'select_concept':
         require '../../functions/navigation.php';
