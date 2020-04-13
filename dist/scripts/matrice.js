@@ -8,8 +8,10 @@ var matrice = {
     setConcept: function (text) {
         this.inputConcept.value = text;
     },
-    setConceptGenerique: function (text) {
-        this.inputConceptGenerique.textContent = text;
+    setConceptGenerique: function (obj) {
+        if (!obj) { return; }
+        this.inputConceptGenerique
+            .innerHTML = '<a href="' + obj.id + '">' + obj.nom + '</a>';
     },
     setConceptSpecifique: function (array) {
         var html = '';
@@ -41,13 +43,15 @@ var matrice = {
     list: function (array) {
         var html = '';
         array.forEach(line => {
-            html += '<li>' + line.nom + '</li>'; });
+            html += '<li><a href="' + line.id + '">' + line.nom + '</a></li>'; });
 
         return html;
     },
     traitement: function (obj) {
+        console.log(obj);
+        
         this.setConcept(obj.nom);
-        this.setConceptGenerique(obj.concept_generique.nom);
+        this.setConceptGenerique(obj.concept_generique);
         this.setConceptSpecifique(obj.concept_specifique);
         this.setConceptAssocie(obj.concept_associe);
         this.setTermeEmploye(obj.concept_employe);
