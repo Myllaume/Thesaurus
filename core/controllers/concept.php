@@ -111,6 +111,114 @@ switch ($_GET['action']) {
             }
             break;
 
+        case 'change_document':
+
+            if (!isset($_POST['data']) || empty($_POST['data'])
+            || empty($_POST['id'])) { break; }
+    
+            $_POST['data'] = explode("\n", $_POST['data']);
+
+            try {
+
+                $request_del = $bdd->prepare('DELETE FROM Documents WHERE id_concept=:id_concept');
+                $is_valid_request_del = $request_del->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
+                $is_valid_request_del &= $request_del->execute();
+
+                if (!$is_valid_request_del) { break; }
+
+                $request_add = $bdd->prepare('INSERT INTO Documents SET
+                titre=:titre, auteur=:auteur, editeur=:editeur, annee=:annee, type=:type,
+                identifiant=:identifiant, id_concept=:id_concept');
+
+                foreach ($_POST['data'] as $ligne) {
+                    $ligne = explode(", ", $ligne);
+                    $ligne_tab = [];
+
+                    $ligne_tab['titre'] = $ligne[0];
+                    $is_valid_request_add = $request_add->bindValue(':titre', $ligne[0], PDO::PARAM_STR);
+
+                    $ligne_tab['auteur'] = $ligne[1];
+                    $is_valid_request_add &= $request_add->bindValue(':auteur', $ligne[1], PDO::PARAM_STR);
+
+                    $ligne_tab['editeur'] = $ligne[2];
+                    $is_valid_request_add &= $request_add->bindValue(':editeur', $ligne[2], PDO::PARAM_STR);
+
+                    $ligne_tab['annee'] = $ligne[3];
+                    $is_valid_request_add &= $request_add->bindValue(':annee', $ligne[3], PDO::PARAM_INT);
+
+                    $ligne_tab['type'] = $ligne[4];
+                    $is_valid_request_add &= $request_add->bindValue(':type', $ligne[4], PDO::PARAM_STR);
+
+                    $ligne_tab['identifiant'] = $ligne[5];
+                    $is_valid_request_add &= $request_add->bindValue(':identifiant', $ligne[5], PDO::PARAM_STR);
+
+                    array_push($data, $ligne_tab);
+
+                    $is_valid_request_add &= $request_add->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
+
+                    $is_valid_request_add &= $request_add->execute();
+
+                    if (!$is_valid_request_add) {break 2;}
+                }
+    
+                $is_ok = true;
+                $consol_msg = 'Termes employés modifiés';
+            } catch (Exception $error) {
+                $consol_msg = $error;
+            }
+            break;
+
+        case 'change_personne':
+
+            if (!isset($_POST['data']) || empty($_POST['data'])
+            || empty($_POST['id'])) { break; }
+    
+            $_POST['data'] = explode("\n", $_POST['data']);
+
+            try {
+
+                $request_del = $bdd->prepare('DELETE FROM Personnes WHERE id_concept=:id_concept');
+                $is_valid_request_del = $request_del->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
+                $is_valid_request_del &= $request_del->execute();
+
+                if (!$is_valid_request_del) { break; }
+
+                $request_add = $bdd->prepare('INSERT INTO Personnes SET
+                nom=:nom, profession=:profession, genre=:genre,
+                nationalite=:nationalite, id_concept=:id_concept');
+
+                foreach ($_POST['data'] as $ligne) {
+                    $ligne = explode(", ", $ligne);
+                    $ligne_tab = [];
+
+                    $ligne_tab['nom'] = $ligne[0];
+                    $is_valid_request_add = $request_add->bindValue(':nom', $ligne[0], PDO::PARAM_STR);
+
+                    $ligne_tab['profession'] = $ligne[1];
+                    $is_valid_request_add &= $request_add->bindValue(':profession', $ligne[1], PDO::PARAM_STR);
+
+                    $ligne_tab['genre'] = $ligne[2];
+                    $is_valid_request_add &= $request_add->bindValue(':genre', $ligne[2], PDO::PARAM_STR);
+
+                    $ligne_tab['nationalite'] = $ligne[3];
+                    $is_valid_request_add &= $request_add->bindValue(':nationalite', $ligne[3], PDO::PARAM_STR);
+
+                    array_push($data, $ligne_tab);
+
+                    $is_valid_request_add &= $request_add->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
+
+                    $is_valid_request_add &= $request_add->execute();
+    
+                    if (!$is_valid_request_add) {break 2;}
+                }
+    
+                $is_ok = true;
+                $consol_msg = 'Termes employés modifiés';
+            } catch (Exception $error) {
+                $consol_msg = $error;
+            }
+            break;
+
     case 'change_ascendant':
 
         if (!isset($_GET['id']) || empty($_GET['id'])

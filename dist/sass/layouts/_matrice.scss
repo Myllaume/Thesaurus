@@ -65,6 +65,7 @@
         background-color: transparent;
         box-sizing: border-box;
         margin: unset;
+        line-height: 3rem;
 
         a {
             text-decoration: none;
@@ -74,6 +75,10 @@
     ul {
         list-style: none;
         padding: unset;
+    }
+
+    li {
+        margin: 1rem 0;
     }
 }
 

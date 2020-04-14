@@ -12,6 +12,10 @@ input, textarea {
     }
 }
 
+textarea {
+    padding: 1rem;
+}
+
 select {
     font-family: inherit;
     border: unset;

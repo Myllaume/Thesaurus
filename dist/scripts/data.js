@@ -116,6 +116,8 @@ function sauvegardeAuto(input, metaOnChange, immediat = false) {
                     terminal.open(json.consolMsg);
 
                     if (json.isOk) {
+                        console.log(json);
+                        
                         cache.getConcept(false, id);
                         sessionStorage.setItem('inEdition', false);
                         resolve({
