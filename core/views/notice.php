@@ -15,6 +15,7 @@
     <section class="notice__section">
         <span class="libelle">Personnes</span>
         <textarea id="concept-personne" class="wind-text" readonly></textarea>
+        <ul class="search-result"></ul>
     </section>
 
 </div>

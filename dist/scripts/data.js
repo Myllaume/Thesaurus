@@ -37,7 +37,7 @@ var cache = {
                     assignData(json.data, json.isOk); }
                 resolve(true);
             }, 'json' )
-            .fail(function (error) { resolve(error); });
+            .fail(function (error) { reject(error); });
         });
     },
     /**
@@ -98,6 +98,7 @@ function sauvegardeAuto(input, metaOnChange) {
             var newContent = input.value;
 
             if (lastContent !== newContent) {
+                
                 $.post( '/Thesaurus/core/controllers/concept.php?action=change_' + metaOnChange, {
                     id : id,
                     data : input.value
@@ -107,13 +108,10 @@ function sauvegardeAuto(input, metaOnChange) {
     
                     if (json.isOk) {
                         cache.getConcept(true, id);
-                        sessionStorage.setItem('inEdition', false);
                         resolve({
                             content: input.value, // = contenu enregistré
                             id: id // = id du concept modifié
                         });
-                    } else {
-                        reject(json.consolMsg);
                     }
                 }, 'json' )
                 .fail(function(erreur) {
@@ -121,4 +119,21 @@ function sauvegardeAuto(input, metaOnChange) {
             }
         });
     });
+}
+
+function sauvegarde(id, data, metaOnChange) {
+    $.post( '/Thesaurus/core/controllers/concept.php?action=change_' + metaOnChange, {
+        id : id,
+        data : data
+    },
+    function( json ) {
+        terminal.open(json.consolMsg);
+
+        console.log(json);
+
+        if (json.isOk) {
+            cache.getConcept(true, id);
+        }
+    }, 'json' )
+    .fail(function(erreur) { console.error(erreur); });
 }

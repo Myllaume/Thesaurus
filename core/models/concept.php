@@ -167,7 +167,8 @@ class Concept {
 
     public function select_personne_bdd($bdd) {
         $request = $bdd->prepare('SELECT id, nom, profession, genre, nationalite
-            FROM Personnes WHERE id_concept = :id');
+        FROM Personnes INNER JOIN Concepts_Personnes ON Personnes.id = Concepts_Personnes.id_personne
+        WHERE id_concept = :id');
         $is_valid_request = $request->bindValue(':id', $this->id, PDO::PARAM_INT);
         $is_valid_request &= $request->execute();
 

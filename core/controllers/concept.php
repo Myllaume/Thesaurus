@@ -177,43 +177,47 @@ switch ($_GET['action']) {
 
             try {
 
-                $request_del = $bdd->prepare('DELETE FROM Personnes WHERE id_concept=:id_concept');
-                $is_valid_request_del = $request_del->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
-                $is_valid_request_del &= $request_del->execute();
-
-                if (!$is_valid_request_del) { break; }
-
-                $request_add = $bdd->prepare('INSERT INTO Personnes SET
-                nom=:nom, profession=:profession, genre=:genre,
-                nationalite=:nationalite, id_concept=:id_concept');
-
                 foreach ($_POST['data'] as $ligne) {
                     $ligne = explode(", ", $ligne);
-                    $ligne_tab = [];
 
-                    $ligne_tab['nom'] = $ligne[0];
-                    $is_valid_request_add = $request_add->bindValue(':nom', $ligne[0], PDO::PARAM_STR);
+                    $request_count = $bdd->prepare('SELECT COUNT(id) FROM Personnes WHERE id=:id');
 
-                    $ligne_tab['profession'] = $ligne[1];
-                    $is_valid_request_add &= $request_add->bindValue(':profession', $ligne[1], PDO::PARAM_STR);
+                    $request_update = $bdd->prepare('UPDATE Personnes SET nom=:nom, profession=:profession,
+                    genre=:genre, nationalite=:nationalite WHERE id=:id');
 
-                    $ligne_tab['genre'] = $ligne[2];
-                    $is_valid_request_add &= $request_add->bindValue(':genre', $ligne[2], PDO::PARAM_STR);
+                    $request_add = $bdd->prepare('INSERT INTO Personnes SET
+                            nom=:nom, profession=:profession, genre=:genre, nationalite=:nationalite');
+                    
+                    $request_link = $bdd->prepare('INSERT INTO Concepts_Personnes SET
+                            id_concept=:id_concept, id_personne=:id_personne');
 
-                    $ligne_tab['nationalite'] = $ligne[3];
-                    $is_valid_request_add &= $request_add->bindValue(':nationalite', $ligne[3], PDO::PARAM_STR);
+                    if (isset($ligne[4]) && !empty($ligne[4])) {
+                        $is_valid_request_count = $request_count->bindValue(':id', $ligne[4], PDO::PARAM_INT);
+                        $is_valid_request_count &= $request_count->execute();
 
-                    array_push($data, $ligne_tab);
+                        if ($request_count->fetchColumn() != 0) {
+                            $is_valid_request_link = $request_link->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
+                            $is_valid_request_link &= $request_link->bindValue(':id_personne', $ligne[4], PDO::PARAM_INT);
+                            $is_valid_request_link &= $request_link->execute();
+                        }
 
-                    $is_valid_request_add &= $request_add->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
+                    } else { 
+                        $is_valid_request_add = $request_add->bindValue(':nom', $ligne[0], PDO::PARAM_STR);
+                        $is_valid_request_add &= $request_add->bindValue(':profession', $ligne[1], PDO::PARAM_STR);
+                        $is_valid_request_add &= $request_add->bindValue(':genre', $ligne[2], PDO::PARAM_STR);
+                        $is_valid_request_add &= $request_add->bindValue(':nationalite', $ligne[3], PDO::PARAM_STR);
+                        $is_valid_request_add &= $request_add->execute();
 
-                    $is_valid_request_add &= $request_add->execute();
-    
-                    if (!$is_valid_request_add) {break 2;}
+                        $id_personne = $bdd->lastInsertId();
+                        
+                        $is_valid_request_link = $request_link->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
+                        $is_valid_request_link &= $request_link->bindValue(':id_personne', $id_personne, PDO::PARAM_INT);
+                        $is_valid_request_link &= $request_link->execute();
+                    }
                 }
     
                 $is_ok = true;
-                $consol_msg = 'Termes employés modifiés';
+                $consol_msg = 'Personnes modifiées';
             } catch (Exception $error) {
                 $consol_msg = $error;
             }
