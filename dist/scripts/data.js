@@ -86,39 +86,27 @@ function assignData(obj, isOk) {
  * @return {Promise}
  */
 
-function sauvegardeAuto(input, metaOnChange, immediat = false) {
+function sauvegardeAuto(input, metaOnChange) {
     return new Promise((resolve, reject) => {
 
-        if (immediat) { var delais = 0; }
-        else { var delais = 10000; }
-
         var lastContent = input.value;
-        var newContent = input.value;
+        
         // id = id de concept enregistré dans la session
         var id = sessionStorage.getItem('idConcept');
 
-        input.addEventListener('input', () => {
-            // contenu actualité en temps réel
-            newContent = input.value;
-            // la session est en mode édition -> navigation bloquée
-            sessionStorage.setItem('inEdition', true);
-        });
-        
-        var retardateur = setInterval(() => {
+        input.addEventListener('blur', () => {
+            var newContent = input.value;
+
             if (lastContent !== newContent) {
-                // si le contenu précédemment enregistré est différent de l'actuel
-                $.post( '/Thesaurus/core/controllers/concept.php?action=change_' + metaOnChange,
-                {
+                $.post( '/Thesaurus/core/controllers/concept.php?action=change_' + metaOnChange, {
                     id : id,
                     data : input.value
                 },
                 function( json ) {
                     terminal.open(json.consolMsg);
-
+    
                     if (json.isOk) {
-                        console.log(json);
-                        
-                        cache.getConcept(false, id);
+                        cache.getConcept(true, id);
                         sessionStorage.setItem('inEdition', false);
                         resolve({
                             content: input.value, // = contenu enregistré
@@ -130,15 +118,7 @@ function sauvegardeAuto(input, metaOnChange, immediat = false) {
                 }, 'json' )
                 .fail(function(erreur) {
                     reject(erreur); });
-
-                // le contenu enregistré devient contenu actuel à comparer
-                lastContent = newContent;
             }
-
-            /** si le focus a été fait sur un autre élément que le input,
-            stoper les enregistrements */
-            if (document.activeElement !== input) { clearInterval(retardateur); }
-        }, delais);
-
+        });
     });
 }
