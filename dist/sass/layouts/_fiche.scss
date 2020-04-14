@@ -1,5 +1,16 @@
 .fiche {
-    padding: 3rem 0;
+    padding-top: 3rem;
+    box-sizing: border-box;
+    height: calc(100% - 2px);
+
+    &__volet {
+        height: 50%;
+        overflow: auto;
+        
+        &--border {
+            border: 1px solid $color-rouge;
+        }
+    }
 }
 
 .form-upload {
@@ -18,5 +29,17 @@
     &__icon {
         width: 70px;
         margin-right: 2rem;
+    }
+}
+
+.zone-lecture {
+    // position: absolute;
+    // bottom: 0px;
+    // right: 0px;
+    height: calc(100% - 2px);
+    // width: 100%;
+    
+    pre {
+        overflow: auto;
     }
 }

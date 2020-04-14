@@ -37,7 +37,7 @@ else { $is_op = 'false'; }
             <section class="section navigation">
                 <header class="section__entete list">
                     <div id="navigation-btn" class="onglet-titre list__btn">
-                        Navigation
+                        Navigation  ▼
                     </div>
                     <ul id="navigation-list" class="list__content">
                         <li class="onglet-titre" data-onglet-aside="1">Arborescence</li>
