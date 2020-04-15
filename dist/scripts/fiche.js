@@ -6,6 +6,7 @@ var fiche = {
 
     set: function(array) {
         this.content.innerHTML = '';
+        this.reader.innerHTML = '';
         
         array.forEach(line => {
             this.add(line);
@@ -51,7 +52,10 @@ var fiche = {
         });
         
     },
-    send: function(data) {
+    send: function(e) {
+        e.preventDefault();
+        var data = new FormData(fiche.form);
+
         $.ajax({
             url: '/Thesaurus/core/controllers/upload.php?id=' + sessionStorage.getItem('idConcept'),
             type: 'POST',
@@ -71,16 +75,10 @@ var fiche = {
     canEdit: function(bool) {
         if (bool === true) {
             this.form.classList.add('form-upload--active');
-
-            this.form.addEventListener('input', (e) => {
-                e.preventDefault();
-                
-                var formData = new FormData(this.form);
-            
-                this.send(formData);
-            });
+            this.form.addEventListener('input', this.send);
         } else {
             this.form.classList.remove('form-upload--active');
+            this.form.removeEventListener('input', this.send);
         }
     },
     read: function(idFiche) {
@@ -90,10 +88,8 @@ var fiche = {
         },
         function( json ) {
             terminal.open(json.consolMsg);
-            console.log(json);
 
             fiche.reader.innerHTML = json.data;
-            
         }, 'json' )
         .fail(function (error) { resolve(error); });
     }

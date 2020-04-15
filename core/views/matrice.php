@@ -6,7 +6,7 @@
     </section>
 
     <section class="matrice__bloc matrice__bloc--centre">
-        <textarea id="concept" class="matrice__cadre text-center" readonly></textarea>
+        <textarea id="concept" class="text-center" readonly></textarea>
     </section>
 
     <section class="matrice__bloc matrice__bloc--bas">

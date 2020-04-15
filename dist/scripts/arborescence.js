@@ -43,8 +43,8 @@ var arborescence = {
     showNode: function(idConcept = sessionStorage.getItem('idConcept')) {
         var node = this.findNode(idConcept);
         if (node == null) { return false; }
+        node.classList.add('--active');
         var nodeTab = [node];
-        nodeTab[nodeTab.length-1].classList.add('--active');
 
         while (nodeTab[nodeTab.length-1] !== this.racine) {
             nodeTab.push(nodeTab[nodeTab.length-1].parentNode); }
@@ -116,6 +116,8 @@ function changeConcept(e) {
     history.pushState({}, 'concept ' + idConcept, idConcept);
     historique.actualiser();
     sessionStorage.setItem('idConcept', idConcept);
+
+    arborescence.showNode();
 
     /** afficher les informations du concept dans les panneaux de visualisation
     et dans la session */
@@ -233,8 +235,7 @@ function modifAssocie(e) {
 /**
  * ajout d'un concept à la racine de l'arboresence
 */
-
-function createConcept() {
+function createConcept() {    
     $.get( '/Thesaurus/core/controllers/concept.php' , {
         action: 'add_concept',
         nom: 'Nouveau concept',

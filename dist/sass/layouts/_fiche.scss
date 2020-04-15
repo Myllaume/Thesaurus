@@ -1,14 +1,17 @@
 .fiche {
     padding-top: 3rem;
     box-sizing: border-box;
-    height: calc(100% - 2px);
+    height: calc(100% - 42px);
 
     &__volet {
         height: 50%;
         overflow: auto;
+        padding: 1rem;
         
         &--border {
-            border: 1px solid $color-rouge;
+            border-top: 1px solid $color-rouge;
+            border-bottom: 1px solid $color-rouge;
+            border-left: 1px solid $color-rouge;
         }
     }
 }
@@ -33,11 +36,7 @@
 }
 
 .zone-lecture {
-    // position: absolute;
-    // bottom: 0px;
-    // right: 0px;
     height: calc(100% - 2px);
-    // width: 100%;
     
     pre {
         overflow: auto;

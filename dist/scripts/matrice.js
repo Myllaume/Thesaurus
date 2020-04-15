@@ -9,23 +9,38 @@ var matrice = {
         this.inputConcept.value = text;
     },
     setConceptGenerique: function (obj) {
+        this.inputConceptGenerique.innerHTML = '';
         if (!obj) { return; }
-        this.inputConceptGenerique
-            .innerHTML = '<a href="' + obj.id + '">' + obj.nom + '</a>';
+
+        var span = document.createElement('span');
+        span.dataset.id = obj.id;
+        span.textContent = obj.nom;
+        this.inputConceptGenerique.appendChild(span);
+        span.addEventListener('click', changeConcept);
     },
     setConceptSpecifique: function (array) {
-        var html = '';
+        this.inputConceptSpecifique.innerHTML = '';
+        if (!array) { return; }
 
-        if (array) { html = this.list(array); }
-
-        this.inputConceptSpecifique.innerHTML = html;
+        array.forEach(elt => {
+            var span = document.createElement('li');
+            span.dataset.id = elt.id;
+            span.textContent = elt.nom;
+            this.inputConceptSpecifique.appendChild(span);
+            span.addEventListener('click', changeConcept);
+        });
     },
     setConceptAssocie: function (array) {
-        var html = '';
+        this.inputConceptAssocie.innerHTML = '';
+        if (!array) { return; }
 
-        if (array) { html = this.list(array); }
-
-        this.inputConceptAssocie.innerHTML = html;
+        array.forEach(elt => {
+            var span = document.createElement('li');
+            span.dataset.id = elt.id;
+            span.textContent = elt.nom;
+            this.inputConceptAssocie.appendChild(span);
+            span.addEventListener('click', changeConcept);
+        });
     },
     setTermeEmploye: function (array) {
         var text = '';
@@ -33,19 +48,6 @@ var matrice = {
             text += elt.nom + '\r\n'; });
 
         this.inputTermeEmploye.value = text;
-    },
-    /**
-     * @param { Array } - Tableau de noms
-     * @return { String } - Code html
-     * ---
-     * Créer une liste à partir d'éléments en tableau
-     */
-    list: function (array) {
-        var html = '';
-        array.forEach(line => {
-            html += '<li><a href="' + line.id + '">' + line.nom + '</a></li>'; });
-
-        return html;
     },
     traitement: function (obj) {
         this.setConcept(obj.nom);

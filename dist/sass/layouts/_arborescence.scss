@@ -1,7 +1,7 @@
 .arborescence {
     padding: 3rem 0;
 
-    ul {
+    &__section {
         list-style: none;
         margin: 0;
 
@@ -21,11 +21,17 @@
 
     }
 
-    li {
+    &__elt {
         position: relative;
         cursor: pointer;
         margin: .5rem 0;
-        padding: .5rem;
+        
+        span {
+            margin: .5rem;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+        }
 
         &:hover {
             background-color: $color-rose;
@@ -39,22 +45,16 @@
     &__arrow {
         @extend %font-code;
         cursor: pointer;
-        background-color: transparent;
-        border: unset;
-        padding: .2rem;
-        width: 20px;
-        height: 20px;
-        border-radius: 2px;
-        transition: background-color .1s,
-            transform .1s;
-
-        &:hover {
-            background-color: $color-rose;
-        }
-    }
-
-    &__arrow {
         position: absolute;
         left: -25px;
+        top: 12px;
+        background-color: transparent;
+        border: unset;
+        color: $color-rouge;
+        transition: transform .1s;
+
+        // &--active {
+        //     transform: rotate(45deg);
+        // }
     }
 }
