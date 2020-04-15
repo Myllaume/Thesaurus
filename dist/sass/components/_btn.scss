@@ -9,11 +9,8 @@
     font-size: 1.4rem;
     text-decoration: unset;
 
-    &--hidden {
-        display: none;
-    }
-
     &--active {
+        border: 1px solid $color-rouge;
         background-color: $color-rose;
         color: black;
     }

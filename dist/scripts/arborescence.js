@@ -53,8 +53,8 @@ var arborescence = {
     },
     // affiche le bouton d'édition
     canEdit: function(bool) {
-        if (bool) { this.btnAddConcept.classList.remove('btn--hidden'); }
-        else { this.btnAddConcept.classList.add('btn--hidden'); }
+        if (bool) { this.btnAddConcept.classList.remove('--hidden'); }
+        else { this.btnAddConcept.classList.add('--hidden'); }
     }
 }
 

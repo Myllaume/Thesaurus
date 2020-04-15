@@ -1,41 +1,44 @@
 <label for="search-sujet" class="libelle">Objet</label>
 <select id="search-sujet">
-    <option value="concept">concept</option>
-    <option value="fiche">fiche</option>
-    <option value="personne">personne</option>
+    <option value="empty" selected></option>
+    <option value="Concepts">concept</option>
+    <option value="Fiches">fiche</option>
+    <option value="Personnes">personne</option>
+    <option value="Documents">document</option>
 </select>
 
-<!-- concept -->
-<label for="search-sujet" class="libelle">Métadonnées</label>
-<select>
-    <option value="0">nom</option>
-    <option value="0">description</option>
-    <option value="0">emplois</option>
+<select id="search-Concepts" class="--hidden">
+    <option value="nom" selected>nom</option>
+    <option value="description">description</option>
+    <option value="emplois">emplois</option>
 </select>
-<!-- fiche -->
-<select class="--hidden">
-    <option value="0">titre</option>
-    <option value="0">date</option>
-    <option value="0">type</option>
+
+<select id="search-Fiches" class="--hidden">
+    <option value="titre" selected>titre</option>
+    <option value="date">date</option>
+    <option value="type">type</option>
 </select>
-<!-- personne -->
-<select class="--hidden">
-    <option value="0">nom</option>
-    <option value="0">profession</option>
+
+<select id="search-Personnes" class="--hidden">
+    <option value="nom" selected>nom</option>
+    <option value="profession">profession</option>
+    <option value="genre">genre</option>
+    <option value="nationalite">nationalité</option>
 </select>
-<!-- document -->
-<select class="--hidden">
-    <option value="0">titre</option>
-    <option value="0">auteur</option>
-    <option value="0">editeur</option>
-    <option value="0">date</option>
-    <option value="0">type</option>
+
+<select id="search-Documents" class="--hidden">
+    <option value="titre" selected>titre</option>
+    <option value="auteur">auteur</option>
+    <option value="editeur">editeur</option>
+    <option value="date">date</option>
+    <option value="type">type</option>
 </select>
-<input id="search-input" class="search-tool" type="search" role="search" placeholder="Rechercher">
 
 <div>
-    <button class="btn btn--active">Croissant</button>
-    <button class="btn">Décroissant</button>
+    <button id="order-croissant" class="btn btn--active index__btn --hidden" data-sort="croissant">Croissant</button>
+    <button id="order-descroissant" class="btn index__btn --hidden" data-sort="decroissant">Décroissant</button>
 </div>
 
-<?php include './cache/index.html'; ?>
+<input id="search-input" class="search-tool --hidden" type="search" role="search" placeholder="Rechercher">
+
+<section id="search-board" class="index__board"></section>

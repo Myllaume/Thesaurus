@@ -1,6 +1,8 @@
 <?php
 
-if (!isset($_GET) || empty($_GET['element']) || empty($_GET['critere'])) {
+if (!isset($_GET) || !isset($_GET['objet']) || empty($_GET['objet'])
+    || !isset($_GET['critere']) || empty($_GET['critere'])
+    || !isset($_GET['terme']) || !isset($_GET['sort']) || !isset($_GET['render'])) {
     exit;
 }
 
@@ -11,29 +13,40 @@ $data = [];
 require '../bdd.php';
 $bdd = connexionBdd();
 
-switch ($_GET['element']) {
-    case 'personne':
-        
-        switch ($_GET['critere']) {
-            case 'nom':
+if ($_GET['sort'] == 'decroissant') { $order = 'DESC'; }
+else { $order = 'ASC'; }
 
-                if (!isset($_GET['terme']) || empty($_GET['terme'])) {
-                    $consol_msg = 'Erreur recherche ' . $_GET['element'] . ' par ' . $_GET['critere'] . ' : aucun terme précisé';
-                    echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
-                    exit;
-                }
+$request = $bdd->prepare('SELECT * FROM '.$_GET['objet'].' ORDER BY :critere ' . $order);
+$is_valid_request &= $request->bindValue(':critere', $_GET['critere'], PDO::PARAM_STR);
 
-                $request = $bdd->prepare('SELECT id, nom AS libelle, profession, genre, nationalite
-                FROM Personnes WHERE nom LIKE "'. $_GET['terme'] . '%"');
-                $is_valid_request &= $request->execute();
+if (!empty($_GET['terme'])) {
+    $request = $bdd->prepare('SELECT * FROM '.$_GET['objet'].' WHERE :critere LIKE ":terme" ORDER BY :critere ' . $order);
+    $is_valid_request &= $request->bindValue(':critere', $_GET['critere'], PDO::PARAM_STR);
+    $is_valid_request &= $request->bindValue(':terme', $_GET['terme'].'%', PDO::PARAM_STR);
+}
 
-                $is_ok = true;
-                $consol_msg = 'Succès recherche ' . $_GET['element'] . ' par ' . $_GET['critere'];
-                $data = $request->fetchAll(PDO::FETCH_ASSOC);
-                break;
+try {
+    
+    $is_valid_request &= $request->execute();
+    $data = $request->fetchAll(PDO::FETCH_ASSOC);
+    
+} catch (Exception $error) {
+    $consol_msg = $error;
+}
+
+switch ($_GET['render']) {
+    case 'table':
+        $table = '<table><thead><tr><th>Nom</th><tr></thead><tbody>';
+        foreach ($data as $ligne) {
+            $table .= '<tr><td>' . $ligne[$_GET['critere']] . '</td></tr>';
         }
+        $table .= '</tbody></table>';
 
+        $data = $table;
         break;
 }
+
+$is_ok = true;
+$consol_msg = 'Fonctionne.';
 
 echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
