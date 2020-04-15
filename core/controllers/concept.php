@@ -172,33 +172,34 @@ switch ($_GET['action']) {
 
             if (!isset($_POST['data']) || empty($_POST['data'])
             || empty($_POST['id'])) { break; }
-    
-            $_POST['data'] = explode("\n", $_POST['data']);
 
             try {
+                $request_count = $bdd->prepare('SELECT COUNT(id) FROM Personnes WHERE id=:id');
 
-                foreach ($_POST['data'] as $ligne) {
-                    $ligne = explode(", ", $ligne);
-
-                    $request_count = $bdd->prepare('SELECT COUNT(id) FROM Personnes WHERE id=:id');
-
-                    $request_update = $bdd->prepare('UPDATE Personnes SET nom=:nom, profession=:profession,
+                $request_update = $bdd->prepare('UPDATE Personnes SET nom=:nom, profession=:profession,
                     genre=:genre, nationalite=:nationalite WHERE id=:id');
 
-                    $request_add = $bdd->prepare('INSERT INTO Personnes SET
-                            nom=:nom, profession=:profession, genre=:genre, nationalite=:nationalite');
-                    
-                    $request_link = $bdd->prepare('INSERT INTO Concepts_Personnes SET
-                            id_concept=:id_concept, id_personne=:id_personne');
+                $request_add = $bdd->prepare('INSERT INTO Personnes SET
+                    nom=:nom, profession=:profession, genre=:genre, nationalite=:nationalite');
+                
+                $request_link = $bdd->prepare('INSERT INTO Concepts_Personnes SET
+                    id_concept=:id_concept, id_personne=:id_personne');
+
+                foreach ($_POST['data'] as $ligne) {
 
                     if (isset($ligne[4]) && !empty($ligne[4])) {
                         $is_valid_request_count = $request_count->bindValue(':id', $ligne[4], PDO::PARAM_INT);
                         $is_valid_request_count &= $request_count->execute();
 
                         if ($request_count->fetchColumn() != 0) {
-                            $is_valid_request_link = $request_link->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
-                            $is_valid_request_link &= $request_link->bindValue(':id_personne', $ligne[4], PDO::PARAM_INT);
-                            $is_valid_request_link &= $request_link->execute();
+                            $is_valid_request_update = $request_update->bindValue(':nom', $ligne[0], PDO::PARAM_STR);
+                            $is_valid_request_update &= $request_update->bindValue(':profession', $ligne[1], PDO::PARAM_STR);
+                            $is_valid_request_update &= $request_update->bindValue(':genre', $ligne[2], PDO::PARAM_STR);
+                            $is_valid_request_update &= $request_update->bindValue(':nationalite', $ligne[3], PDO::PARAM_STR);
+                            
+                            // $is_valid_request_link = $request_link->bindValue(':id_concept', $_POST['id'], PDO::PARAM_INT);
+                            // $is_valid_request_link &= $request_link->bindValue(':id_personne', $ligne[4], PDO::PARAM_INT);
+                            // $is_valid_request_link &= $request_link->execute();
                         }
 
                     } else { 
@@ -216,8 +217,9 @@ switch ($_GET['action']) {
                     }
                 }
     
+                $data = $_POST;
                 $is_ok = true;
-                $consol_msg = 'Personnes modifiées';
+                $consol_msg = 'Personnes';
             } catch (Exception $error) {
                 $consol_msg = $error;
             }

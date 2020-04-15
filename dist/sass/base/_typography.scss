@@ -44,6 +44,16 @@ a {
     color: $color-rouge;
 }
 
+.model {
+    margin-left: 1rem;
+    font-size: 1.4rem;
+
+    .--active {
+        @extend %font-body-medium;
+        text-decoration: underline;
+    }
+}
+
 .text-center {
     text-align: center;
 }

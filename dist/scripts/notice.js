@@ -1,7 +1,12 @@
 var notice = {
     inputDescription: document.querySelector('#concept-description'),
     inputDocuments: document.querySelector('#concept-document'),
-    inputPersonnes: document.querySelector('#concept-personne'),
+    personnes: {
+        input: document.querySelector('#concept-personne'),
+        memoire: [],
+        models: document.querySelectorAll('[data-personne-model]')
+    },
+    inputPersonnesMemory: [],
     setDescription: function (text) {
         this.inputDescription.value = text;
     },
@@ -16,12 +21,18 @@ var notice = {
     },
     setPersonne: function (array) {
         var text = '';
+        let i = 0;
         array.forEach(elt => {
             var tab = [elt.nom, elt.profession, elt.genre, elt.nationalite, elt.id];
-            text += tab.join(', ') + '\r\n';
+            this.personnes.memoire.push(tab);
+
+            if (i == array.length - 1) { text += tab.join(', '); }
+            else { text += tab.join(', ') + '\r\n'; }
+
+            i++;
         });
 
-        this.inputPersonnes.value = text;
+        this.personnes.input.value = text;
     },
     traitement: function (obj) {
         this.setDescription(obj.description);
@@ -32,7 +43,7 @@ var notice = {
         bool = !bool; // inversion
         this.inputDescription.readOnly = bool;
         this.inputDocuments.readOnly = bool;
-        this.inputPersonnes.readOnly = bool;
+        this.personnes.input.readOnly = bool;
     }
 }
 
@@ -42,37 +53,55 @@ notice.inputDescription.addEventListener('focus', () => {
 notice.inputDocuments.addEventListener('focus', () => {
     sauvegardeAuto(notice.inputDocuments, 'document'); });
 
-notice.inputPersonnes.addEventListener('focus', () => {
-    var initialVal = notice.inputPersonnes.value;
-    var searchResult = notice.inputPersonnes.nextElementSibling;
+notice.personnes.input.addEventListener('focus', () => {
     
-    var firstResult = document.createElement('span');
-    notice.inputPersonnes.after(firstResult);
-    firstResult.addEventListener('click', () => {
-        sauvegarde(sessionStorage.getItem('idConcept'), notice.inputPersonnes.value, 'personne'); });
-
-    notice.inputPersonnes.addEventListener('input', () => {
-        var totalVal = notice.inputPersonnes.value;
-        var splitVal = totalVal.split('\n');
-
-        firstResult.textContent = splitVal[splitVal.length - 1];
-
-        search('personne', 'nom', splitVal[splitVal.length - 1])
-        .then(function(data) {
-            searchResult.innerHTML = '';
+    notice.personnes.input.addEventListener('input', () => {
+        var totalVal = notice.personnes.input.value;
+        var lines = totalVal.split('\n');
+    
+        // console.log(notice.inputPersonnesMemory[1]);
+    
+        let i= 0;
+        lines.forEach(line => {
+            var chaine = line.split(', ');
+            // console.log(chaine);
+            // notice.personnes.models[chaine.length - 1].classList.add('--active');
+    
+                switch (chaine.length - 1) {
+                    case 0:
+                        notice.personnes.models[0].classList.add('--active');
+                        break;
+                    case 1:
+                        notice.personnes.models[1].classList.add('--active');
+                        break;
+                    case 2:
+                        notice.personnes.models[2].classList.add('--active');
+                        break;
+                    case 3:
+                        notice.personnes.models[3].classList.add('--active');
+                        break;
+                    case 4:
+                        notice.personnes.models[4].classList.add('--active');
+                        break;
+                }
             
-            data.forEach(line => {
-                var listElementSearch = document.createElement('li');
-                listElementSearch.textContent = line.libelle;
-                searchResult.appendChild(listElementSearch);
-
-                listElementSearch.addEventListener('click', () => {
-                    var tab = [line.libelle, line.profession, line.genre, line.nationalite, line.id];
-                    notice.inputPersonnes.value = initialVal + tab.join(', ');
-                    initialVal = notice.inputPersonnes.value;
-                    sauvegarde(sessionStorage.getItem('idConcept'), notice.inputPersonnes.value, 'personne');
-                });
-            });
+                notice.personnes.memoire[i] = chaine;
+    
+    
+            i++;
         });
     });
+
+    
+    notice.personnes.input.addEventListener('blur', () => {
+        console.log(notice.personnes.memoire);
+        
+        sauvegarde(sessionStorage.getItem('idConcept'), notice.personnes.memoire, 'personne');
+
+    });
 });
+
+// notice.personnes.input.addEventListener('blur', () => {
+//     // console.log(notice.personnes.memoire);
+//     sauvegarde(sessionStorage.getItem('idConcept'), notice.personnes.memoire, 'personne');
+// });
