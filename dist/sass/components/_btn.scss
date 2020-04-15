@@ -15,3 +15,28 @@
         color: black;
     }
 }
+
+.btn-lite {
+    @extend %font-body-italic;
+    cursor: pointer;
+    background-color: transparent;
+    color: $color-rouge;
+    border: unset;
+    font-size: 1.4rem;
+    text-decoration: unset;
+
+    &--active {
+        border: 1px solid $color-rouge;
+        background-color: $color-rose;
+        color: black;
+    }
+}
+
+.btn-push {
+    cursor: pointer;
+    border: 1px solid $color-rouge;
+    background-color: $color-fond;
+    color: $color-rouge;
+    width: 40px;
+    height: 40px;
+}

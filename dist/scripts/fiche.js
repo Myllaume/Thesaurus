@@ -2,11 +2,14 @@ var fiche = {
     content: document.querySelector('#fiche'),
     input: document.querySelector('#input-upload'),
     form: document.querySelector('#form-upload'),
+    voletLecture: document.querySelector('.fiche__volet-lecture'),
+    bandeauEdition: document.querySelector('.fiche__btns-box'),
     reader: document.querySelector('#reader'),
+    btnExtend: document.querySelector('#reader-extend'),
 
     set: function(array) {
         this.content.innerHTML = '';
-        this.reader.innerHTML = '';
+        // this.reader.innerHTML = '';
         
         array.forEach(line => {
             this.add(line);
@@ -28,7 +31,7 @@ var fiche = {
         bandeau.classList.add('file__bandeau');
         icon_content.appendChild(bandeau);
 
-        var titre = document.createElement('h2');
+        var titre = document.createElement('span');
         titre.classList.add('file__titre');
         titre.textContent = obj.nom_sortie;
         bandeau.appendChild(titre);
@@ -38,12 +41,12 @@ var fiche = {
         bandeau.appendChild(contentBtns);
 
         var btnRead = document.createElement('button');
-        btnRead.classList.add('btn');
+        btnRead.classList.add('btn-lite');
         btnRead.textContent = 'Lire';
         contentBtns.appendChild(btnRead);
 
         var btnDowld = document.createElement('button');
-        btnDowld.classList.add('btn');
+        btnDowld.classList.add('btn-lite');
         btnDowld.textContent = 'Télécharger';
         contentBtns.appendChild(btnDowld);
 
@@ -74,10 +77,10 @@ var fiche = {
     },
     canEdit: function(bool) {
         if (bool === true) {
-            this.form.classList.add('form-upload--active');
+            this.bandeauEdition.classList.remove('fiche__btns-box--hidden');
             this.form.addEventListener('input', this.send);
         } else {
-            this.form.classList.remove('form-upload--active');
+            this.bandeauEdition.classList.add('fiche__btns-box--hidden');
             this.form.removeEventListener('input', this.send);
         }
     },
@@ -94,3 +97,7 @@ var fiche = {
         .fail(function (error) { resolve(error); });
     }
 };
+
+fiche.btnExtend.addEventListener('click', () => {
+    fiche.voletLecture.classList.toggle('fiche__volet-lecture--active');
+});

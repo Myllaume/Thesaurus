@@ -1,44 +1,79 @@
 .fiche {
+    position: relative;
     padding-top: 3rem;
     box-sizing: border-box;
-    height: calc(100% - 42px);
+    height: 100%;
 
-    &__volet {
-        height: 50%;
-        overflow: auto;
-        padding: 1rem;
-        
-        &--border {
-            border-top: 1px solid $color-rouge;
-            border-bottom: 1px solid $color-rouge;
-            border-left: 1px solid $color-rouge;
+    &__btns-box {
+        display: flex;
+        align-items: baseline;
+
+        &--hidden {
+            display: none;
         }
     }
-}
 
-.form-upload {
-    display: none;
+    &__volet-selection {
+        overflow: auto;
+        height: calc(50% - 1.6rem);
+    }
 
-    &--active {
-        display: block;
+    &__volet-lecture {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        overflow: auto;
+        height: 50%;
+        width: 100%;
+        border-top: 1px solid $color-rouge;
+        border-left: 1px solid $color-rouge;
+        background-color: $color-fond;
+        transition: height .8s;
+
+        &--active {
+            height: 90%;
+        }
     }
 }
 
 .file {
     display: flex;
-    height: 100px;
-    margin: 3rem 0;
+    padding: 1rem 0;
+    
+    &:not(:last-child) {
+        border-bottom: 1px solid $color-rouge;
+    }
+
+    &__bandeau {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__title {
+        font-size: 2rem;
+        line-height: unset;
+    }
     
     &__icon {
-        width: 70px;
+        width: 20px;
         margin-right: 2rem;
+    }
+
+    &__btns {
+        margin-left: 2rem;
     }
 }
 
 .zone-lecture {
-    height: calc(100% - 2px);
-    
-    pre {
-        overflow: auto;
+    overflow: auto;
+    box-sizing: border-box;
+    padding: 1rem;
+    height: 100%;
+
+    &__btn-extand {
+        position: absolute;
+        top: -1px;
+        right: 0px;
     }
 }
