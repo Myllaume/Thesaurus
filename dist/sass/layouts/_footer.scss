@@ -13,3 +13,41 @@ footer {
         text-decoration: none;
     }
 }
+
+.export {
+    &__btn {
+        position: absolute;
+        right: -1px;
+        bottom: 0px;
+    }
+
+    &__window {
+        visibility: hidden;
+        position: absolute;
+        background-color: $color-rose;
+        border: 1px solid $color-rouge;
+        color: $color-rouge;
+        bottom: 300%;
+        right: 10px;
+        width: 150px;
+        height: 150px;
+        transition: transform .2s;
+        transform: translateY(10px);
+        
+        &--visible {
+            transform: translateY(0px);
+            visibility: visible;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 0px;
+            width: 20px;
+            height: 20px;
+            clip-path: polygon(50% 80%, 0 0, 100% 0);
+            background-color: $color-rouge;
+        }
+    }
+}

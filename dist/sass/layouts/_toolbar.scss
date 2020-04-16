@@ -10,7 +10,8 @@
     }
 
     &__window {
-        display: none;
+        user-select: none;
+        visibility: hidden;
         position: absolute;
         top: 100%;
         left: 20px;
@@ -19,9 +20,23 @@
         border: 1px solid $color-rouge;
         color: $color-rouge;
         padding-left: .8rem;
+        transition: transform .2s;
+        transform: translateY(-10px);
 
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 22px;
+            width: 20px;
+            height: 20px;
+            clip-path: polygon(50% 15%, 0% 100%, 100% 100%);
+            background-color: $color-rouge;
+        }
+        
         &--visible {
-            display: block;
+            transform: translateY(-0px);
+            visibility: visible;
         }
     }
 

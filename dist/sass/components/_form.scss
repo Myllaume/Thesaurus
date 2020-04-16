@@ -4,7 +4,6 @@ input, textarea {
     background-color: transparent;
     font-size: inherit;
     color: inherit;
-    resize: vertical;
     width: 100%;
 
     &[type="file"] {
@@ -14,6 +13,7 @@ input, textarea {
 
 textarea {
     padding: 1rem;
+    resize: vertical;
 }
 
 select {
