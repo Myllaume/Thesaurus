@@ -125,12 +125,18 @@ switch ($_GET['element']) {
             if (!$is_valid_request) { throw new Exception("Erreur bdd : SELECT Files"); }
             $fiche_metas = $request->fetch(PDO::FETCH_ASSOC);
 
-            include_once '../../libs/Parsedown.php';
-            include_once '../../functions/files.php';
+            $path = '../../upload/' . $fiche_metas['nom_enregistrement'] . '.' . $fiche_metas['extension'];
+            $data['path'] = $path;
 
-            $data = markdown_to_html('../../upload/' . $fiche_metas['nom_enregistrement'] . '.' . $fiche_metas['extension']);
+            if (isset($_GET['markdown']) && $_GET['markdown'] == 'true') {
+                $data['content'] = file_get_contents($path);
+            } else {
+                include_once '../../libs/Parsedown.php';
+                include_once '../../functions/files.php';
+                $data['content'] = markdown_to_html($path);
+            }
 
-            file_put_contents('../../cache/' . $fiche_metas['nom_enregistrement'] . '.html', $data);
+            // file_put_contents('../../cache/' . $fiche_metas['nom_enregistrement'] . '.html', $data);
 
             $is_ok = true;
             $consol_msg = 'Fiche générée.';

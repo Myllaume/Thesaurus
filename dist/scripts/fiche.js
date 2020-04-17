@@ -1,24 +1,45 @@
 var fiche = {
-    content: document.querySelector('#fiche'),
-    input: document.querySelector('#input-upload'),
-    form: document.querySelector('#form-upload'),
-    voletLecture: document.querySelector('.fiche__volet-lecture'),
+    // bloc où insérer les badeaux des fiches
+    allFichesContent: document.querySelector('#fiche'),
+    formUpload: document.querySelector('#form-upload'),
+    // contenant des boutons de création et de téléversement des fiches
     bandeauEdition: document.querySelector('.fiche__btns-box'),
-    reader: document.querySelector('#reader'),
+    // contenant extensible des blocs de lecture et écriture
+    voletLecture: document.querySelector('.fiche__volet-lecture'),
+    // bouton permettant d'étendre le voletLecture
     btnExtend: document.querySelector('#reader-extend'),
-
+    // textarea d'édition des fiches
+    writer: document.querySelector('#writer'),
+    // bloc de lecture des fiches
+    reader: document.querySelector('#reader'),
+    // informations sur la fiche en cours de lecture
+    metas: {
+        path: null,
+        id: null
+    },
+    /**
+     * @param { Array } array - Tableau listant toutes les fiches
+     * Les fiches retrouvée dans la base de données ou le cache sont
+     * insérées une à dans le allFichesContent
+     */
     set: function(array) {
-        this.content.innerHTML = '';
-        // this.reader.innerHTML = '';
+        this.allFichesContent.innerHTML = '';
+        this.writer.value = '';
+        this.reader.innerHTML = '';
         
         array.forEach(line => {
             this.add(line);
         });
     },
+    /**
+     * @param { JSON } obj - Metas de la base de données
+     * id, nom_enregistrement, nom_sortie,
+     * extension, date
+     */
     add: function(obj) {
         var icon_content = document.createElement('div');
         icon_content.classList.add('file');
-        this.content.appendChild(icon_content);
+        this.allFichesContent.appendChild(icon_content);
 
         var img = document.createElement('img');
         img.classList.add('file__icon')
@@ -51,13 +72,15 @@ var fiche = {
         contentBtns.appendChild(btnDowld);
 
         btnRead.addEventListener('click', () => {
-            this.read(obj.id);
+            // Si demande de lecture, on stocke l'id de la fiche
+            this.metas.id = obj.id;
+            this.read();
         });
         
     },
     send: function(e) {
         e.preventDefault();
-        var data = new FormData(fiche.form);
+        var data = new FormData(fiche.formUpload);
 
         $.ajax({
             url: '/Thesaurus/core/controllers/upload.php?id=' + sessionStorage.getItem('idConcept'),
@@ -75,29 +98,62 @@ var fiche = {
             }
         });
     },
+    // rendre tous les éléments relatifs au fiches éditables
     canEdit: function(bool) {
         if (bool === true) {
             this.bandeauEdition.classList.remove('fiche__btns-box--hidden');
-            this.form.addEventListener('input', this.send);
+            this.formUpload.addEventListener('input', this.send);
+            
+            this.writer.addEventListener('change', this.modif);
+            this.writer.readOnly = false;
+            this.writer.classList.add('zone-lecture--active');
+            this.reader.classList.remove('zone-lecture--active');
         } else {
             this.bandeauEdition.classList.add('fiche__btns-box--hidden');
-            this.form.removeEventListener('input', this.send);
+            this.formUpload.removeEventListener('input', this.send);
+
+            this.writer.removeEventListener('change', this.modif);
+            this.writer.readOnly = true;
+            this.writer.classList.remove('zone-lecture--active');
+            this.reader.classList.add('zone-lecture--active');
         }
     },
     read: function(idFiche) {
         $.get( '/Thesaurus/core/controllers/cache.php' , {
             element: 'fiche',
-            id: idFiche
+            id: fiche.metas.id,
+            markdown: sessionStorage.getItem('isOp')
         },
         function( json ) {
             terminal.open(json.consolMsg);
 
-            fiche.reader.innerHTML = json.data;
+            fiche.path = json.data.path;
+
+            if (sessionStorage.getItem('isOp') == 'true') {
+                fiche.writer.value = json.data.content; }
+            else { 
+                fiche.reader.innerHTML = json.data.content; }
         }, 'json' )
         .fail(function (error) { resolve(error); });
+    },
+    modif: function() {
+        $.post( '/Thesaurus/core/controllers/concept.php?action=change_fiche', {
+            id : fiche.metas.id,
+            data : fiche.writer.value,
+            path : fiche.path
+        },
+        function( json ) {
+            terminal.open(json.consolMsg);
+
+            if (json.isOk) {
+                cache.getConcept(true, id);
+            }
+        }, 'json' )
+        .fail(function(erreur) { console.error(erreur); });
     }
 };
 
 fiche.btnExtend.addEventListener('click', () => {
+    // extension du volet de lecture
     fiche.voletLecture.classList.toggle('fiche__volet-lecture--active');
 });

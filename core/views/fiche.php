@@ -16,8 +16,8 @@
 
     <div class="fiche__volet-lecture">
         <button id="reader-extend" class="btn-push zone-lecture__btn-extand">▲</button>
-        <!-- <section id="reader" class="zone-lecture"></section> -->
-        <textarea id="reader" class="zone-lecture"></textarea>
+        <section id="reader" class="zone-lecture"></section>
+        <textarea id="writer" class="zone-lecture" readonly></textarea>
     </div>
 
 </article>

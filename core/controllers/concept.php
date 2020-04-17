@@ -39,6 +39,29 @@ switch ($_GET['action']) {
         }
         break;
 
+    case 'change_fiche':
+
+        if (!isset($_POST['data']) || empty($_POST['data'])
+            || empty($_POST['id']) || !isset($_POST['path']) || empty($_POST['path'])) { break; }
+
+        try {
+            file_put_contents($_POST['path'], $_POST['data']);
+
+            $request = $bdd->prepare('UPDATE Files SET last_edition=:last_edition
+            WHERE id = :id');
+            $is_valid_request = $request->bindValue(':last_edition', date("Y-m-d"), PDO::PARAM_STR);
+            $is_valid_request &= $request->bindValue(':id', $_POST['id'], PDO::PARAM_INT);
+            $is_valid_request &= $request->execute();
+
+            if (!$is_valid_request) { throw new Exception("UPDATE Files last_edition échoué"); }
+
+            $is_ok = true;
+            $consol_msg = 'Fiche actualisée';
+        } catch (Exception $error) {
+            $consol_msg = $error;
+        }
+        break;
+    
     case 'change_description':
 
         if (!isset($_POST['data']) || empty($_POST['data'])
