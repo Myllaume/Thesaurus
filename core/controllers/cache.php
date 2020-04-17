@@ -36,7 +36,6 @@ switch ($_GET['element']) {
             $consol_msg = 'Données acquises.';
             $data = [
                 'notice' => [
-                    'type_id' => $class_concept->get_id_type(),
                     'description' => $class_concept->get_description(),
                     'document' => $class_concept->select_document_bdd($bdd),
                     'personne' => $class_concept->select_personne_bdd($bdd)
@@ -81,34 +80,6 @@ switch ($_GET['element']) {
         }
 
         break;
-    
-    case 'index':
-        try {
-            $request = $bdd->prepare('SELECT Concepts.id AS id, Concepts.nom AS nom, Types.nom AS type 
-                FROM Concepts INNER JOIN Types ON Concepts.id_type = Types.id');
-            $is_valid_request = $request->execute();
-            
-            if (!$is_valid_request) { throw new Exception("Erreur bdd : SELECT Concepts"); }
-            $concepts_list = $request->fetchAll(PDO::FETCH_ASSOC);
-            
-            $html = '<table><thead>';
-            $html .= '<tr><th>Nom</th><th>Type</th><tr>';
-            $html .= '</thead><tbody>';
-
-            foreach ($concepts_list as $nb => $line) {
-            $html .= '<tr><td>' . $line['nom'] . '</td><td>' . $line['type'] . '</td></tr>'; }
-
-            $html .= '</tbody></table>';
-
-            file_put_contents('../../cache/index.html', $html);
-
-            $is_ok = true;
-            $consol_msg = 'Index généré.';
-        } catch (Exception $error) {
-            $consol_msg = 'Erreur de génération index : ' . $error;
-        }
-
-        break;
 
     case 'fiche':
         try {
@@ -144,51 +115,6 @@ switch ($_GET['element']) {
             $consol_msg = 'Erreur de génération index : ' . $error;
         }
 
-        break;
-    
-    case 'select_concept':
-        require '../../functions/navigation.php';
-
-        try {
-            include '../models/concept.php';
-            
-            $html = '<ul class="select list__content">';
-            foreach (Concept::import_bdd($bdd) as $ligne_nb => $ligne) {
-                $html .= '<li data-concept-id="' . $ligne['id'] . '" class="onglet-titre" >' . $ligne['nom'] . '</li>';
-            }
-            $html .= '<ul>';
-            file_put_contents('../../cache/select_concept.html', $html);
-
-            $is_ok = true;
-            $consol_msg = 'Select des concepts généré.';
-        } catch (Exception $error) {
-            $consol_msg = 'Erreur de select de concepts : ' . $error;
-        }
-
-        break;
-
-    case 'select_type':
-
-        try {
-            $request = $bdd->prepare('SELECT * FROM Types');
-            $is_valid_request = $request->execute();
-
-            if (!$is_valid_request) { throw new Exception("Erreur bdd : SELECT Types"); }
-            $type_list = $request->fetchAll(PDO::FETCH_ASSOC);
-            if (empty($type_list)) { throw new Exception("Aucun type trouvé dans la base de données"); }
-            
-            $html = '<ul class="select list__content">';
-            foreach ($type_list as $ligne_nb => $ligne) {
-                $html .= '<li data-type-id="' . $ligne['id'] . '" class="onglet-titre" >' . $ligne['nom'] . '</li>';
-            }
-            $html .= '</ul>';
-
-            file_put_contents('../../cache/select_type.html', $html);
-            $is_ok = true;
-            $consol_msg = 'Select des types généré.';
-        } catch (Exception $error) {
-            $consol_msg = 'Erreur de select des types : ' . $error;
-        }
         break;
 }
 

@@ -1,14 +1,16 @@
 <?php
 
+$is_ok = false;
+$data = [];
+
 if (!isset($_GET) || !isset($_GET['objet']) || empty($_GET['objet'])
     || !isset($_GET['critere']) || empty($_GET['critere'])
     || !isset($_GET['terme']) || !isset($_GET['sort']) || !isset($_GET['render'])) {
+        
+    $consol_msg = 'Recherche impossible : informations manquantes.';
+    echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
     exit;
 }
-
-$is_ok = false;
-$consol_msg = 'Aucun traitement.';
-$data = [];
 
 require '../bdd.php';
 $bdd = connexionBdd();

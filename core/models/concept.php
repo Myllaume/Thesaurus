@@ -12,7 +12,6 @@ class Concept {
         $this->nom = strval($this->nom);
         $this->description = strval($this->description);
         $this->id_ascendant = intval($this->id_ascendant);
-        $this->id_type = intval($this->id_type);
     }
 
     /**
@@ -77,18 +76,6 @@ class Concept {
         return $this->id_ascendant;
     }
 
-    public function set_id_type($var) {
-        if (!is_numeric($var)) {
-            throw new Exception("L'id d'un type doit être un nombre entier");
-        }
-        
-        $this->id_type = $var;
-    }
-
-    public function get_id_type() {
-        return $this->id_type;
-    }
-
     /**
      * =====================
      * REQUÊTES BDD
@@ -112,7 +99,6 @@ class Concept {
         $this->nom = $concept['nom'];
         $this->description = $concept['description'];
         $this->id_ascendant = $concept['id_ascendant'];
-        $this->id_type = $concept['id_type'];
     }
 
     public function select_associe_bdd($bdd) {

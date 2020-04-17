@@ -34,6 +34,7 @@ if ($_FILES['fichier']['size'] > 1000000) { // 2 mégaoctets
     exit;
 }
 
+// obtention nom ficher, sans extension : ex "file.txt' -> 'file'
 $nom_sortie = str_replace('.' . $extension_fichier, '', $_FILES['fichier']['name']);
 
 if (strlen($nom_sortie) > 150) {
@@ -46,7 +47,7 @@ $path_destination = '../../upload/';
 
 $rand_string = str_shuffle('abcdefghijklmnopqrstuvwxyz');
 $nom_enregistrement = substr($rand_string, 4, -6);
-$date_enregistrement = date("Y-m-d");
+$date_enregistrement = date("Y-m-d"); // = aujourd'hui
 
 $chemin_fichier = $path_destination . $nom_enregistrement . '.' .$extension_fichier;
 

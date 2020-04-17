@@ -46,8 +46,6 @@ onglet.prototype.open = function() {
     
     this.btn.classList.add('onglet__epingle--active');
     this.content.classList.add('onglet--active');
-
-    window.location.hash = this.nom;
 }
 
 window.addEventListener("DOMContentLoaded", () => {

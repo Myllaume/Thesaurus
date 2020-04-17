@@ -13,21 +13,22 @@ $consol_msg = 'Aucun traitement.';
 
 switch ($_GET['action']) {
     case 'connexion':
-        if (isset($_POST) && !empty($_POST['cle'])) {
-            $list_cle = file_get_contents('../keys.txt');
-            $list_cle = explode(PHP_EOL, $list_cle);
-
-            if (in_array($_POST['cle'], $list_cle)) {
-                $_SESSION['is_operateur'] = true;
-                
-                $is_ok = true;
-                $consol_msg = 'Connexion réussie.';
-            } else {
-                $consol_msg = 'Clé invalide.';
-            }
-        } else {
-            $consol_msg = 'Erreur envoie.';
+        if (!isset($_POST) && empty($_POST['cle'])) {
+            $consol_msg = 'Aucune clé entrée';
         }
+
+        $list_cle = file_get_contents('../keys.txt');
+        // 1 ligne = 1 clé
+        $list_cle = explode(PHP_EOL, $list_cle);
+
+        if (!in_array($_POST['cle'], $list_cle)) {
+            $consol_msg = 'Clé non reconnue';
+        }
+
+        $_SESSION['is_operateur'] = true;
+
+        $is_ok = true;
+        $consol_msg = 'Mode opérateur activé';
         break;
 
     case 'deconnexion':
@@ -35,7 +36,7 @@ switch ($_GET['action']) {
         session_destroy();
 
         $is_ok = true;
-        $consol_msg = 'Deconnexion réussie.';
+        $consol_msg = 'Mode opérateur désactivé';
         break;
 }
 

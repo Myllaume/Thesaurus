@@ -61,5 +61,3 @@ var index = {
 }
 
 index.sujet.addEventListener('change', index.selectObjet);
-
-console.log(index.search);
