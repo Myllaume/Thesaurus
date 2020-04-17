@@ -27,61 +27,44 @@ toolbar.btn.addEventListener('click', () => {
  * Affichage des onglets de navigation et de visualisation
  */
 
-var voletAside = {
-    epingles: document.querySelectorAll('[data-onglet-aside]'),
-    epingleActive: undefined,
+function onglet(nomOnglet, parentOnglet) {
+    this.nom = nomOnglet;
+    this.btn = document.querySelector('[data-onglet=' + nomOnglet + ']');
+    this.content = document.querySelector('#onglet-' + nomOnglet);
+    this.parent = parentOnglet;
 
-    activ: function () {
-        this.epingles.forEach(epingle => {
-            epingle.addEventListener('click', (e) => {
-
-                if (this.epingleActive == undefined) {
-                    this.epingleActive = this.epingles.item(0); }
-        
-                if (this.epingleActive !== e.target) {
-                    document.querySelector('#onglet' + this.epingleActive.dataset.ongletAside)
-                        .classList.remove('onglet--active');
-                    this.epingleActive.classList.remove('onglet__epingle--active');
-                }
-                this.epingleActive = epingle;
-        
-                document.querySelector('#onglet' + epingle.dataset.ongletAside)
-                    .classList.add('onglet--active');
-                epingle.classList.add('onglet__epingle--active');
-            });
-        });
-    }
+    this.btn.addEventListener('click', () => {
+        this.open();
+    });
 }
 
-var voletMain = {
-    epingles: document.querySelectorAll('[data-onglet-main]'),
-    epingleActive: undefined,
+onglet.prototype.open = function() {
+    this.parent.querySelector('.onglet__epingle--active')
+        .classList.remove('onglet__epingle--active');
+    this.parent.querySelector('.onglet--active')
+        .classList.remove('onglet--active');
+    
+    this.btn.classList.add('onglet__epingle--active');
+    this.content.classList.add('onglet--active');
 
-    activ: function () {
-        this.epingles.forEach(epingle => {
-            epingle.addEventListener('click', (e) => {
-
-                if (this.epingleActive == undefined) {
-                    this.epingleActive = this.epingles.item(0); }
-        
-                if (this.epingleActive !== e.target) {
-                    document.querySelector('#onglet' + this.epingleActive.dataset.ongletMain)
-                        .classList.remove('onglet--active');
-                    this.epingleActive.classList.remove('onglet__epingle--active');
-                }
-                this.epingleActive = epingle;
-        
-                document.querySelector('#onglet' + epingle.dataset.ongletMain)
-                    .classList.add('onglet--active');
-                epingle.classList.add('onglet__epingle--active');
-
-                // history.pushState({}, 'concept ' + idConcept, idConcept);
-            });
-        });
-    }
+    window.location.hash = this.nom;
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    voletAside.activ();
-    voletMain.activ();
+    var visualisation = document.querySelector('.visualisation');
+    var visualisationOnglets = ['matrice', 'notice', 'fiches'];
+
+    visualisationOnglets.forEach(nomOnglet => {
+        new onglet(nomOnglet, visualisation); });
+    
+    var navigation = document.querySelector('.navigation');
+    var navigationOnglets = ['arborescence', 'index', 'historique'];
+
+    navigationOnglets.forEach(nomOnglet => {
+        new onglet(nomOnglet, navigation); });
+    
+    if (location.hash) {
+        var targetOnglet = new onglet(location.hash.substring(1), visualisation);
+        targetOnglet.open();
+    }
 });

@@ -4,8 +4,9 @@
     &__section {
         list-style: none;
         margin: 0;
-
+        
         &:not(:first-child) {
+            border-left: 1px solid $color-rose;
             transform: scaleY(0);
             transform-origin: 50% 0;
             height: 0px;
