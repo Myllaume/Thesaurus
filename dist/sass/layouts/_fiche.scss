@@ -3,7 +3,6 @@
     padding-top: 1rem;
     box-sizing: border-box;
     height: calc(100% - 2px);
-    // height: 100%;
 
     &__btns-box {
         display: flex;
@@ -17,21 +16,32 @@
     &__volet-selection {
         overflow: auto;
         height: 50%;
+        transition: height .8s;
+
+        &--active {
+            height: 100%;
+        }
     }
 
     &__volet-lecture {
         position: absolute;
         bottom: 0px;
         right: 0px;
-        height: 50%;
+        height: 0%;
         width: 100%;
-        border-top: 1px solid $color-rouge;
-        border-left: 1px solid $color-rouge;
         background-color: $color-fond;
         transition: height .8s;
+        overflow: hidden;
+        
+        &--visible {
+            border-top: 1px solid $color-rouge;
+            border-left: 1px solid $color-rouge;
+            height: 50%;
+            overflow-y: auto;
+        }
 
         &--active {
-            height: 90%;
+            height: 100%;
         }
     }
 }
@@ -70,7 +80,8 @@
     overflow: auto;
     box-sizing: border-box;
     padding: 1rem;
-    height: 100%;
+    height: calc(100% - 50px);
+    box-sizing: border-box;
 
     &--active {
         display: block;
@@ -81,4 +92,12 @@
         top: -1px;
         right: 0px;
     }
+}
+
+.titre-fiche {
+    @extend %font-body-medium-italic;
+    box-sizing: border-box;
+    height: 50px;
+    resize: none;
+    color: $color-rouge;
 }

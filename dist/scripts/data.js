@@ -37,7 +37,7 @@ var cache = {
                     assignData(json.data, json.isOk); }
                 resolve(true);
             }, 'json' )
-            .fail(function (error) { reject(error); });
+            .fail(function (error) { console.error(error); });
         });
     },
     /**

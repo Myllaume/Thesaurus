@@ -1,6 +1,6 @@
 <article class="fiche">
 
-    <div class="fiche__volet-selection">
+    <div class="fiche__volet-selection fiche__volet-selection--active">
 
         <div class="fiche__btns-box fiche__btns-box--hidden">
             <button class="btn">Créer une fiche</button>
@@ -16,8 +16,9 @@
 
     <div class="fiche__volet-lecture">
         <button id="reader-extend" class="btn-push zone-lecture__btn-extand">▲</button>
+        <textarea id="fiche-title" class="titre-fiche" placeholder="titre" readonly></textarea>
         <section id="reader" class="zone-lecture"></section>
-        <textarea id="writer" class="zone-lecture" readonly></textarea>
+        <textarea id="writer" class="zone-lecture" placeholder="texte" readonly></textarea>
     </div>
 
 </article>
