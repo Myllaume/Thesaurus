@@ -43,11 +43,8 @@ if (strlen($nom_sortie) > 150) {
     exit;
 }
 
+$nom_enregistrement = fiche_gen_nom_enregistrement();
 $path_destination = '../../upload/';
-
-$rand_string = str_shuffle('abcdefghijklmnopqrstuvwxyz');
-$nom_enregistrement = substr($rand_string, 4, -6);
-$date_enregistrement = date("Y-m-d"); // = aujourd'hui
 
 $chemin_fichier = $path_destination . $nom_enregistrement . '.' .$extension_fichier;
 
@@ -60,16 +57,10 @@ try {
 }
 
 try {
-    $request = $bdd->prepare('INSERT INTO Files SET nom_enregistrement=:nom_enregistrement,
-        nom_sortie=:nom_sortie, extension=:extension, date=:date, id_concept=:id_concept');
-    $is_valid_request = $request->bindValue(':nom_enregistrement', $nom_enregistrement, PDO::PARAM_STR);
-    $is_valid_request &= $request->bindValue(':nom_sortie', $nom_sortie, PDO::PARAM_STR);
-    $is_valid_request &= $request->bindValue(':extension', $extension_fichier, PDO::PARAM_STR);
-    $is_valid_request &= $request->bindValue(':date', $date_enregistrement, PDO::PARAM_STR);
-    $is_valid_request &= $request->bindValue(':id_concept', $_GET['id'], PDO::PARAM_INT);
-    $is_valid_request &= $request->execute();
+    include '../models/fiche.php';
 
-    $id = $bdd->lastInsertId();
+    $id_file = fiche_insert_bdd($bdd, $_GET['id'], $extension_fichier,
+        $nom_enregistrement, $nom_sortie);
 } catch (Exception $error) {
     unlink($chemin_fichier);
 
@@ -81,7 +72,7 @@ try {
 $is_ok = true;
 $consol_msg = 'Fichier enregistré.';
 $data = [
-    'id' => $id,
+    'id' => $id_file,
     'nom_enregistrement' => $nom_enregistrement,
     'nom_sortie' => $nom_sortie,
     'extension' => $extension_fichier

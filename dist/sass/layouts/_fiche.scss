@@ -87,10 +87,15 @@
         display: block;
     }
 
-    &__btn-extand {
+    &__btn-box {
+        display: flex;
         position: absolute;
         top: -1px;
-        right: 0px;
+        right: -1px;
+
+        .btn-push:first-child {
+            border-right: unset;
+        }
     }
 }
 

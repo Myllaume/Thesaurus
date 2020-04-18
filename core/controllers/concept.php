@@ -12,6 +12,8 @@ if (!isset($_SESSION['is_operateur']) || $_SESSION['is_operateur'] !== true
 require '../bdd.php';
 $bdd = connexionBdd();
 
+include '../models/fiche.php';
+
 $is_ok = false;
 $consol_msg = 'Aucun traitement.';
 $data = [];
@@ -37,6 +39,36 @@ switch ($_GET['action']) {
         } catch (Exception $error) {
             $consol_msg = $error;
         }
+        break;
+
+    case 'add_fiche':
+
+        if (!isset($_GET['id']) || empty($_GET['id'])) {
+
+            $consol_msg = 'Création de fiche impossible :
+                des données sont manquantes/vide : id';
+            break;
+        }
+
+        try {
+            $nom_enregistrement = fiche_gen_nom_enregistrement();
+            file_put_contents('../../upload/' . $nom_enregistrement . '.md', '');
+
+            $id_file = fiche_insert_bdd($bdd, $_GET['id'], 'md',
+                $nom_enregistrement);
+
+            $data = [
+                'id' => $id_file,
+                'nom_enregistrement' => $nom_enregistrement,
+                'nom_sortie' => 'Sans titre',
+                'extension' => 'md'
+            ];
+
+            $is_ok = true;
+            $consol_msg = 'Fiche créée';
+        } catch (Exception $error) {
+            $consol_msg = $error; }
+
         break;
 
     case 'change_fiche_content':

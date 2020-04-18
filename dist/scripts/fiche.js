@@ -2,13 +2,18 @@ var fiche = {
     // bloc où insérer les badeaux des fiches
     allFichesContent: document.querySelector('#fiche'),
     formUpload: document.querySelector('#form-upload'),
+    btnCreate: document.querySelector('#fiche-create'),
     // contenant des boutons de création et de téléversement des fiches
     bandeauEdition: document.querySelector('.fiche__btns-box'),
     // contenant extensible des blocs de lecture et écriture
     voletSelection: document.querySelector('.fiche__volet-selection'),
-    voletLecture: document.querySelector('.fiche__volet-lecture'),
+    voletLecture: {
+        content: document.querySelector('.fiche__volet-lecture'),
+        btnExtend: document.querySelector('#reader-extend'),
+        btnClose: document.querySelector('#reader-close')
+    },
     // bouton permettant d'étendre le voletLecture
-    btnExtend: document.querySelector('#reader-extend'),
+    // btnExtend: document.querySelector('#reader-extend'),
     // textarea de titre des fiches
     title: document.querySelector('#fiche-title'),
     // textarea d'édition des fiches
@@ -67,7 +72,7 @@ var fiche = {
 
         var btnRead = document.createElement('button');
         btnRead.classList.add('btn-lite');
-        btnRead.textContent = 'Lire';
+        btnRead.textContent = 'Ouvrir';
         contentBtns.appendChild(btnRead);
 
         var btnDowld = document.createElement('button');
@@ -103,8 +108,8 @@ var fiche = {
             }
         });
     },
-    // rendre tous les éléments relatifs au fiches éditables
     canEdit: function(bool) {
+        // au changement de statut d'authentification
         if (bool === true) {
             this.bandeauEdition.classList.remove('fiche__btns-box--hidden');
             this.formUpload.addEventListener('input', this.send);
@@ -113,6 +118,8 @@ var fiche = {
             this.writer.addEventListener('change', this.modifContent);
             this.title.readOnly = false;
             this.title.addEventListener('change', this.modifTitle);
+
+            fiche.btnCreate.addEventListener('click', this.create);
 
             this.writer.classList.add('zone-lecture--active');
             this.reader.classList.remove('zone-lecture--active');
@@ -125,13 +132,15 @@ var fiche = {
             this.title.readOnly = true;
             this.title.removeEventListener('change', this.modifTitle);
 
+            fiche.btnCreate.removeEventListener('click', this.create);
+
             this.writer.classList.remove('zone-lecture--active');
             this.reader.classList.add('zone-lecture--active');
-
-            this.switchToModeLecture(false);
         }
+
+        this.switchToModeLecture(false);
     },
-    read: function(idFiche) {
+    read: function() {
         return new Promise((resolve, reject) => {
 
             $.get( '/Thesaurus/core/controllers/cache.php' , {
@@ -156,7 +165,7 @@ var fiche = {
                 resolve(true);
 
             }, 'json' )
-            .fail(function (error) { resolve(error); });
+            .fail(function (error) { console.error(error); });
 
         });
     },
@@ -195,20 +204,42 @@ var fiche = {
         }, 'json' )
         .fail(function(erreur) { console.error(erreur); });
     },
+    create: function() {
+        $.get( '/Thesaurus/core/controllers/concept.php' , {
+            action: 'add_fiche',
+            id: sessionStorage.getItem('idConcept')
+        },
+        function(json) {
+
+            if (json.isOk) {
+                cache.getConcept(false);
+                fiche.add(json.data);
+    
+                fiche.metas.id = json.data.id;
+                fiche.metas.title = json.data.nom_sortie;
+                fiche.read();
+            }
+
+        }, 'json' )
+        .fail(function (error) { console.error(error); });
+    },
     extendLecture: function() {
-        fiche.voletLecture.classList.toggle('fiche__volet-lecture--active');
+        fiche.voletLecture.content.classList.toggle('fiche__volet-lecture--active');
     },
     switchToModeLecture: function(bool) {
         if (bool) {
             fiche.voletSelection.classList.remove('fiche__volet-selection--active');
-            fiche.voletLecture.classList.add('fiche__volet-lecture--visible');
-            fiche.btnExtend.addEventListener('click', this.extendLecture);
+            fiche.voletLecture.content.classList.add('fiche__volet-lecture--visible');
+            fiche.voletLecture.btnExtend.addEventListener('click', this.extendLecture);
         } else {
             fiche.voletSelection.classList.add('fiche__volet-selection--active');
-            fiche.voletLecture.classList.remove('fiche__volet-lecture--visible');
-            fiche.btnExtend.removeEventListener('click', this.extendLecture);
-            fiche.voletLecture.classList.remove('fiche__volet-lecture--active');
+            fiche.voletLecture.content.classList.remove('fiche__volet-lecture--visible');
+            fiche.voletLecture.btnExtend.removeEventListener('click', this.extendLecture);
+            fiche.voletLecture.content.classList.remove('fiche__volet-lecture--active');
         }
     }
 };
 
+fiche.voletLecture.btnClose.addEventListener('click', () => {
+    fiche.switchToModeLecture(false);
+});
