@@ -37,8 +37,7 @@ switch ($_GET['element']) {
             $data = [
                 'notice' => [
                     'description' => $class_concept->get_description(),
-                    'document' => $class_concept->select_document_bdd($bdd),
-                    'personne' => $class_concept->select_personne_bdd($bdd)
+                    'document' => $class_concept->select_document_bdd($bdd)
                 ],
                 'matrice' => [
                     'nom' => $class_concept->get_nom(),

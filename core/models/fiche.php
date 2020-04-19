@@ -28,7 +28,7 @@ function fiche_insert_bdd($bdd, $id_concept, $extension_fichier,
     $is_valid_request &= $request->bindValue(':id_concept', $id_concept, PDO::PARAM_INT);
     $is_valid_request &= $request->execute();
 
-    if (!is_valid_request) {
+    if (!$is_valid_request) {
         throw new Exception("Fiche non enregistrée : erreur de base de données"); }
 
     return $bdd->lastInsertId();

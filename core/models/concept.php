@@ -140,26 +140,13 @@ class Concept {
 
     public function select_document_bdd($bdd) {
         $request = $bdd->prepare('SELECT id, titre, auteur, editeur, annee, type, identifiant
-            FROM Documents WHERE id_concept = :id');
-        $is_valid_request = $request->bindValue(':id', $this->id, PDO::PARAM_INT);
-        $is_valid_request &= $request->execute();
-
-        if (!$is_valid_request) {
-            throw new Exception('Erreur bdd : SELECT Documents');
-        }
-
-        return $request->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function select_personne_bdd($bdd) {
-        $request = $bdd->prepare('SELECT id, nom, profession, genre, nationalite
-        FROM Personnes INNER JOIN Concepts_Personnes ON Personnes.id = Concepts_Personnes.id_personne
+        FROM Documents INNER JOIN Concepts_Documents ON Documents.id = Concepts_Documents.id_document
         WHERE id_concept = :id');
         $is_valid_request = $request->bindValue(':id', $this->id, PDO::PARAM_INT);
         $is_valid_request &= $request->execute();
 
         if (!$is_valid_request) {
-            throw new Exception('Erreur bdd : SELECT Personnes');
+            throw new Exception('Erreur bdd : SELECT Documents');
         }
 
         return $request->fetchAll(PDO::FETCH_ASSOC);

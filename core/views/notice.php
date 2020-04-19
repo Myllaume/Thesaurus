@@ -9,20 +9,15 @@
     
     <section class="notice__section">
         <span class="libelle">Documents</span>
-        <textarea id="concept-document" class="wind-text" readonly></textarea>
-    </section>
-
-    <section class="notice__section">
-        <span class="libelle">Personnes</span>
         <span class="model">
-            <span data-personne-model="nom">nom,</span>
-            <span data-personne-model="profession">profession,</span>
-            <span data-personne-model="genre">genre,</span>
-            <span data-personne-model="nationalité,">nationalité</span>
-            <span data-personne-model="id">id</span>
+            <span data-personne-model="titre">titre,</span>
+            <span data-personne-model="auteur">auteur,</span>
+            <span data-personne-model="editeur">editeur,</span>
+            <span data-personne-model="annee,">annee,</span>
+            <span data-personne-model="type">type,</span>
+            <span data-personne-model="identifiant">identifiant,</span>
         </span>
-        <textarea id="concept-personne" class="wind-text" readonly></textarea>
-        <ul class="search-result"></ul>
+        <textarea id="concept-document" class="wind-text" readonly></textarea>
     </section>
 
 </div>
