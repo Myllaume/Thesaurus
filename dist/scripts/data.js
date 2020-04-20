@@ -114,8 +114,11 @@ function sauvegardeAuto(input, metaOnChange) {
                         });
                     }
                 }, 'json' )
-                .fail(function(erreur) {
-                    reject(erreur); });
+                .fail(function(erreur, erreur2, erreur3) {
+                    console.error(erreur);
+                    console.error(erreur2);
+                    console.error(erreur3);
+                });
             }
         });
     });
@@ -135,5 +138,9 @@ function sauvegarde(id, data, metaOnChange) {
             cache.getConcept(true, id);
         }
     }, 'json' )
-    .fail(function(erreur) { console.error(erreur); });
+    .fail(function(erreur, erreur2, erreur3) {
+        console.error(erreur);
+        console.error(erreur2);
+        console.error(erreur3);
+    });
 }

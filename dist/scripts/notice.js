@@ -45,78 +45,55 @@ var notice = {
 notice.inputDescription.addEventListener('focus', () => {
     sauvegardeAuto(notice.inputDescription, 'description'); });
 
-notice.document.input.addEventListener('focus', () => {
-    sauvegardeAuto(notice.document.input, 'document'); });
-
-// notice.personnes.input.addEventListener('input', () => {
-//     var totalVal = notice.personnes.input.value;
-//     var lines = totalVal.split('\n');
-
-//     let i= 0;
-//     lines.forEach(line => {
-//         var chaine = line.split(', ');
-
-//         switch (chaine.length - 1) {
-//             case 0:
-//                 notice.personnes.models[0].classList.add('--active');
-//                 break;
-//             case 1:
-//                 notice.personnes.models[1].classList.add('--active');
-//                 break;
-//             case 2:
-//                 notice.personnes.models[2].classList.add('--active');
-//                 break;
-//             case 3:
-//                 notice.personnes.models[3].classList.add('--active');
-//                 break;
-//             case 4:
-//                 notice.personnes.models[4].classList.add('--active');
-//                 break;
-//         }
-
-//         i++;
-//     });
-// });
-
 notice.document.input.addEventListener('change', () => {
 
     var totalVal = notice.document.input.value;
     var lines = totalVal.split('\n');
 
-    if (lines.length > notice.document.memoire.length) {
-        var i = notice.document.memoire.length;
-        while (lines[i] !== undefined) {
-            var line = lines[i].split(', ');
-            notice.document.memoire.push({
-                titre: line[0],
-                auteur: line[1],
-                editeur: line[2],
-                annee: line[3],
-                type: line[4],
-                identifiant: line[5]
-            });
-            i++;
+    for (let y = 0; y < notice.document.memoire.length; y++) {
+
+        // console.log(lines[y].length);
+
+        var words = lines[y].split(', ');
+        
+        if (lines[y] == '') {
+            notice.document.memoire[y] = {id: notice.document.memoire[y].id};
+        } else if (words.length === 6) {
+            notice.document.memoire[y] = {
+                id: notice.document.memoire[y].id,
+                titre: words[0],
+                auteur: words[1],
+                editeur: words[2],
+                annee: words[3],
+                type: words[4],
+                identifiant: words[5]
+            };
+            
         }
     }
 
-    // for (let i = 0; i < lines.length; i++) {
-
-    //     if (notice.personnes.memoire[i] == undefined) {
-    //         notice.personnes.memoireTampon.push('add');
-    //         break;
-    //     }
+    if (lines.length > notice.document.memoire.length) {
+        var i = notice.document.memoire.length;
         
-    //     if (lines[i] != notice.personnes.memoire[i].join(', ')) {
-    //         notice.personnes.memoireTampon[i] = 'modif';
-    //         break;
-    //     }
-
-    //     if (lines[i] == '') {
-    //         notice.personnes.memoireTampon[i] = 'suppr';
-    //     }
-    // }    
+        while (lines[i] !== undefined) {
+            var line = lines[i].split(', ');
+            if (line.length === 6) {
+                notice.document.memoire.push({
+                    titre: line[0],
+                    auteur: line[1],
+                    editeur: line[2],
+                    annee: line[3],
+                    type: line[4],
+                    identifiant: line[5]
+                });
+            } else {
+                break;
+            }
+            i++;
+        }
+    }
     
-    $.post( '/Thesaurus/core/controllers/test.php', {
+    $.post( '/Thesaurus/core/controllers/concept.php?action=documents', {
         id : sessionStorage.getItem('idConcept'),
         data : notice.document.memoire
     },
@@ -126,7 +103,7 @@ notice.document.input.addEventListener('change', () => {
         console.log(json);
 
         if (json.isOk) {
-            cache.getConcept(true, id);
+            cache.getConcept(true, sessionStorage.getItem('idConcept'));
         }
     }, 'json' )
     .fail(function(erreur) { console.error(erreur); });

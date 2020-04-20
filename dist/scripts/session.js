@@ -3,7 +3,6 @@ if (sessionStorage.length === 0) {
     // si la session est vide
     sessionStorage.setItem('idConcept', document.body.dataset.concept);
     sessionStorage.setItem('nomConcept', undefined);
-    sessionStorage.setItem('isOp', document.body.dataset.op);
     sessionStorage.setItem('historique', '[{"nom" : "undefined", "id": ' + document.body.dataset.concept + '}]');
     sessionStorage.setItem('historiquePos', 0);
     sessionStorage.setItem('inEdition', 'false');
@@ -12,6 +11,9 @@ if (sessionStorage.length === 0) {
     // ou que l'identifiant enregistré n'est pas le même que celui présenté dans le DOM
     sessionStorage.setItem('idConcept', document.body.dataset.concept);
 }
+
+sessionStorage.setItem('isOp', document.body.dataset.op);
+
 window.addEventListener("DOMContentLoaded", () => {
     // si l'utilisateur est désigné opérateur par sa session
     if (sessionStorage.getItem('isOp') == 'true') {

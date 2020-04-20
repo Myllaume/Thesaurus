@@ -222,6 +222,85 @@ switch ($_GET['action']) {
             $consol_msg = $error->getMessage(); }
 
         break;
+
+    case 'documents':
+
+        if (!isset($_POST['id']) || empty($_POST['id'])
+            || !isset($_POST['data']) || empty($_POST['data'])) {
+
+            $consol_msg = 'Changement liste document impossible :
+                des données sont manquantes/vides : id, data';
+            
+            echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
+            exit;
+        }
+
+        $data['none'] = [];
+        $data['insert'] = [];
+        $data['update'] = [];
+        $data['delete'] = [];
+        $data['reste'] = [];
+        $data['docs_ids'] = [];
+
+        try {
+
+            include '../models/document.php';
+
+            $form_documents = $_POST['data'];
+
+            $form_documents_length = count($form_documents);
+
+            for ($i = 0 ; $i < $form_documents_length ; $i++) {
+                if (empty($form_documents[$i]['titre'])) {
+                    array_push($data['delete'], $form_documents[$i]['id']);
+                    continue;
+                }
+
+                if (!isset($form_documents[$i]['id'])) {
+                    array_push($data['insert'], $form_documents[$i]);
+                    continue;
+                }
+
+                array_push($data['docs_ids'], intval($form_documents[$i]['id']));
+                array_push($data['reste'], $form_documents[$i]);
+            }
+
+            unset($form_documents);
+
+            $bdd_documents = document_select_by_ids_bdd($bdd, $data['docs_ids']);
+
+            $form_documents_length = count($data['reste']);
+
+            for ($i = 0 ; $i < $form_documents_length ; $i++) {
+                $differences_tab = array_diff($data['reste'][$i], $bdd_documents[$i]);
+                
+                if (empty($differences_tab)) {
+                    array_push($data['none'], $data['reste'][$i]); }
+                else {
+                    array_push($data['update'], $data['reste'][$i]); }
+            }
+
+            foreach ($data['delete'] as $document_id) {
+                document_unlink_concept($bdd, $document_id);
+            }
+            foreach ($data['insert'] as $document) {
+                $id = document_insert_bdd($bdd, 'insert', $document['titre'], $document['auteur'],
+                    $document['editeur'], $document['annee'], $document['type'], $document['identifiant']);
+                document_link_concept($bdd, $id, $_POST['id']);
+            }
+            foreach ($data['update'] as $document) {
+                document_update_bdd($bdd, 'update', $document['id'], $document['titre'], $document['auteur'],
+                    $document['editeur'], $document['annee'], $document['type'], $document['identifiant']);
+            }
+
+            $data = [];
+            $is_ok = true;
+            $consol_msg = 'Document enregistré.';
+
+        } catch (Exception $error) {
+            $consol_msg = $error->getMessage(); }
+
+        break;
 }
 
 echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));
