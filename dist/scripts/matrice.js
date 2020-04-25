@@ -60,9 +60,11 @@ var matrice = {
         if (bool) {
             matrice.inputConceptGenerique.classList.add('clignotant');
             matrice.inputConceptAssocie.classList.add('clignotant');
+            matrice.inputConceptSpecifique.classList.add('clignotant');
         } else {
             matrice.inputConceptGenerique.classList.remove('clignotant');
             matrice.inputConceptAssocie.classList.remove('clignotant');
+            matrice.inputConceptSpecifique.classList.remove('clignotant');
         }
 
         bool = !bool; // inversion
@@ -88,3 +90,7 @@ matrice.inputConceptGenerique.addEventListener('click', () => {
 
 matrice.inputConceptAssocie.addEventListener('click', () => {
     changeMode(matrice.inputConceptAssocie, modifAssocie); });
+
+matrice.inputConceptSpecifique.addEventListener('click', () => {
+    createConcept(sessionStorage.getItem('idConcept'));
+});

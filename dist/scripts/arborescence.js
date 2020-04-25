@@ -94,8 +94,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 arborescence.btnAddConcept.addEventListener('click', () => {
     // ajout d'un concept à la racine de l'arborescence
-    sessionStorage.setItem('idConcept', 0);
-    createConcept();
+    createConcept(0);
 });
 
 /**
@@ -216,6 +215,8 @@ function modifGenerique(e) {
 */
 
 function modifAssocie(e) {
+    console.log('lalal');
+    
 
     if (isInceste(e.target.dataset.id)) { return; }
 
@@ -235,15 +236,17 @@ function modifAssocie(e) {
 /**
  * ajout d'un concept à la racine de l'arboresence
 */
-function createConcept() {    
+function createConcept(id_ascendant) {    
+    if (sessionStorage.getItem('isOp') != 'true') { return; }
+
     $.get( '/Thesaurus/core/controllers/concept.php' , {
         action: 'add_concept',
         nom: 'Nouveau concept',
-        id_ascendant: sessionStorage.getItem('idConcept')
+        id_ascendant: id_ascendant
     },
     function(json) {
         terminal.open(json.consolMsg);
-        if (json.isOk) { cache.getArborescence(true); }
+        if (json.isOk) { cache.getArborescence(); }
     }, 'json')
     .fail(function(error) { console.error(error); });
 }
