@@ -8,23 +8,22 @@
  * Requête de recherche à la base de données
  */
 
-function search(objet, critere, terme = '', sort = 'croissant', render = 'table') {
+function search(objet, critere, terme = '', sort = 'croissant') {
     return new Promise((resolve, reject) => {
         $.get( '/Thesaurus/core/controllers/search.php' , {
             objet: objet,
             critere: critere,
             terme : terme,
-            sort : sort,
-            render : render
+            sort : sort
         },
         function(json) {
             if (json.isOk) {
+                terminal.open(json.consolMsg);
                 resolve(json.data); }
             else {
-                console.error(json);
-                
-            }
+                console.error(json); }
         }, 'json' )
-        .fail(function(error) { reject(error); });
+        .fail(function(error) { console.error(error);
+         });
     });
 }

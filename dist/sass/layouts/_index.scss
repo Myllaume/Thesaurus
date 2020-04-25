@@ -1,9 +1,24 @@
 .index {
     padding: 3rem 0;
+    
+    ul {
+        list-style: none;
+        padding: 0;
+    }
 
-    // &__search-board {
-
-    // }
+    &__ligne {
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0 1rem .8rem;
+        border-left: 2px solid $color-fond;
+        
+        &:hover {
+            background-color: $color-rose;
+            border-left: 2px solid $color-rouge;
+        }
+    }
 }
 
 .search-tool {

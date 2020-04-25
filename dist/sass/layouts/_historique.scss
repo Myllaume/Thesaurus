@@ -1,11 +1,19 @@
 .historique {
     padding: 3rem 0;
 
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
     &__ligne {
-        text-decoration: none;
-        display: block;
-        padding: 1rem 0 1rem .8rem;
         border-left: 2px solid $color-fond;
+
+        a {
+            display: block;
+            text-decoration: none;
+            padding: 1rem .8rem;
+        }
         
         &:hover {
             background-color: $color-rose;

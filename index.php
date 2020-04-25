@@ -61,7 +61,9 @@ else { $is_op = 'false'; }
                     </section>
 
                     <section id="onglet-historique" class="onglet">
-                        <div id="historique" class="historique"></div>
+                        <div class="historique">
+                            <ul id="historique"></ul>
+                        </div>
                     </section>
                 </main>
             </section>

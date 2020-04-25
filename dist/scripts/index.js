@@ -3,6 +3,7 @@ var index = {
     search: document.querySelector('#search-input'),
     btnsSort: document.querySelectorAll('.index__btn'),
     board: document.querySelector('#search-board'),
+    list: document.querySelector('#index-list'),
     request: {
         objet: '',
         critere: '',
@@ -12,10 +13,32 @@ var index = {
     activeSelect: undefined,
 
     load: function() {
+        index.list.innerHTML = '';
+
         search(this.request.objet, this.request.critere,
             this.request.terme, this.request.sort)
         .then(function(data) {
-            index.board.innerHTML = data;
+            data.forEach(elt => {
+
+                var listElt = document.createElement('li');
+                listElt.classList.add('index__ligne');
+                listElt.textContent = Object.values(elt)[1]; // nom
+                listElt.setAttribute('data-index', Object.values(elt)[0]) // id
+                index.list.appendChild(listElt);
+
+                if (sessionStorage.getItem('isOp') == 'true') {
+                    var btnSuppr = document.createElement('button');
+                    btnSuppr.classList.add('btn-push');
+                    btnSuppr.textContent = 'x';
+                    listElt.appendChild(btnSuppr);
+    
+                    btnSuppr.addEventListener('click', () => {
+                        console.log('suppr ' + index.request.objet + ' ' + Object.values(elt)[0]);
+                    });
+                }
+
+            });
+            
         });
     },
     selectObjet: function() {

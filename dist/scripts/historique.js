@@ -46,12 +46,10 @@ var historique = {
      * @param { Object } obj Dernier objet enregistré en Historique de session
      */
     addLine: function(obj) {
-        var histLigne = document.createElement('a');
+        var histLigne = document.createElement('li');
         histLigne.classList.add('historique__ligne');
-        histLigne.setAttribute('href', '/Thesaurus/' + obj.id);
-        histLigne.textContent = obj.nom;
+        histLigne.innerHTML = '<a href="/Thesaurus/' + obj.id+ '">' + obj.nom+ '</a>';
         historique.content.prepend(histLigne);
-        
     }
 };
 
