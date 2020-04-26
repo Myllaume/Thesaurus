@@ -243,3 +243,17 @@ var fiche = {
 fiche.voletLecture.btnClose.addEventListener('click', () => {
     fiche.switchToModeLecture(false);
 });
+
+function deleteFiche(idFiche) {
+    console.log(idFiche);
+    
+    $.get( '/Thesaurus/core/controllers/concept.php' , {
+        action: 'delete_fiche',
+        id: idFiche
+    },
+    function(json) {
+        terminal.open(json.consolMsg);
+        if (json.isOk) { cache.getConcept(); }
+    }, 'json')
+    .fail(function(error) { console.error(error); });
+}

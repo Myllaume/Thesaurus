@@ -76,7 +76,7 @@ function deleteElement(e) {
             deleteConcept(elementId);
             break;
         case 'Files':
-            console.log('go suppr Files' + elementId);
+            deleteFiche(elementId);
             break;
     }
 }

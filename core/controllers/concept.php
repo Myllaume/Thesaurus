@@ -92,6 +92,26 @@ switch ($_GET['action']) {
 
         break;
 
+    case 'delete_fiche':
+
+        if (!isset($_GET['id']) || empty($_GET['id'])) {
+
+            $consol_msg = 'Suppression fiche impossible :
+                des données sont manquantes/vides : id';
+            break;
+        }
+
+        try {
+            include '../models/fiche.php';
+            fiche_delete_bdd($bdd, $_GET['id']);
+
+            $is_ok = true;
+            $consol_msg = 'Fiche supprimé';
+        } catch (Exception $error) {
+            $consol_msg = $error->getMessage(); }
+
+        break;
+
     case 'change_fiche_content':
 
         if (!isset($_POST['id']) || empty($_POST['id'])

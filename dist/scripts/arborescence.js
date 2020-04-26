@@ -249,7 +249,10 @@ function createConcept(idAscendant) {
     },
     function(json) {
         terminal.open(json.consolMsg);
-        if (json.isOk) { cache.getArborescence(true); }
+        if (json.isOk) {
+            cache.getConcept(false, json.data); // = id du concept créé
+            cache.getArborescence(true);
+        }
     }, 'json')
     .fail(function(error) { console.error(error); });
 }

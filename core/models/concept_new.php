@@ -53,7 +53,7 @@ function concept_delete_bdd($bdd, $id) {
 
 function concept_delete_cache($id) {
     
-    $file_path = '../../upload/concept_' . $id . '.json';
+    $file_path = '../../cache/concept_' . $id . '.json';
 
     if (file_exists($file_path)) {
         unlink($file_path); }
