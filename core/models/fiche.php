@@ -67,14 +67,19 @@ function fiche_update_title($bdd, $id, $title) {
         throw new Exception("Nom de fichier non actualisé : erreur de base de données"); }
 }
 
-function fiche_delete_bdd($bdd, $id) {
-
+function fiche_get_path($bdd, $id) {
     $request = $bdd->prepare('SELECT nom_enregistrement, extension FROM Files WHERE id = :id');
     $is_valid_request = $request->bindValue(':id', $id, PDO::PARAM_INT);
     $is_valid_request &= $request->execute();
     if (!$is_valid_request) {
-        throw new Exception("Fiche à supprimer non récupérée : erreur de base de données"); }
-    $file_metas = $request->fetch(PDO::FETCH_ASSOC);
+        throw new Exception("Chamin fiche non récupéré : erreur de base de données"); }
+
+    return $request->fetch(PDO::FETCH_ASSOC);
+}
+
+function fiche_delete_bdd($bdd, $id) {
+
+    $file_metas = fiche_get_path($bdd, $id);
 
     if (!unlink('../../upload/'. $file_metas['nom_enregistrement'] . '.' . $file_metas['extension'])) {
         throw new Exception("Fiche non supprimée : erreur serveur"); }

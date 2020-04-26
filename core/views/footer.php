@@ -6,6 +6,8 @@
 
     <div class="export">
         <button id="export-btn" class="btn-push export__btn">▲</button>
-        <div id="export-menu" class="export__window"></div>
+        <div id="export-menu" class="export__window">
+            <span id="download-concept">Télécharger concept</span>
+        </div>
     </div>
 </footer>

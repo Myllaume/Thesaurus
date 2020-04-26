@@ -43,6 +43,8 @@ if (strlen($nom_sortie) > 150) {
     exit;
 }
 
+include '../models/fiche.php';
+
 $nom_enregistrement = fiche_gen_nom_enregistrement();
 $path_destination = '../../upload/';
 
@@ -57,7 +59,6 @@ try {
 }
 
 try {
-    include '../models/fiche.php';
 
     $id_file = fiche_insert_bdd($bdd, $_GET['id'], $extension_fichier,
         $nom_enregistrement, $nom_sortie);

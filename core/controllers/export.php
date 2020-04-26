@@ -3,32 +3,43 @@
 ini_set('display_errors','on');
 error_reporting(E_ALL);
 
-if (!isset($_GET) || empty($_GET['element'])) {
+if (!isset($_GET) || !isset($_GET['element']) || empty($_GET['element'])
+    || !isset($_GET['id']) || empty($_GET['id'])) {
     exit;
 }
 
-$is_ok = false;
-$consol_msg = 'Aucun traitement.';
-$data = [];
-
 require '../bdd.php';
 $bdd = connexionBdd();
-require '../models/concept.php';
+
+function throw_download($file_path) {
+    if (file_exists($file_path)) {
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . basename($file_path) . '"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($file_path));
+        readfile($file_path);
+        exit;
+    } else {
+        echo 'Erreur de téléchargement';
+    }
+}
 
 switch ($_GET['element']) {
 
-    case 'csv':
-        $bdd_entete = Concept::get_structure_bdd($bdd);
-        $entete = [];
-        foreach ($bdd_entete as $field_nb => $field_spec) {
-            array_push($entete, $field_spec['Field']);
-        }
+    case 'concept':
 
-        require '../../functions/files.php';
-        create_CSV_from_array(Concept::import_bdd($bdd),
-            '../../cache/table_concept.csv', $entete);
+        throw_download('../../cache/concept_' . $_GET['id'] . '.json');
+
+        break;
+
+    case 'fiche':
+        
+        include '../models/fiche.php';
+        $file_metas = fiche_get_path($bdd, $_GET['id']);
+        throw_download('../../upload/'. $file_metas['nom_enregistrement'] . '.' . $file_metas['extension']);
 
         break;
 }
-
-echo json_encode(array('isOk' => $is_ok, 'consolMsg' => $consol_msg, 'data' => $data));

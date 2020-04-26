@@ -86,6 +86,11 @@ var fiche = {
             this.metas.id = obj.id;
             this.read();
         });
+
+        btnDowld.addEventListener('click', () => {
+            window.open('/Thesaurus/core/controllers/export.php?element=fiche&id='
+                + obj.id, '_blank');
+        });
         
     },
     send: function(e) {
@@ -105,7 +110,10 @@ var fiche = {
                     fiche.add(json.data);
                     cache.getConcept(false);
                 }
-            }
+            },
+            error: function (error) {
+                console.error(error);
+            }    
         });
     },
     canEdit: function(bool) {
