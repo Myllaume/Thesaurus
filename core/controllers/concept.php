@@ -39,6 +39,27 @@ switch ($_GET['action']) {
 
         break;
 
+    case 'delete_concept':
+
+        if (!isset($_GET['id']) || empty($_GET['id'])) {
+
+            $consol_msg = 'Suppression concept impossible :
+                des données sont manquantes/vides : id';
+            break;
+        }
+
+        try {
+            include '../models/concept_new.php';
+            concept_delete_bdd($bdd, $_GET['id']);
+            concept_delete_cache($_GET['id']);
+
+            $is_ok = true;
+            $consol_msg = 'Concept supprimé';
+        } catch (Exception $error) {
+            $consol_msg = $error->getMessage(); }
+
+        break;
+
     case 'add_fiche':
 
         if (!isset($_GET['id']) || empty($_GET['id'])) {

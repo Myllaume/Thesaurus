@@ -175,7 +175,10 @@ function isInceste(idConcept) {
     var idList = arborescence.nodeToId(isAListParent);
     var test = idList.indexOf(idConcept);
 
-        if (test !== -1) { return true; }
+        if (test !== -1) {
+            terminal.open('Erreur : inceste');
+            return true;
+        }
         else { return false; }
     }
 
@@ -236,17 +239,40 @@ function modifAssocie(e) {
 /**
  * ajout d'un concept à la racine de l'arboresence
 */
-function createConcept(id_ascendant) {    
+function createConcept(idAscendant) {    
     if (sessionStorage.getItem('isOp') != 'true') { return; }
 
     $.get( '/Thesaurus/core/controllers/concept.php' , {
         action: 'add_concept',
         nom: 'Nouveau concept',
-        id_ascendant: id_ascendant
+        id_ascendant: idAscendant
     },
     function(json) {
         terminal.open(json.consolMsg);
-        if (json.isOk) { cache.getArborescence(); }
+        if (json.isOk) { cache.getArborescence(true); }
+    }, 'json')
+    .fail(function(error) { console.error(error); });
+}
+
+function deleteConcept(idConcept) {    
+    if (sessionStorage.getItem('isOp') != 'true') { return; }
+
+    // test : vérifier que le concept n'a plus d'enfants
+    var nextNode = arborescence.findNode(idConcept)
+        .parentNode
+        .nextElementSibling;
+    if (nextNode && nextNode.tagName == 'UL') {
+        terminal.open('Concept non-supprimé : supprimez d\'abord ses enfants');
+        return false;
+    }
+
+    $.get( '/Thesaurus/core/controllers/concept.php' , {
+        action: 'delete_concept',
+        id: idConcept
+    },
+    function(json) {
+        terminal.open(json.consolMsg);
+        if (json.isOk) { cache.getArborescence(true); }
     }, 'json')
     .fail(function(error) { console.error(error); });
 }

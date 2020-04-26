@@ -5,22 +5,6 @@
     <option value="Files">fiche</option>
 </select>
 
-<select id="search-Concepts" class="--hidden">
-    <option value="nom" selected>nom</option>
-</select>
-
-<select id="search-Files" class="--hidden">
-    <option value="nom_sortie" selected>titre</option>
-</select>
-
-<select id="search-Documents" class="--hidden">
-    <option value="titre" selected>titre</option>
-    <option value="auteur">auteur</option>
-    <option value="editeur">editeur</option>
-    <option value="date">date</option>
-    <option value="type">type</option>
-</select>
-
 <div>
     <button id="order-croissant" class="btn btn--active index__btn --hidden" data-sort="croissant">Croissant</button>
     <button id="order-descroissant" class="btn index__btn --hidden" data-sort="decroissant">Décroissant</button>
